@@ -8,7 +8,7 @@ layout: article
 #   zh-Hant :   关于
 #   # @end locale config
 #   # @end locale config
-# show_title: false
+show_title: false
 ---
 
 ## Keep It Simple, Stupid
