@@ -4,7 +4,7 @@ key: 2022-04-06-JavaScript简介
 
 ## JavaScript语言简介
 
-JavaScript 诞生于1995年。在那个时代用户提交一个表单需要获取服务器端的反馈，这个时间大概十几秒，如果能在客户 qa 端完成一些基本的验证绝对是很大的进步。当时如日中天的 Netscape 公司，决定着手开发一种客户端语言解决简单的表单验证。就职于 Netscape 公司的布兰登·艾奇开始着手计划将1995年2月发布的 LiveScript 同时在浏览器和服务器中使用。Netscape 与 Sun 公司成立了一个开发联盟。Sun 公司正是 Java 的拥有着，而此时，Netscape 为了搭上媒体热炒 Java 的顺风车，临时把 LiveScript 改名为 JavaScript，所以从本质上来说 JavaScript 和 Java 没什么关系。
+JavaScript 诞生于1995年。在那个时代用户提交一个表单需要获取服务器端的反馈，这个时间大概十几秒，如果能在客户端完成一些基本的验证绝对是很大的进步。当时如日中天的 Netscape 公司，决定着手开发一种客户端语言解决简单的表单验证。就职于 Netscape 公司的布兰登·艾奇开始着手计划将1995年2月发布的 LiveScript 同时在浏览器和服务器中使用。Netscape 与 Sun 公司成立了一个开发联盟。Sun 公司正是 Java 的拥有着，而此时，Netscape 为了搭上媒体热炒 Java 的顺风车，临时把 LiveScript 改名为 JavaScript，所以从本质上来说 JavaScript 和 Java 没什么关系。
 
 1997年，以 JavaScript1.1 为蓝本的建议被提交给了欧洲计算机制造商协会（ECMA，European Computer Manufactures Association），该协会指定39号技术委员会负责将其进行标准化，TC39 经过数月的努力完成了 ECMA-262——定义了一种名为 ECMAScript 的新脚本语言的标准。
 
@@ -21,7 +21,7 @@ JavaScript 的注释与 JAVA 几乎相同，单行注释以`//`开头，在其�
 /**************时间:2018年2月1日*******************/
 function getAbsolute(a) {
     if(a < 0) {
-      a = -a;//取a的相反数
+        a = -a;//取a的相反数
     }
     return a;
 }
@@ -44,14 +44,14 @@ JavaScript 的输出有三种方式，如下：
 
 ### 第 1 种：弹出对话框模式
 
-通过 `alert()` 函数弹出对话框，这是最常用的方式。在 `script` 标签下，调用 `window.alert()` 函数，括号内填入输出的内容。将下面的代码以文本编辑器编辑后改为 .html 后缀，然后用浏览器打开后即可弹出对话框。
+通过 `alert()` 函数弹出对话框，这是最常用的方式。在 script 标签下，调用 `window.alert()` 函数，括号内填入输出的内容。将下面的代码以文本编辑器编辑后改为 .html 后缀，然后用浏览器打开后即可弹出对话框。
 
 ```html
 <!DOCTYPE html>
 <html>
     <body>
         <script>
-        window.alert("Hello,World!");
+            window.alert("Hello,World!");
         </script>
     </body>
 </html>
@@ -59,13 +59,13 @@ JavaScript 的输出有三种方式，如下：
 
 以浏览器方式打开刚刚建立的 HTMl 文件，在浏览器上面可以看到，如图1所示：
 
-![预览大图](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-18:42:32-186147.png)
+![image-20220406185819871](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-18:58:20-image-20220406185819871.png)
 
 这里的标签是 HTML 中的内容，关于 JavaScript 和 HTML 的关系，将在下一节介绍。
 
 ### 第 2 种：控制台模式
 
-通过 console 输出到控制台，在 script 标签下，调用 console.log() 函数，括号内填入输出的内容，以浏览器打开下面的代码后，按 F12 键即可在浏览器的控制台中实现输出。
+通过 console 输出到控制台，在 script 标签下，调用 `console.log()` 函数，括号内填入输出的内容，以浏览器打开下面的代码后，按 F12 键即可在浏览器的控制台中实现输出。
 
 ```html
 <!DOCTYPE html>
