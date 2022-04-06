@@ -125,3 +125,31 @@ JavaScript 的输出有三种方式，如下：
 </html>
 ```
 
+## JavaScript 与 HTML
+
+JavaScript 因弥补 HTML 的不足而诞生，使得 HTML 更加丰富多彩，可以说没有 HTML 就没有 JavaScript 的存在，所以当 JavaScript 用于开发网页时，都是放在 HTML 代码之中的，那么，如何在 HTML 中嵌入 JavaScript 呢？
+
+要想了解 JavaScript 如何嵌入到 HTML 代码中，先必须了解 HTML 代码的基本结构。
+
+### 什么是 HTML
+
+HTML，即超文本标记语言，是一种用于编写网页的脚本语言，超文本，包括图片、视频、音频等非文本元素，这些元素要在网页上展示就离不开 HTML。目前，网站后台开发的语言和框架多种多样，前端却基本围绕着如何丰富 HTML 这个基础而发展。 作为一门编程语言，HTML 的内容很多，可以参考我们的 HTML 相关文章，这里仅介绍 HTML 代码的结构。 由尖括号对和括号内文字构成的整体被称为标签，两个匹配的标签构成标签对，匹配指两个标签的文字相同，后者文字前加入`/`符号，`<body></body>`即一个标签对。标签之间可以嵌套。 HTML 代码所有内容在`<html></html>`标签对之间，下层又分为两个标签对`<head></head>`和`<body></body>`，后者中间放入网页内容的主体部分。
+
+### 使用内置 script 标签对的方式嵌入 JS 代码
+
+将 JavaScript 嵌入到 HTML 中有两种方法，对于内容较少的 JavaScript 代码，常采用将 JavaScript 代码直接写在 HTML 中的做法。 在`<script></script>`之间写入 JavaScript 代码，然后将标签连同代码放入到`<head></head>`或者`<body></body>`之间，常见的是放在`<head></head>`之间，因为这样 JavaScript 和 HTML 的主体内容相对分开，便于阅读。如下是一个实例：
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+        console.log("在HTML中嵌入JavaScript，这里是JS部分");
+        </script>
+    </head>
+    <body>
+    <!--这里是HTML的主体部分-->
+    </body>
+</html>
+```
+
