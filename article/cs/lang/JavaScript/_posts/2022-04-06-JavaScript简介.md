@@ -1,5 +1,5 @@
 ---
-key: /:title
+key: /:title/
 ---
 
 ## JavaScript语言简介
