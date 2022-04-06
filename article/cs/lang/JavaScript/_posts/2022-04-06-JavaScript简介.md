@@ -1,5 +1,5 @@
 ---
-key: 2022-04-06-JavaScript简介
+key: /:title
 ---
 
 ## JavaScript语言简介
