@@ -2,5 +2,126 @@
 key: 2022-04-06-JavaScript简介
 ---
 
-# JavaScript语言简介
+## JavaScript语言简介
+
+JavaScript 诞生于1995年。在那个时代用户提交一个表单需要获取服务器端的反馈，这个时间大概十几秒，如果能在客户 qa 端完成一些基本的验证绝对是很大的进步。当时如日中天的 Netscape 公司，决定着手开发一种客户端语言解决简单的表单验证。就职于 Netscape 公司的布兰登·艾奇开始着手计划将1995年2月发布的 LiveScript 同时在浏览器和服务器中使用。Netscape 与 Sun 公司成立了一个开发联盟。Sun 公司正是 Java 的拥有着，而此时，Netscape 为了搭上媒体热炒 Java 的顺风车，临时把 LiveScript 改名为 JavaScript，所以从本质上来说 JavaScript 和 Java 没什么关系。
+
+1997年，以 JavaScript1.1 为蓝本的建议被提交给了欧洲计算机制造商协会（ECMA，European Computer Manufactures Association），该协会指定39号技术委员会负责将其进行标准化，TC39 经过数月的努力完成了 ECMA-262——定义了一种名为 ECMAScript 的新脚本语言的标准。
+
+现在开发人员常说的 JavaScript 包含三个部分：ECMAScript、浏览器对象模型 (BOM) 和文档对象模型 (DOM)。
+
+## JavaScript 注释
+
+JavaScript 的注释与 JAVA 几乎相同，单行注释以`//`开头，在其后添加注释。多行注释以`/*`开头，以`*/`结尾，在中间添加注释。
+
+```js
+/**************函数名:getAbsolute******************/
+/**************功能:求一个整数的绝对值**************/
+/**************作者:Bruce*************************/
+/**************时间:2018年2月1日*******************/
+function getAbsolute(a) {
+    if(a < 0) {
+      a = -a;//取a的相反数
+    }
+    return a;
+}
+```
+
+养成良好的注释习惯是一个优秀的开发人员的必备素质，注释写的好不好能衡量开发人员的编程水平，一般来说，一个源代码文件需要有一个总体的注释，每一个函数也需要像上面一样的注释，对于难理解的句子，需要单行注释。
+
+## 搭建 JavaScript 的运行环境
+
+JavaScript 运行环境的搭建很简单，下载并安装任意一种浏览器就可以。 以下是运行一个 JavaScript 源代码的全过程：
+
+- 新建一个文本编辑器，打开后输入 JavaScript 源代码，关闭时以 .js 结尾；
+- 在 HTML 中调用刚刚建立的 JS 文件；
+- 以浏览器方式打开 HTML 文件。 用 Windows 系统自带的文本编辑器不是很方便，推荐使用 Sublime，这是一个免费的集成开发环境，具有代码自动补全等很多优点。
+- 也可以使用 JetBrains 家的集成 IDE WebStrom
+
+## JavaScript 输出
+
+JavaScript 的输出有三种方式，如下：
+
+### 第 1 种：弹出对话框模式
+
+通过 `alert()` 函数弹出对话框，这是最常用的方式。在 `script` 标签下，调用 `window.alert()` 函数，括号内填入输出的内容。将下面的代码以文本编辑器编辑后改为 .html 后缀，然后用浏览器打开后即可弹出对话框。
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+        window.alert("Hello,World!");
+        </script>
+    </body>
+</html>
+```
+
+以浏览器方式打开刚刚建立的 HTMl 文件，在浏览器上面可以看到，如图1所示：
+
+![预览大图](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-18:42:32-186147.png)
+
+这里的标签是 HTML 中的内容，关于 JavaScript 和 HTML 的关系，将在下一节介绍。
+
+### 第 2 种：控制台模式
+
+通过 console 输出到控制台，在 script 标签下，调用 console.log() 函数，括号内填入输出的内容，以浏览器打开下面的代码后，按 F12 键即可在浏览器的控制台中实现输出。
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+        console.log("Hello,World!");
+        </script>
+    </body>
+</html>
+```
+
+在浏览器的控制台可以看到如图所示的内容：
+
+![image-20220406184846815](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-18:48:47-image-20220406184846815.png)
+
+除此之外，还有 `console.error()`、`console.warn()` 等方式实现输出，分别表示输出错误，输出警告。
+
+### 第 3 种：页面输出模式
+
+通过 `document.write()` 实现输出到页面。在 `document.write()` 函数的括号中填入输出的内容即可。例子如下：
+
+```html
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+        document.write("Hello,World!");
+        </script>
+    </body>
+</html>
+```
+
+浏览器的页面输出如图所示：
+
+![image-20220406185111830](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-18:51:12-image-20220406185111830.png)
+
+此外，还有其他几种比较少用的输出方式，这里不做介绍，可参考相关文档。
+
+## 练习
+
+- 采用相关知识板块介绍的任意一种方法，实现输出“ Hello,JavaScript! ”。
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+    <!-- 请在此处编写代码 -->
+		<!---------Begin--------->
+		<script>
+			window.alert("Hello,JavaScript!");
+		</script>
+		<!---------End--------->
+	</head>
+	<body>
+	</body>
+</html>
+```
 
