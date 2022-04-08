@@ -156,7 +156,7 @@ HTML，即超文本标记语言，是一种用于编写网页的脚本语言，�
 
 ### 引入外置代码源文件的方式在 HTML 中嵌入 JavaScript
 
-对于较长的 JavaScript 源代码，使用内置代码的方式会使得 HTML 代码过长，不符合程序开发模块化的要义。这时可采用引入外部代码文件的方式，即将所有的 JavaScript 代码放在一个扩展名为 .js 的文档中，然后将 script 标签的 src 属性值设置为待引入的 JavaScript 文件的路径名，再将`<script></script>`放在`<head></head>`或者`<body></body>`之间。如下是一个实例： 我们将 JavaScript 代码放在 myjs.js 中，HTML 代码放在 hello.html 中，两者在同一个目录下，其内容分别是： 
+对于较长的 JavaScript 源代码，使用内置代码的方式会使得 HTML 代码过长，不符合程序开发模块化的要义。这时可采用引入外部代码文件的方式，即将所有的 JavaScript 代码放在一个扩展名为 .js 的文档中，然后将 script 标签的 src 属性值设置为待引入的 JavaScript 文件的路径名，再将`<script></script>`放在`<head></head>`或者`<body></body>`之间。如下是一个实例： 我们将 JavaScript 代码放在 myjs.js 中，HTML 代码放在 hello.html 中，两者在同一个目录下，其内容分别是：
 
 myjs.js 如下：
 
@@ -222,7 +222,7 @@ console.log("在HTML中嵌入JavaScript，这里是JS部分");
   var myvar1;     //申明变量"myvar1"
 	var myvar2,myvar3,myvar4;     //一次申明三个变量
 	```
-	
+
 - 变量的初始化和赋值 既然变量是用来记录数据的，如何给变量赋值呢？简单来说，和数学中一样，用一个等号连接变量名和变量的值即可，对于数字的赋值，直接用等号连接数字和变量，对于字符串的赋值，需要将字符串包含在英文双引号之中。 变量的第一次赋值称之为初始化。 你可能已经想到了，申明和初始化能一起进行吗？答案是肯定的，下面我们给出具体的例子：
 	```js
     var numberVar;     //申明
@@ -238,14 +238,14 @@ console.log("在HTML中嵌入JavaScript，这里是JS部分");
 ### JavaScript 中的变量的作用域
 
 变量的作用范围，或者说作用域，是指变量保持有效的范围，JavaScript 中的变量广义上来说分为局部变量和全局变量。
-	
+
 - 全局变量 在函数外部申明的变量称为全局变量，全局变量的作用自申明的地方起，到整个 JavaScript 文件的末尾（包括这其中的所有函数的内部）。下面是一个例子:
   ```js
   var wholeVar = 12;     //申明并初始化一个全局变量
-  function() {
-  var localVar = 1;     //局部变量
-  console.log(wholeVar+localVar); //输出13
-  }
+  function () {
+      var localVar = 1;     //局部变量
+      console.log(wholeVar+localVar); //输出13
+  };
   console.log(wholeVar);     //输出12
   ```
 
@@ -267,7 +267,7 @@ console.log("在HTML中嵌入JavaScript，这里是JS部分");
 	    console.log(wholeVar);
 	}
 	```
-	
+
 	关于第三行的输出，你的第一反应一定是1吧，正确答案是 undefined。这是因为在函数内部，变量不论在何处申明，都应该看成是在最开始申明（赋值不会看成是在最开始赋值，这就是不输出2的原因），这就是“申明提前”，所以，以上代码等价于：
 	```js
 	var wholeVar = 1;
@@ -278,7 +278,7 @@ console.log("在HTML中嵌入JavaScript，这里是JS部分");
 	    console.log(wholeVar);
 	}
 	```
-	
+
 	> 注意：这个地方不太好理解，所以我们在编程的时候局部变量的名字最好不要和全局变量冲突。
 
 
