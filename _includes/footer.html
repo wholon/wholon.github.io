@@ -22,6 +22,14 @@
         {%- include author-links.html author=_site_author -%}
       </div>
     </div>
+    <!--    在非文章的页脚显示总浏览量    -->
+    {%- if _VALINE_VISITOR -%}
+    <div style="text-align: center" id="/" class="leancloud_visitors" >
+      <em class="post-meta-item-text">总访问量 </em>
+      <i class="leancloud-visitors-count"></i>
+    </div>
+    {%- endif -%}
+
     {%- include snippets/get-locale-string.html key='COPYRIGHT_DATES' -%}
     {%- assign _locale_copyright_dates = __return -%}
     <div class="site-info mt-2">

@@ -142,7 +142,7 @@ comments:
     app_id      : cilQp1y35tu306dtvpUYQdai-gzGzoHsz # LeanCloud App id
     app_key     : jVCnL11R3DvbBvS7T6Vg0lPc # LeanCloud App key
     placeholder : 添加评论 # Prompt information
-    visitor     : true # false (default)
+    visitor     : true # false (default) 改成了仅在主页显示
     meta        : # [tom, and, jack]
 
 
@@ -255,7 +255,7 @@ plugins:
 #     scope:
 #       path: "" # 一个空的字符串代表项目中所有的文件
 #       type: "posts"
-      
+
 #     values:
 #       layout: article
 #       author: "Holon" # 给站点里的所有文章设置作者 Holon

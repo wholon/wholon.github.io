@@ -13,11 +13,11 @@
 
 <div id="vcomments"></div>
 
-{%- if _VALINE_VISITOR -%}    
-<!-- 文章阅读量统计 -->
+<!-- 在 valine 下方显示阅读量统计 -->
+{%- if false -%}
 <span id="{{page.url}}" class="leancloud_visitors" data-flag-title={{page.title}}>
-  <!-- <em class="post-meta-item-text"></em>
-  <i class="leancloud-visitors-count"></i> -->
+  <em class="post-meta-item-text">总浏览量</em>
+  <i class="leancloud-visitors-count"></i>
 </span>
 {%- endif -%}
 
@@ -36,7 +36,7 @@
     {%- assign _page_lang_slice =  page.lang | slice: 0, 2 -%}
     {%- if _page_lang_slice != 'en'  -%}
       _config.lang = 'zh-CN';
-    {%- endif -%}  
+    {%- endif -%}
     {%- if _VALINE_VISITOR -%}
       _config.visitor = 'true';
     {%- endif -%}

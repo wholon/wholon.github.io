@@ -21,8 +21,8 @@
       });
       $('.js-pageview').each(function() {
         var $this = $(this);
-        // var key = $this.attr('data-page-key');
-        var key = {{ page.title }};
+        var key = $this.attr('data-page-key');
+        // var key = {{ page.title }};
         pageview.get(key, function(view) {
           $this.attr('itemprop', 'userInteractionCount').attr('content', view).text(view);
         });

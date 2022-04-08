@@ -5,7 +5,7 @@
 {%- assign _LEANCLOUD_APP_KEY = site.pageview.leancloud.app_key -%}
 {%- assign _LEANCLOUD_APP_CLASS = site.pageview.leancloud.app_class -%}
 
-{%- if 
+{%- if
   _LEANCLOUD_APP_ID and
   _LEANCLOUD_APP_KEY and
   _LEANCLOUD_APP_CLASS -%}
@@ -22,8 +22,8 @@
       });
       var key =   '{{ page.title }}';
       var title = {{ page.title | jsonify }};
-      pageview.increase(key, title, function(view) {
-        $("[data-page-key='{{ page.key }}']").text(view);
+      pageview.increase(key, key, function(view) {
+        $("[data-page-key='{{ page.title }}']").text(view);
       });
     });
   </script>
