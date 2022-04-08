@@ -14,7 +14,10 @@
 <div id="vcomments"></div>
 
 {%- if _VALINE_VISITOR -%}    
-<span id="{{page.url}}" class="leancloud-visitors" data-flag-title={{page.title}}>
+<!-- 文章阅读量统计 -->
+<span id="{{page.url}}" class="leancloud_visitors" data-flag-title={{page.title}}>
+  <!-- <em class="post-meta-item-text"></em>
+  <i class="leancloud-visitors-count"></i> -->
 </span>
 {%- endif -%}
 
@@ -24,14 +27,15 @@
       el: '#vcomments',
       appId:  '{{ _VALINE_APP_ID }}',
       appKey: '{{ _VALINE_APP_KEY }}',
-      verify: true,
+      verify: false,
+      avatar: 'wavatar',
     };
     {%- if _VALINE_PLACEHOLDER -%}
       _config.placeholder = '{{ _VALINE_PLACEHOLDER }}';
     {%- endif -%}
     {%- assign _page_lang_slice =  page.lang | slice: 0, 2 -%}
-    {%- if _page_lang_slice != 'zh'  -%}
-      _config.lang = 'en';
+    {%- if _page_lang_slice != 'en'  -%}
+      _config.lang = 'zh-CN';
     {%- endif -%}  
     {%- if _VALINE_VISITOR -%}
       _config.visitor = 'true';

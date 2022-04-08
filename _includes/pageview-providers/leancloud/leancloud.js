@@ -31,8 +31,11 @@
     function insert(key, title) {
       var Blog = AV.Object.extend(appClass);
       var blog = new Blog();
+      
       blog.set('title', title);
-      blog.set('key', key);
+      // 将插入的 key 设置为 title
+      // blog.set('key', key);
+      blog.set('key', title);
       blog.set('views', 0);
       return blog.save();
     }

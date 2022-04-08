@@ -1,5 +1,5 @@
 ---
-key: 2022-04-07-JavaScript运算符
+key: JavaScript运算符
 ---
 
 ## 算术运算符

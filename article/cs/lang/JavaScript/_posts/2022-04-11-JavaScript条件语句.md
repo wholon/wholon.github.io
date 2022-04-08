@@ -1,5 +1,5 @@
 ---
-key: 2022-04-08-JavaScript条件语句
+key: JavaScript条件语句
 ---
 
 ## if-else类型

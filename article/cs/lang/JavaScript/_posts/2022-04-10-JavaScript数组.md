@@ -1,5 +1,5 @@
 ---
-key: 2022-04-08-JavaScript数组
+key: JavaScript数组
 ---
 
 ## 数组的创建、读写和长度

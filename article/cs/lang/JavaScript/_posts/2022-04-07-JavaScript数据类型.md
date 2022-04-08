@@ -1,5 +1,5 @@
 ---
-key: 2022-04-06-JavaScript数据类型
+key: JavaScript数据类型
 ---
 
 ## JavaScript 数据类型介绍

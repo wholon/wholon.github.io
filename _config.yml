@@ -39,7 +39,7 @@ author:
   type      : # "person" (default), "organization"
   name      : Holon
   url       : https://holon.wang
-  avatar    : https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/A9BDE2A2-9971-43E3-9702-7C733E48E00D.jpeg # path or url of avatar image (square)
+  avatar    : https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-08-22:36:50-apple-touch-icon.png # path or url of avatar image (square)
   bio       : 念念不忘，必有回响
   email     : holon.cn@gmail.com
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
@@ -120,7 +120,7 @@ sharing:
 ## => Comments
 ##############################
 comments:
-  provider: gitalk # false (default), "disqus", "gitalk", "valine", "custom"
+  provider: valine # false (default), "disqus", "gitalk", "valine", "custom"
 
   ## Disqus
   disqus:
@@ -139,11 +139,11 @@ comments:
   ## Valine
   # please refer to https://valine.js.org/en/ for more info.
   valine:
-    app_id      : # LeanCloud App id
-    app_key     : # LeanCloud App key
-    placeholder : # Prompt information
-    visitor     : # false (default)
-    meta        : # "[nick, mail, link]" (default) nickname, E-mail, Personal-site
+    app_id      : cilQp1y35tu306dtvpUYQdai-gzGzoHsz # LeanCloud App id
+    app_key     : jVCnL11R3DvbBvS7T6Vg0lPc # LeanCloud App key
+    placeholder : 添加评论 # Prompt information
+    visitor     : true # false (default)
+    meta        : # [tom, and, jack]
 
 
 ## => Pageview
@@ -220,14 +220,15 @@ defaults:
       type: posts
     values:
       layout: article
-      sharing: true
+      # sharing: true
       license: true
       author: Holon
       aside:
         toc: true
-      show_edit_on_github: true
-      show_subscribe: true
+      # show_edit_on_github: true
+      # show_subscribe: true
       pageview: true
+
 
 
 ## => Plugins
