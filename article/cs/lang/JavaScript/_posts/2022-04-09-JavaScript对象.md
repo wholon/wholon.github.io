@@ -1,7 +1,3 @@
----
-
----
-
 ## 对象的创建
 
 `JavaScript`是一种基于对象`（Object-based）`的语言，在`JavaScript`中，对象的创建和`Java`不同，既有`Java`使用的构造函数方式，也有其他方法。

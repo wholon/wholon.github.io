@@ -1,7 +1,3 @@
----
-key: JavaScript字符串
----
-
 ## 查找字符串的位置
 
 ### indexOf()

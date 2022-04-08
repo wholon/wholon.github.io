@@ -1,7 +1,3 @@
----
-key: JavaScript简介
----
-
 ## JavaScript语言简介
 
 JavaScript 诞生于1995年。在那个时代用户提交一个表单需要获取服务器端的反馈，这个时间大概十几秒，如果能在客户端完成一些基本的验证绝对是很大的进步。当时如日中天的 Netscape 公司，决定着手开发一种客户端语言解决简单的表单验证。就职于 Netscape 公司的布兰登·艾奇开始着手计划将1995年2月发布的 LiveScript 同时在浏览器和服务器中使用。Netscape 与 Sun 公司成立了一个开发联盟。Sun 公司正是 Java 的拥有着，而此时，Netscape 为了搭上媒体热炒 Java 的顺风车，临时把 LiveScript 改名为 JavaScript，所以从本质上来说 JavaScript 和 Java 没什么关系。
