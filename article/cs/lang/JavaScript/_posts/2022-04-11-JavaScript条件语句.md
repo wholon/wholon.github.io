@@ -9,7 +9,7 @@
 一段完整的`JavaScript`语句相当于一条主干路，从第一句开始执行直到最后一句。而`if`语句是一条连接在干路上的支路，满足某个条件时程序进入支路中执行，执行完后回到干路。如下所示：
 
 ```mermaid
-graph TB;
+graph LR;
 	A{条件成立?};
 	B[执行 if 内语句];
 	C[执行其他语句];
@@ -49,7 +49,7 @@ function abs(a) {
 `if-else`相当于干路分成了两条支路，程序执行遇到分支的时候，必须且只能选择其中一条继续执行，结束后回到干路。如下：
 
 ```mermaid
-graph TB;
+graph LR;
 	A[其他语句];
 	B{条件成立};
 	C[执行语句1];
@@ -188,14 +188,10 @@ console.log(class3 === class1);
    ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:17:36-189268.png)  
 
 ```mermaid
-graph TB
+flowchart LR
 	subgraph case
 		direction LR
-        A{条件1?}
-        B{条件2?}
-        C{条件n?}
-        A--否-->B
-		B-.否.->C
+        A{条件1?}--否-->B{条件2?}-.否.->C{条件n?}
 	end
 	subgraph 语句
 		direction LR
@@ -335,6 +331,15 @@ function mainJs(a) {
 判断闰年的过程如下：  
 
    ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:22:22-191800.png)  
+
+```mermaid
+graph LR
+输入年份-->B{被4整除且不能被100整除 或者 被400整除}
+B--是-->输出闰年
+B--否-->输出平年
+```
+
+​	
 
 效果如下：
 当`year`等于`2000`，该函数返回“`2000`年是闰年”。
