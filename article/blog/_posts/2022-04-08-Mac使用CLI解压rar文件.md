@@ -22,7 +22,7 @@ Mac 端自带的解压软件已经能够满足绝大多数需求，但对于 rar
 
    2. 新建服务，选择左侧的“实用工具”，双击它下面的“运行shell脚本”选项。右侧会出现如下图所示。
 
-      ![preview](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-08-18:01:30-v2-3c79fa750a390e88d3de807244abdcb8_r.jpg)
+      ![preview](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204122308453.jpg)
 
    3. shell代码为
 

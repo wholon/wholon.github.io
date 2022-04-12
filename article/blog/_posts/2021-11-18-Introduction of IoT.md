@@ -26,7 +26,7 @@ body fat scale
 
 xiao ai stereo
 
-<img src="https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/IMG_1EB420A0F5D6-1.jpeg" alt="IMG_1EB420A0F5D6-1" style="zoom: 25%;" />
+<img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204122308194.jpeg" alt="IMG_1EB420A0F5D6-1" style="zoom: 25%;" />
 
 
 
@@ -34,7 +34,7 @@ I ever wrote:
 
 《Research on APP Mobile Management Technology of Nanjing Tangshan Hot Spring》
 
-<img src="https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/%E5%9B%BE%E7%89%87%201.png" alt="图片 1" style="zoom: 67%;" />
+<img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204122308545.png" alt="图片 1" style="zoom: 67%;" />
 
 At the edge of the system:
 
