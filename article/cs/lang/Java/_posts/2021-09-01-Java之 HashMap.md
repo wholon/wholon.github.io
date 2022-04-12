@@ -13,21 +13,25 @@
 
 ## 散列函数
 若在建立记录表的时候，确定记录的key与其存储地址之间的关系f，即使key与记录的存放地址H相对应：
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/9dbb1f36e448427c80622e02e191fff6.png)
-记录按key存放。当要查找key=k的记录时，通过关系f就可得到相应记录的地址而获取记录，从而省去key的比较过程。这个关系f就是所谓的Hash函数（或称散列函数），记为H(key)。它实际上是一个地址映射函数，其自变量为记录的key，函数值为记录的存储地址（或称Hash地址）。
+
+![在这里插入图片描述](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121751763.png)
+
+记录按key存放。当要查找key=k的记录时，通过关系f就可得到相应记录的地址而获取记录，从而省去key的比较过程。这个关系f就是所谓的Hash函数（或称散列函数），记为H(key)。它实际上是一个地址映射函数，其自变量为记录的key，函数值为记录的存储地址（或称Hash地址)。
 
 ## 散列存储
 散列存储的基本思想：
 以关键字的值为自变量，通过一定的函数关系（散列函数，或称Hash函数），以计算得到的函数值作为结点的存储地址（编号，即数组的下标），将结点存入相应的存储单元里去。 
 
-![散列存储过程示例](https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASG9sb25f,size_20,color_FFFFFF,t_70,g_se,x_16-20211105002314866.png)
+![散列存储过程示例](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121752678.png)
 ## 冲突、同义词的概念
 散列存储中经常会出现对于两个不同关键字xi，xj，却有H(xi)=H(xj)，即对于不同的关键字具有相同的存放地址，这种现象称为冲突或碰撞。碰撞的两个（或多个）关键字称为同义词（相对于函数H而言）。 
 
 ## 装填因子
 又称“负载因子”反映了散列表的装填程度（饱和程度）其定义为：
-![在这里插入图片描述](https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/245a19c182a84e7d812b85ea79212428.png)
+
+![在这里插入图片描述](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121752121.png)
 ![在这里插入图片描述](https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/dddae6c12bea4a4aa72e656f2a69b337.png)
+
 通常a<1，负载因子越接近1.0，内存的使用效率越高，元素的寻找时间越长，同样，负载因子越接近0.0，元素的寻找时间越短，但内存的浪费越大。
 
 ## 散列函数的构造
