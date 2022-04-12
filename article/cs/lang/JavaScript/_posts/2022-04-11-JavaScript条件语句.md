@@ -187,6 +187,31 @@ console.log(class3 === class1);
 
    ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:17:36-189268.png)  
 
+```mermaid
+graph TB;
+	subgraph case;
+	A{条件1?}
+	B{条件2?}
+	C{条件n?}
+	end;
+	subgraph 语句;
+	A1[语句1]
+	B1[语句2]
+    C1[语句3]
+	D[...]
+	end;
+	A--否-->B;
+	B-.否.->C;
+	A--是-->A1;
+	B--是-->B1;
+	C--是-->C1;
+	A1-->D;
+	B1-->D;
+	C1-->D;
+```
+
+
+
 `switch`语句的语法如下：  
 
 ```js
