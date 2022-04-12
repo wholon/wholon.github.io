@@ -8,8 +8,6 @@
 
 一段完整的`JavaScript`语句相当于一条主干路，从第一句开始执行直到最后一句。而`if`语句是一条连接在干路上的支路，满足某个条件时程序进入支路中执行，执行完后回到干路。如下所示：
 
-   ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121821864.png)  
-
 ```mermaid
 graph TB;
 	A{条件成立?}
