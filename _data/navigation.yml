@@ -25,7 +25,7 @@ header:
       zh-Hant :   人工智能
       # @end locale config
     url: /assets/category/ai/index.html
-  
+
   - titles:
     # @start locale config
       en      :   Algorithms
@@ -67,9 +67,8 @@ header:
 # 侧边导航栏
 CS:
   - title:      编程语言
+    url:        /assets/category/cs/lang/index.html
     children:
-      - title:  汇总
-        url:    /assets/category/cs/lang/index.html
       - title:  C/C++
         url:    /assets/category/cs/lang/cpp.html
       - title:  Java
@@ -78,33 +77,28 @@ CS:
         url:    /assets/category/cs/lang/javascript.html
       - title:  HTML
         url:    /assets/category/cs/lang/html.html
-      
+
   - title:      操作系统
+    url:        /assets/category/cs/os/index.html
     children:
-      - title:  汇总
-        url:    /assets/category/cs/os/index.html
       - title:  Linux
         url:    /assets/category/cs/os/linux.html
       - title:  Mac
         url:    /assets/category/cs/os/mac.html
-  
+
   - title:      计算机网络
+    url:        /assets/category/cs/network/index.html
     children:
-      - title:  汇总
-        url:    /assets/category/cs/network/index.html
+
 
   - title:      软件工程
+    url:        /assets/category/cs/se/index.html
     children:
-      - title:  汇总
-        url:    /assets/category/cs/se/index.html
       - title:  设计模式
         url:    /assets/category/cs/se/designpattern.html
       - title:  数据库
         url:    /assets/category/cs/se/database.html
-  
+
   - title:      开发工具
+    url:        /assets/category/cs/tool/index.html
     children:
-      - title:  汇总
-        url:    /assets/category/cs/tool/index.html
-  
-  
