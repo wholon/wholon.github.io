@@ -36,7 +36,7 @@ timezone: Asia/Shanghai # see https://en.wikipedia.org/wiki/List_of_tz_database_
 ## => Author and Social
 ##############################
 author:
-  type      : # "person" (default), "organization"
+  type      : person # "person" (default), "organization"
   name      : Holon
   url       : https://holon.wang
   avatar    : https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-08-22:36:50-apple-touch-icon.png # path or url of avatar image (square)
