@@ -3,17 +3,13 @@ layout: articles
 <!-- sidebar:
     nav: CS -->
 title: 人工智能
-
 ---
+{{page.url}}
 
 <ul>
-    {% for cat in site.categories %}
-        {% if cat[0] == "ai" %}
-        {% for post in cat[1] %}
+    {% for post in site.categories.ai %}
         {{post.date | date:"%Y/%m/%d"}}
         <font size="3"><a href={{post.url}} title={{ cat[0] }}>{{post.title}}</a></font>
         <br>
-        {% endfor %}
-        {% endif %}
     {% endfor %}
 </ul>

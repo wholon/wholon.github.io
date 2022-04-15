@@ -1,18 +1,13 @@
 ---
 layout: articles
 <!-- sidebar:
-    nav: ALGORITHMS -->
-title: 算法
+    nav: CS -->
+title: 碎碎念
 ---
-
 <ul>
-    {% for cat in site.categories %}
-        {% if cat[0] == "algorithms" %}
-        {% for post in cat[1] %}
+    {% for post in site.categories.blog %}
         {{post.date | date:"%Y/%m/%d"}}
         <font size="3"><a href={{post.url}} title={{ cat[0] }}>{{post.title}}</a></font>
         <br>
-        {% endfor %}
-        {% endif %}
     {% endfor %}
 </ul>
