@@ -55,11 +55,11 @@ cs:
     url:        /article/cs/lang/
     children:
       - title:  C/C++
-        url:    /article/cs/lang/C&C++/
+        url:    /article/cs/lang/c&c++/
       - title:  Java
-        url:    /article/cs/lang/Java/
+        url:    /article/cs/lang/java/
       - title:  JavaScript
-        url:    /article/cs/lang/JavaScript/
+        url:    /article/cs/lang/javascript/
       - title:  HTML
         url:    /article/cs/lang/html/
 

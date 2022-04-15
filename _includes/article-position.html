@@ -6,11 +6,11 @@
 
 {% if _show_article_position %}
   <!-- 获取页面网址 -->
-  {%- assign _page_url = include.url -%}
-  {% assign _page_url_array = _page_url | split: "/" %}
+  {%- assign _article_url = include.article_url -%}
+
   {% comment %}获取导航栏分类{% endcomment %}
   {% for _head_cat in site.data.navigation.header %}
-    {% if _page_url contains _head_cat.url %}
+    {% if _article_url contains _head_cat.url %}
       {% assign _cat0 = _head_cat.titles.zh %}
       {%- include snippets/get-nav-url.html path=_head_cat.url -%}
       {%- assign _cat0_url = __return -%}
@@ -18,11 +18,11 @@
   {% endfor %}
 
   <!-- 获取当前侧边栏分类 -->
-  {% assign _side_cats = page.url | split: "/" %}
+  {% assign _side_cats = _article_url | split: "/" %}
   {% assign _side_cat = _side_cats[2] %}
   {% for _side_bar in site.data.navigation[_side_cat] %}
     {% comment %}获取二级分类{% endcomment %}
-    {% if _page_url contains _side_bar.url %}
+    {% if _article_url contains _side_bar.url %}
       {% assign _cat1 = _side_bar.title %}
       {%- include snippets/get-nav-url.html path=_side_bar.url -%}
       {%- assign _cat1_url = __return -%}
@@ -30,10 +30,10 @@
 
     {% comment %}获取三级分类{% endcomment %}
     {% if _side_bar.children %}
-      {% for _sub_side_bar in _side_bar.children %}
-        {% if _page_url contains _sub_side_bar.url %}
-          {% assign _cat2 = _sub_side_bar.title %}
-          {%- include snippets/get-nav-url.html path=_sub_side_bar.url -%}
+      {% for _side_bar_child in _side_bar.children %}
+        {% if _article_url contains _side_bar_child.url %}
+          {% assign _cat2 = _side_bar_child.title %}
+          {%- include snippets/get-nav-url.html path=_side_bar_child.url -%}
           {% assign _cat2_url = __return %}
         {% endif %}
       {% endfor %}
@@ -42,7 +42,7 @@
 
   <ul class="left-clo menu">
     {% if _cat0 %}
-      <li>当前分类：</li>
+      <li>位置：</li>
       <li>
         <a class="button button--secondary button--pill button--sm"
            href="{{ _cat0_url }}">{{ _cat0 }}</a>
@@ -64,6 +64,10 @@
            href="{{ _cat2_url }}">{{ _cat2 }}</a>
       </li>
     {% endif %}
-
   </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  {% assign _cat0 = false %}
+  {% assign _cat1 = false %}
+  {% assign _cat2 = false %}
 {% endif %}
