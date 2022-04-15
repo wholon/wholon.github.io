@@ -14,7 +14,6 @@ default:
   toc:
     selectors: 'h1,h2,h3'
   sources: bootcdn
-
   page:
     mode: normal
     type: webpage
@@ -30,7 +29,7 @@ default:
     show_edit_on_github: false
     show_date: true
     show_tags: true
-    show_author_profile: false
+    show_author_profile: true
     show_subscribe: false
     full_width: false
     sharing: false
@@ -38,6 +37,7 @@ default:
     license: false
     pageview: false
     search: default
+    show_article_position: true # 展示文章分类 配置于 include/article-position.html
 
 sources:
   bootcdn:
@@ -63,6 +63,6 @@ sources:
       css: 'https://unpkg.com/gitalk@1.2.2/dist/gitalk.css'
     valine: 'https//unpkg.com/valine/dist/Valine.min.js'
     mathjax: 'https://unpkg.com/mathjax@2.7.4/unpacked/MathJax.js?config=TeX-MML-AM_CHTML'
-    
+
     # mermaid: 'https://unpkg.com/mermaid@8.0.0-rc.8/dist/mermaid.min.js'
     mermaid: 'https://unpkg.com/mermaid@9.0.0/dist/mermaid.js'

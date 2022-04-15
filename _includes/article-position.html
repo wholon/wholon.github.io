@@ -1,0 +1,69 @@
+<!-- 获取设置项：是否开启显示文章位置 -->
+{%- include snippets/assign.html
+  target=site.data.variables.default.page.show_article_position
+  source0=layout.show_article_position source1=include.article.show_article_position -%}
+{%- assign _show_article_position = __return -%}
+
+{% if _show_article_position %}
+  <!-- 获取页面网址 -->
+  {%- assign _page_url = include.url -%}
+  {% assign _page_url_array = _page_url | split: "/" %}
+  {% comment %}获取导航栏分类{% endcomment %}
+  {% for _head_cat in site.data.navigation.header %}
+    {% if _page_url contains _head_cat.url %}
+      {% assign _cat0 = _head_cat.titles.zh %}
+      {%- include snippets/get-nav-url.html path=_head_cat.url -%}
+      {%- assign _cat0_url = __return -%}
+    {% endif %}
+  {% endfor %}
+
+  <!-- 获取当前侧边栏分类 -->
+  {% assign _side_cats = page.url | split: "/" %}
+  {% assign _side_cat = _side_cats[2] %}
+  {% for _side_bar in site.data.navigation[_side_cat] %}
+    {% comment %}获取二级分类{% endcomment %}
+    {% if _page_url contains _side_bar.url %}
+      {% assign _cat1 = _side_bar.title %}
+      {%- include snippets/get-nav-url.html path=_side_bar.url -%}
+      {%- assign _cat1_url = __return -%}
+    {% endif %}
+
+    {% comment %}获取三级分类{% endcomment %}
+    {% if _side_bar.children %}
+      {% for _sub_side_bar in _side_bar.children %}
+        {% if _page_url contains _sub_side_bar.url %}
+          {% assign _cat2 = _sub_side_bar.title %}
+          {%- include snippets/get-nav-url.html path=_sub_side_bar.url -%}
+          {% assign _cat2_url = __return %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+  <ul class="left-clo menu">
+    {% if _cat0 %}
+      <li>当前分类：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="{{ _cat0_url }}">{{ _cat0 }}</a>
+      </li>
+    {% endif %}
+
+    {% if _cat1 %}
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="{{ _cat1_url }}">{{ _cat1 }}</a>
+      </li>
+    {% endif %}
+
+    {% if _cat2 %}
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="{{ _cat2_url }}">{{ _cat2 }}</a>
+      </li>
+    {% endif %}
+
+  </ul>
+{% endif %}

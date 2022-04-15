@@ -36,11 +36,11 @@ timezone: Asia/Shanghai # see https://en.wikipedia.org/wiki/List_of_tz_database_
 ## => Author and Social
 ##############################
 author:
-  type      : person # "person" (default), "organization"
+  type      : Person # "person" (default), "organization"
   name      : Holon
   url       : https://holon.wang
-  avatar    : https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-08-22:36:50-apple-touch-icon.png # path or url of avatar image (square)
-  bio       : 念念不忘，必有回响
+  avatar    : https://holon-image.oss-cn-beijing.aliyuncs.com/20220415234156pm7cyt.png # path or url of avatar image (square)
+  bio       : Keep it simple, Stupid
   email     : holon.cn@gmail.com
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
   twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name

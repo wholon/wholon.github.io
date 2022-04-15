@@ -1,0 +1,15 @@
+{% assign cat = page.url | split:"\\" | last %}
+{{ page.url | split:"\\" | last }}
+{{ site.categories.cat }}
+{{ cat }}
+{% if condition %}
+
+{% endif %}
+{% assign nav = value %}
+
+{% for headenv in site.data.navigation.header %}
+  {% if headenv.url == page.url %}
+    {% assign page.title = headenv.titles.zh %}
+  {% endif %}
+{% endfor %}
+

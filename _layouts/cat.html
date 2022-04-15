@@ -1,0 +1,49 @@
+---
+layout: articles
+sidebar:
+  nav: cs
+---
+<!-- 获取当前侧边栏分类 -->
+{% assign _side_cats = page.url | split:"/" %}
+{% assign _side_cat = _side_cats[2] %}
+
+<!-- 插入侧边导航栏 -->
+
+<!-- 获取当前导航页的标题 -->
+{% for _head_cat in site.data.navigation.header %}
+  {% if _head_cat.url == page.url %}
+    {% assign _article_title = _head_cat.titles.zh %}
+    <header><h1>{{ _article_title }}</h1></header>
+  {% endif %}
+{% endfor %}
+
+<!-- 获取边栏标题 -->
+{% for _side_bar in site.data.navigation[_side_cat] %}
+<!-- 一级标题 -->
+  {% if _side_bar.url == page.url %}
+  {% assign _article_title = _side_bar.title %}
+  <header><h1>{{ _article_title }}</h1></header>
+  {% endif %}
+
+<!-- 二级标题 -->
+  {% if _side_bar.children %}
+    {% for _sub_side_bar in _side_bar.children %}
+      {% if _sub_side_bar.url == page.url %}
+        {% assign _article_title = _sub_side_bar.title %}
+        <header><h1>{{ _article_title }}</h1></header>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+
+
+<!-- 按照链接最后一个文件分类 -->
+{% assign last_cat = page.url | split:"/" | last %}
+<ul>
+  {% for post in site.categories[last_cat] %}
+  {{post.date | date:"%Y/%m/%d"}}
+  <font size="3"><a href={{post.url}} title={{ cat[0] }}>{{post.title}}</a></font>
+  <br>
+  {% endfor %}
+</ul>

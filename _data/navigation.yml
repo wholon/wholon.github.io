@@ -39,18 +39,18 @@ header:
       en      :   Archive
       zh      :   归档
       # @end locale config
-    url: /archive.html
+    url: /archive
 
   - titles:
       # @start locale config
       en      :   About
       zh      :   关于
       # @end locale config
-    url: /about.html
+    url: /about
 
 
 # 侧边导航栏
-CS:
+cs:
   - title:      编程语言
     url:        /article/cs/lang/
     children:
@@ -67,9 +67,9 @@ CS:
     url:        /article/cs/os/
     children:
       - title:  Linux
-        url:    /article/cs/os/linux.html
+        url:    /article/cs/os/linux/
       - title:  Mac
-        url:    /article/cs/os/mac.html
+        url:    /article/cs/os/mac/
 
   - title:      计算机网络
     url:        /article/cs/network/
@@ -80,9 +80,9 @@ CS:
     url:        /article/cs/se/
     children:
       - title:  设计模式
-        url:    /article/cs/se/designpattern.html
+        url:    /article/cs/se/designpattern/
       - title:  数据库
-        url:    /article/cs/se/database.html
+        url:    /article/cs/se/database/
 
   - title:      开发工具
     url:        /article/cs/tool/

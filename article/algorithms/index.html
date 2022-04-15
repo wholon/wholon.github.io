@@ -1,14 +1,5 @@
 ---
-layout: articles
-<!-- sidebar:
-    nav: ALGORITHMS -->
-title: 算法
+layout: cat
+sidebar:
+    nav: algorithms
 ---
-
-<ul>
-    {% for post in site.categories.algorithms %}
-        {{post.date | date:"%Y/%m/%d"}}
-        <font size="3"><a href={{post.url}} title={{ cat[0] }}>{{post.title}}</a></font>
-        <br>
-    {% endfor %}
-</ul>

@@ -1,15 +1,5 @@
 ---
-layout: articles
-<!-- sidebar:
-    nav: CS -->
-title: 人工智能
+layout: cat
+sidebar:
+    nav: ai
 ---
-{{page.url}}
-
-<ul>
-    {% for post in site.categories.ai %}
-        {{post.date | date:"%Y/%m/%d"}}
-        <font size="3"><a href={{post.url}} title={{ cat[0] }}>{{post.title}}</a></font>
-        <br>
-    {% endfor %}
-</ul>

@@ -30,6 +30,8 @@
   {%- include article/footer/custom.html -%}
 
   {%- if _show_author_profile -%}
+<!--  在页脚作者信息上方添加 联系我 标题 -->
+    <h2>联系我</h2>
     {%- if page.author -%}
       {%- assign _author = site.data.authors[page.author] -%}
     {%- else -%}

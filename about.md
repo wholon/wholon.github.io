@@ -22,4 +22,3 @@ show_title: false
 
 
 ## 联系我
-holon.cn@gmail.com

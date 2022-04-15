@@ -37,8 +37,8 @@
 
   {%- if _show_tags or _show_author or _show_date or _pageview -%}
     <div class="article__info clearfix">
+<!--      展示标签 -->
       {%- if _show_tags -%}
-
         <ul class="left-col menu">
           {%- assign _tag_path = _paths_archive | append: '?tag=' -%}
           {%- include snippets/prepend-baseurl.html path=_tag_path -%}
@@ -53,6 +53,11 @@
           {%- endfor -%}
         </ul>
       {%- endif -%}
+      <!--展示文章分类-->
+
+      {% include article-position.html url = page.url %}
+
+
 
       {%- if _show_author or _show_date or _pageview -%}
         <ul class="right-col menu">
