@@ -20,15 +20,17 @@
         appKey:   '{{ _LEANCLOUD_APP_KEY }}',
         appClass: '{{ _LEANCLOUD_APP_CLASS }}'
       });
-      var key =   '{{ page.title }}';
-      var title = {{ page.title | jsonify }};
-      pageview.increase(key, key, function(view) {
-        $("[data-page-key='{{ page.title }}']").text(view);
-      });
-    //  总浏览量增加
+      //  总浏览量增加
       pageview.increase("网站浏览量", "网站浏览量", function(view) {
         $("#site-view").text(view);
       });
+      // 文章浏览量增加
+      var key =   '{{ page.title }}';
+      // var title = {{ page.title | jsonify }};
+      pageview.increase(key, key, function(view) {
+        $("[data-page-key='{{ page.title }}']").text(view);
+      });
+
     });
   </script>
 
