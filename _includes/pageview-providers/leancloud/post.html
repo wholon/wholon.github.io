@@ -25,6 +25,11 @@
       pageview.increase(key, key, function(view) {
         $("[data-page-key='{{ page.title }}']").text(view);
       });
+    //  总浏览量增加
+      pageview.increase("网站浏览量", "网站浏览量", function(view) {
+        $("#site-view").text(view);
+      });
+
     });
   </script>
 

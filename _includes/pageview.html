@@ -2,8 +2,7 @@
 {%- assign _pageview = __return -%}
 
 
-{%- if page.layout == "home" -%}
-
+{% if page %}
   {%- if jekyll.environment != "development" -%}
     {%- if site.pageview.provider == 'leancloud' -%}
       {%- include pageview-providers/leancloud/home.html -%}
@@ -11,19 +10,33 @@
       {%- include pageview-providers/custom/home.html -%}
     {%- endif -%}
   {%- endif -%}
+{% endif %}
 
 
-{%- elsif page.layout == "article" -%}
-  {%- if _pageview -%}
-
-    {%- if jekyll.environment != "development" and
-      jekyll.environment != "beta" -%}
-      {%- if site.pageview.provider == 'leancloud' -%}
-        {%- include pageview-providers/leancloud/post.html -%}
-      {%- elsif site.pageview.provider == 'custom' -%}
-        {%- include pageview-providers/custom/post.html -%}
-      {%- endif -%}
-    {%- endif -%}
-
-  {%- endif -%}
-{%- endif -%}
+<!--{%- if page.layout == "home" or page.layout == "catalogue" -%}-->
+<!--  {%- if jekyll.environment != "development" -%}-->
+<!--    {%- if site.pageview.provider == 'leancloud' -%}-->
+<!--      {%- include pageview-providers/leancloud/home.html -%}-->
+<!--    {%- elsif site.pageview.provider == 'custom' -%}-->
+<!--      {%- include pageview-providers/custom/home.html -%}-->
+<!--    {%- endif -%}-->
+<!--  {%- endif -%}-->
+<!--{%- elsif page.layout == "article" -%}-->
+<!--  {%- if _pageview -%}-->
+<!--    {%- if jekyll.environment != "development" and jekyll.environment != "beta" -%}-->
+<!--      {%- if site.pageview.provider == 'leancloud' -%}-->
+<!--        {%- include pageview-providers/leancloud/post.html -%}-->
+<!--      {%- elsif site.pageview.provider == 'custom' -%}-->
+<!--        {%- include pageview-providers/custom/post.html -%}-->
+<!--      {%- endif -%}-->
+<!--    {%- endif -%}-->
+<!--  {%- endif -%}-->
+<!--{% elsif page %}-->
+<!--  {%- if jekyll.environment != "development" -%}-->
+<!--    {%- if site.pageview.provider == 'leancloud' -%}-->
+<!--      {%- include pageview-providers/leancloud/home.html -%}-->
+<!--    {%- elsif site.pageview.provider == 'custom' -%}-->
+<!--      {%- include pageview-providers/custom/home.html -%}-->
+<!--    {%- endif -%}-->
+<!--  {%- endif -%}-->
+<!--{%- endif -%}-->

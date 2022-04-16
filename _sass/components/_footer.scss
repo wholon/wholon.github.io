@@ -31,3 +31,14 @@
     text-align: center;
   }
 }
+
+// .footer__site-view {
+//   padding: map-get($spacers, 2) map-get($spacers, 3);
+//   background-color: rgba($green, .1);
+//   border: 1px solid $green;
+//   border-radius: map-get($base, border-radius);
+// }
+.footer__site-view {
+  color: $text-color-function;
+  background-color: $green;
+}

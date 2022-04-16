@@ -19,14 +19,21 @@
         appKey:   '{{ _LEANCLOUD_APP_KEY }}',
         appClass: '{{ _LEANCLOUD_APP_CLASS }}'
       });
+      // 总浏览量
+      pageview.increase("网站浏览量", "网站浏览量", function(view) {
+        $("#site-view").text(view);
+      });
+      // var key = {{ page.title }};
       $('.js-pageview').each(function() {
         var $this = $(this);
         var key = $this.attr('data-page-key');
-        // var key = {{ page.title }};
         pageview.get(key, function(view) {
           $this.attr('itemprop', 'userInteractionCount').attr('content', view).text(view);
         });
       });
+
+
+
     });
   </script>
 

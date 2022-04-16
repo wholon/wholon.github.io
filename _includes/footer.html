@@ -22,13 +22,19 @@
         {%- include author-links.html author=_site_author -%}
       </div>
     </div>
-    <!--    在非文章的页脚显示总浏览量    -->
-    {%- if _VALINE_VISITOR -%}
+    <!--    在非文章的页脚显示总浏览量 使用VALINE统计    -->
+    {%- if false -%}
     <div style="text-align: center" id="/" class="leancloud_visitors" >
       <em class="post-meta-item-text">总访问量 </em>
       <i class="leancloud-visitors-count"></i>
     </div>
     {%- endif -%}
+
+    <!--    在网站底部显示总访问量 使用 leanCLoud统计， key: 网站浏览量  -->
+    <div class="article__content code.info" style="text-align: center">
+      <code class="language-plaintext warning highlighter-rouge">总点击量</code>
+      <code id="site-view" class="js-pageview language-plaintext success highlighter-rouge" data-page-key="网站浏览量">0</code>
+    </div>
 
     {%- include snippets/get-locale-string.html key='COPYRIGHT_DATES' -%}
     {%- assign _locale_copyright_dates = __return -%}
