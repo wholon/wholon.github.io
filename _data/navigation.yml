@@ -62,6 +62,8 @@ cs:
         url:    /article/cs/lang/javascript/
       - title:  HTML
         url:    /article/cs/lang/html/
+      - title:  CSS
+        url:    /article/cs/lang/css/
 
   - title:      操作系统
     url:        /article/cs/os/
