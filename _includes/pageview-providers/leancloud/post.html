@@ -26,7 +26,7 @@
       });
       // 文章浏览量增加
       var key =   '{{ page.title }}';
-      // var title = {{ page.title | jsonify }};
+      var title = {{ page.title | jsonify }};
       pageview.increase(key, key, function(view) {
         $("[data-page-key='{{ page.title }}']").text(view);
       });
