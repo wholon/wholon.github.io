@@ -1,45 +1,131 @@
 ---
-layout: catalogue
+layout: articles
 sidebar:
     nav: cs
 ---
-
+<!-- 这个文件是为了动态生成文章分类html 而书写的
+     可能达到的效果是 https://{{baseurl}}/category/?category=cs 可以获得所有属于 cs
+     的文章。好处是不用在每一个 _posts 的同级目录添加 index.html 标志文件。
+     但是写到一半发现如果导航页面的地址变动，将失去文章位置的信息。文章位置信息是通过文章地址
+     和导航地址比对确定的。
+     所以得不偿失，故取消这种写法。
+     目前，该文件已经能够通过 https://{{baseurl}}/category/?category=cs 检索到文章。
+ -->
 <script>
+    const nav_cat = getQueryVariable("category");
     //decodeURIComponent 是为了防止浏览器转义中文字体，然后获取不到。
-    var category = decodeURIComponent(parseURL(document.location.href).params["category"]);
-    var data = '{ { % for categorie in site.categories %}{ % if categorie[0] != site.categories.first[0] %},{ % endif %}"{ { categorie[0] }}":[{ % for post in categorie[1] %}{ % if post != categorie[1].first %},{ % endif %}{"url":"{ {post.url}}", "tags":{ {post.tags | jsonify }} , "content":"{ {post.excerpt | uri_escape}}" , "title":"{ {post.title}}","date":"{ {post.date | date:"%d/%m/%Y"}}"}{ % endfor %}]{ % endfor %} }';
-    var arr = JSON.parse(data)[category];
+    // var category = decodeURIComponent(parseURL(document.location.href).params["category"]);
+    // var category = parseURL(document.location.href).params["category"];
+    // 获取所有文章数据
+    const data = '{ {% for categorie in site.categories %}{% if categorie[0] != site.categories.first[0] %},{% endif %}"{{ categorie[0] }}":[{% for post in categorie[1] %}{% if post != categorie[1].first %},{% endif %}{"url":"{{post.url}}", "title":"{{post.title}}","date":"{{post.date | date:"%d/%m/%Y"}}"}{% endfor %}]{% endfor %} }';
+    const nav_articles = JSON.parse(data)[nav_cat];
+    const content_div = document.getElementsByClassName("js-article-content")[0];
+    for (let i = 0; i < nav_articles.length; i++) {
+      let article = nav_articles[i];
+
+      const article_ul = document.createElement("ul");
+      article_ul.innerText = article.date + " ";
+      content_div.appendChild(article_ul);
+
+      var art = document.createElement("a");
+      art.href = article.url;
+      art.title = article.title;
+      art.innerText = article.title;
+      article_ul.appendChild(art);
+    }
+
+
+
+
 
     /**
      * [parseURL 解析url]
      * @param  {[String]} url [url]
      * @return {[Object]}     [返回解析好的对象]
      */
-     function parseURL(url) {
-        var a =  document.createElement("a");
-        a.href = url;
-        return {
-            source: url,
-            protocol: a.protocol.replace(":",""),
-            host: a.hostname,
-            port: a.port,
-            query: a.search,
-            params: (function(){
-                var ret = {},
-                    seg = a.search.replace(/^\?/,"").split("&"),
-                    len = seg.length, i = 0, s;
-                for ( ; i < len ; i++ ) {
-                    if ( !seg[i] ) { continue; }
-                    s = seg[i].split("=");
-                    ret[s[0]] = s[1];
-                }
-                return ret;
-            })(),
-            file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,""])[1],
-            hash: a.hash.replace("#",""),
-            path: a.pathname.replace(/^([^\/])/,"/$1"),
-            relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,""])[1],
-            segments: a.pathname.replace(/^\//,"").split("/")
-        };
-    }
+    //  function parseURL(url) {
+    //     var a =  document.createElement("a");
+    //     a.href = url;
+    //     return {
+    //         source: url,
+    //         protocol: a.protocol.replace(":",""),
+    //         host: a.hostname,
+    //         port: a.port,
+    //         query: a.search,
+    //         params: (function(){
+    //             var ret = {},
+    //                 seg = a.search.replace(/^\?/,"").split("&"),
+    //                 len = seg.length, i = 0, s;
+    //             for ( ; i < len ; i++ ) {
+    //                 if ( !seg[i] ) { continue; }
+    //                 s = seg[i].split("=");
+    //                 ret[s[0]] = s[1];
+    //             }
+    //             return ret;
+    //         })(),
+    //         file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,""])[1],
+    //         hash: a.hash.replace("#",""),
+    //         path: a.pathname.replace(/^([^\/])/,"/$1"),
+    //         relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,""])[1],
+    //         segments: a.pathname.replace(/^\//,"").split("/")
+    //     };
+    // }
+
+    function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
 </script>
+
+<!-- 获取当前侧边栏分类 -->
+{% assign _side_cats = page.url | split:"/" %}
+{% assign _side_cat = _side_cats[2] %}
+
+{{ request.params['category'] }}
+
+<!-- 插入侧边导航栏 -->
+
+<!-- 获取当前导航页的标题 -->
+{% for _head_cat in site.data.navigation.header %}
+  {% if _head_cat.url == page.url %}
+    {% assign _article_title = _head_cat.titles.zh %}
+    <header><h1>{{ _article_title }}</h1></header>
+  {% endif %}
+{% endfor %}
+
+<!-- 获取边栏标题 -->
+{% for _side_bar in site.data.navigation[_side_cat] %}
+<!-- 一级标题 -->
+  {% if _side_bar.url == page.url %}
+  {% assign _article_title = _side_bar.title %}
+  <header><h1>{{ _article_title }}</h1></header>
+  {% endif %}
+
+<!-- 二级标题 -->
+  {% if _side_bar.children %}
+    {% for _sub_side_bar in _side_bar.children %}
+      {% if _sub_side_bar.url == page.url %}
+        {% assign _article_title = _sub_side_bar.title %}
+        <header><h1>{{ _article_title }}</h1></header>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+
+
+<!-- 按照链接最后一个文件分类 -->
+{% assign last_cat = page.url | split:"/" | last %}
+<ul>
+  {% for post in site.categories[last_cat] %}
+  {{post.date | date:"%Y/%m/%d"}}
+  <font size="3"><a href={{post.url}} title={{ cat[0] }}>{{post.title}}</a></font>
+  <br>
+  {% endfor %}
+</ul>
