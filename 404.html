@@ -1,13 +1,3 @@
 ---
 layout: 404
 ---
-<!-- exampole -->
-<!-- {% for post in site.posts %}
-<li>
-    {{post.title}}
-</li>
-{% endfor %} -->
-
-{% for category in site.categories %}
-    <a href="{{site.baseurl}}/category.html?category={{ category|first }}">{{category | first}} <span>({{category | last | size}})</span></a>
-{% endfor %}

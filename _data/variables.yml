@@ -38,6 +38,7 @@ default:
     pageview: false
     search: default
     show_article_position: true # 展示文章分类 配置于 include/article-position.html
+    
 
 sources:
   bootcdn:

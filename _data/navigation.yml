@@ -11,28 +11,28 @@ header:
       en      :   CS
       zh      :   计算机科学
       # @end locale config
-    url: /article/cs/
+    url: /posts/cs/
 
   - titles:
       # @start locale config
       en      :   AI
       zh      :   人工智能
       # @end locale config
-    url: /article/ai/
+    url: /posts/ai/
 
   - titles:
       # @start locale config
       en      :   Algorithms
       zh      :   算法
       # @end locale config
-    url: /article/algorithms/
+    url: /posts/algorithms/
 
   - titles:
       # @start locale config
       en      :   Blog
       zh      :   随笔
       # @end locale config
-    url: /article/blog/
+    url: /posts/blog/
 
   - titles:
       # @start locale config
@@ -52,40 +52,40 @@ header:
 # 侧边导航栏
 cs:
   - title:      编程语言
-    url:        /article/cs/lang/
+    url:        /posts/cs/lang/
     children:
       - title:  C/C++
-        url:    /article/cs/lang/c&c++/
+        url:    /posts/cs/lang/c&c++/
       - title:  Java
-        url:    /article/cs/lang/java/
+        url:    /posts/cs/lang/java/
       - title:  JavaScript
-        url:    /article/cs/lang/javascript/
+        url:    /posts/cs/lang/javascript/
       - title:  HTML
-        url:    /article/cs/lang/html/
+        url:    /posts/cs/lang/html/
       - title:  CSS
-        url:    /article/cs/lang/css/
+        url:    /posts/cs/lang/css/
 
   - title:      操作系统
-    url:        /article/cs/os/
+    url:        /posts/cs/os/
     children:
       - title:  Linux
-        url:    /article/cs/os/linux/
+        url:    /posts/cs/os/linux/
       - title:  Mac
-        url:    /article/cs/os/mac/
+        url:    /posts/cs/os/mac/
 
   - title:      计算机网络
-    url:        /article/cs/network/
+    url:        /posts/cs/network/
     children:
 
 
   - title:      软件工程
-    url:        /article/cs/se/
+    url:        /posts/cs/se/
     children:
       - title:  设计模式
-        url:    /article/cs/se/designpattern/
+        url:    /posts/cs/se/designpattern/
       - title:  数据库
-        url:    /article/cs/se/database/
+        url:    /posts/cs/se/database/
 
   - title:      开发工具
-    url:        /article/cs/tool/
+    url:        /posts/cs/tool/
     children:

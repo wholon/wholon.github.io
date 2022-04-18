@@ -1,3 +1,5 @@
+# JavaScript数据类型
+
 ## JavaScript 数据类型介绍
 
 JavaScript 的数据类型有数字、字符串、布尔型、对象类型、数组、null 和 undefined。

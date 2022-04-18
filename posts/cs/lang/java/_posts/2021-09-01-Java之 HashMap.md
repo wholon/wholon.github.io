@@ -1,5 +1,3 @@
-
-
 # Java之 HashMap
 
 # 数据结构背景

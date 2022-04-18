@@ -1,4 +1,4 @@
-# H1TitleFirstSECOND
+# JavaScript常用对象
 
 ## Math类
 

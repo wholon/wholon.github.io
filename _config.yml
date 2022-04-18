@@ -80,7 +80,7 @@ license: CC-BY-NC-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-ND-4
 
 ## TOC
 toc:
-  selectors: "h1,h2,h3"  #(default)
+  selectors: "h1,h2,h3,h4,h5,h6"  #(default)
 
 
 ## => Markdown Enhancements
@@ -222,6 +222,7 @@ defaults:
       layout: article
       # sharing: true
       license: true
+      # 主要目的：给所有文章添加作者
       author: Holon
       aside:
         toc: true
@@ -238,17 +239,19 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
-  # - jekyll-titles-from-headings
+  - jekyll-titles-from-headings
   - jekyll-last-modified-at
+  
+# plugin 从文章第一个标题中摘取标题
+titles_from_headings:
+  enabled:     true
+  strip_title: true
+  collections: true # 必须为 true，否则会不生效
 
+# plugin 文章最后更改日期，首先获取 git log 中的日期
+# 如果没有，则获取文件的 mtime
 last-modified-at:
   date-format: '%d-%b-%y'
-
-# titles_from_headings:
-#   enabled:     true
-#   strip_title: true
-#   collections: false
-
 
 # collections:
 #  posts:

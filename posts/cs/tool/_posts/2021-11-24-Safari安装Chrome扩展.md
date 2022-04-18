@@ -1,4 +1,4 @@
-
+# Safari安装Chrome扩展
 
 > 原视频链接：[How to PERMANENTLY Add Google Chrome Extensions to Safari](https://www.youtube.com/watch?v=tFbBiEdFVUA)
 
