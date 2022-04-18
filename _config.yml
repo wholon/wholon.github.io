@@ -248,10 +248,7 @@ last-modified-at:
 #   enabled:     true
 #   strip_title: true
 #   collections: false
-collections:
-  article:
-    output: true
-    permalink: /:categories/:year/:month/:day/:title/
+
 
 # collections:
 #  posts:
