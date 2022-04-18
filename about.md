@@ -1,6 +1,7 @@
 ---
 layout: article
 title: 关于
+show_title: false
 ---
 
 ## Keep It Simple, Stupid

@@ -246,7 +246,7 @@ plugins:
 titles_from_headings:
   enabled:     true
   strip_title: true
-  collections: true # 必须为 true，否则会不生效
+  collections: true # 必须为 true，否则会不生效 见这篇邮件 https://discuss.asciidoctor.org/skip-front-matter-together-with-jekyll-titles-from-headings-td6129.html
 
 # plugin 文章最后更改日期，首先获取 git log 中的日期
 # 如果没有，则获取文件的 mtime
