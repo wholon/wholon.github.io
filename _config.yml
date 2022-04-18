@@ -238,6 +238,7 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
+  - jekyll-titles-from-headings
 
 
 # collections:
