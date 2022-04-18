@@ -1,8 +1,45 @@
 # GitHubPages中的Jekyll插件白名单
 
-地址：[GitHub pages Plugin white list](https://github.com/github/pages-gem/blob/master/lib/github-pages/plugins.rb)
+GitHub Pages cannot build sites using unsupported plugins. If you want to use unsupported plugins, generate your site locally and then push your site's static files to GitHub.
 
-{{ page.last_modified_at }}
+GitHub Pages无法使用不受支持的插件构建网站。如果您想使用不受支持的插件，请在本地生成您的网站，然后将网站的静态文件推送到GitHub。
+
+## GitHub pages 默认插件
+
+官方文档 [GitHub pages plugins](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#plugins)
+
+GitHub Pages uses plugins that are enabled by default and cannot be disabled:
+
+- [`jekyll-coffeescript`](https://github.com/jekyll/jekyll-coffeescript)
+- [`jekyll-default-layout`](https://github.com/benbalter/jekyll-default-layout)
+- [`jekyll-gist`](https://github.com/jekyll/jekyll-gist)
+- [`jekyll-github-metadata`](https://github.com/jekyll/github-metadata)
+- [`jekyll-optional-front-matter`](https://github.com/benbalter/jekyll-optional-front-matter)
+- [`jekyll-paginate`](https://github.com/jekyll/jekyll-paginate)
+- [`jekyll-readme-index`](https://github.com/benbalter/jekyll-readme-index)
+- [`jekyll-titles-from-headings`](https://github.com/benbalter/jekyll-titles-from-headings)
+- [`jekyll-relative-links`](https://github.com/benbalter/jekyll-relative-links)
+
+## 更新GitHub Pages gem
+
+Jekyll是一个活跃的开源项目，经常更新。如果您计算机上的`github-pages`宝石与GitHub Pages服务器上的`github-pages` gem 不一致，则您的网站在本地构建时可能与在GitHub上发布时看起来不同。为了避免这种情况，请定期更新计算机上的`github-pages`宝石。
+
+1. 打开终端。
+
+2. 更新 `github-pages` gem 。
+
+      - 如果您安装了Bundler，请运行`bundle update github-pages`。
+
+      - 如果您没有安装Bundler，请运行`gem update github-pages`。
+
+
+## GitHub pages 支持的插件
+
+For a list of supported plugins, see "[Dependency versions](https://pages.github.com/versions/)" on the GitHub Pages site. For usage information for a specific plugin, see the plugin's documentation.
+
+## GitHub pages 插件白名单
+
+地址：[GitHub pages Plugin white list](https://github.com/github/pages-gem/blob/master/lib/github-pages/plugins.rb)
 
 ```ruby
 # frozen_string_literal: true
