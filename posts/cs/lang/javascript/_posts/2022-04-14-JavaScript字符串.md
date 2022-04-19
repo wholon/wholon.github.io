@@ -6,7 +6,7 @@
 
 子字符串指一个字符串中**连续**的一部分。
 
-   ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-08-18:41:00-199033.png)  
+   ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/20220419144538CsV3x8.png)  
 
 上图中有两个字符串`aaabc`和`abc`，将`abc`从左往右在`aaabc`中查找，第一次出现的位置是在`aaabc`的索引`2`处。
 

@@ -1,4 +1,4 @@
-# JavaScript条件语句
+# JavaScript条件语句
 
 ## if-else类型
 
@@ -185,9 +185,7 @@ console.log(class3 === class1);
 
 ### switch语句
 
-`switch`是一种多分支的选择结构，采用等值判断，如下是结构图，其中`T`表示条件成立，`F`表示条件不成立，箭头表示语句的执行方向。
-
-   ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:17:36-189268.png)  
+`switch`是一种多分支的选择结构，采用等值判断，如下是结构图，其中`T`表示条件成立，`F`表示条件不成立，箭头表示语句的执行方向。  
 
 ```mermaid
 flowchart LR
@@ -330,9 +328,7 @@ function mainJs(a) {
 
 完成函数`judgeLeapYear(year)`，功能是判断某一年是否为闰年，是则返回“`xxx`年是闰年”，否则返回“`xxx`年不是闰年”。参数`year`是表示年份的四位数整数。
 
-判断闰年的过程如下：  
-
-   ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:22:22-191800.png)  
+判断闰年的过程如下：    
 
 ```mermaid
 graph LR

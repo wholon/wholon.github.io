@@ -55,7 +55,7 @@ JavaScript 的输出有三种方式，如下：
 
 以浏览器方式打开刚刚建立的 HTMl 文件，在浏览器上面可以看到，如图1所示：
 
-![image-20220406185819871](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-18:58:20-image-20220406185819871.png)
+![image-20220406185819871](https://holon-image.oss-cn-beijing.aliyuncs.com/20220419143706D2XrC8.png)
 
 这里的标签是 HTML 中的内容，关于 JavaScript 和 HTML 的关系，将在下一节介绍。
 
@@ -76,7 +76,7 @@ JavaScript 的输出有三种方式，如下：
 
 在浏览器的控制台可以看到如图所示的内容：
 
-![image-20220406184846815](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-18:48:47-image-20220406184846815.png)
+![image-20220406184846815](https://holon-image.oss-cn-beijing.aliyuncs.com/20220419143720PwZ5Rs.png)
 
 除此之外，还有 `console.error()`、`console.warn()` 等方式实现输出，分别表示输出错误，输出警告。
 
@@ -97,7 +97,7 @@ JavaScript 的输出有三种方式，如下：
 
 浏览器的页面输出如图所示：
 
-![image-20220406185111830](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-18:51:12-image-20220406185111830.png)
+![image-20220406185111830](https://holon-image.oss-cn-beijing.aliyuncs.com/20220419143732FOYCO8.png)
 
 此外，还有其他几种比较少用的输出方式，这里不做介绍，可参考相关文档。
 

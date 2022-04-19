@@ -456,11 +456,11 @@ function mainJs(myArray) {
 
 如下图所示，`9`比`5`大，交换两者的位置后，`9`就到后面去了。
 
-   ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:07:14-189245.png)  
+   ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/20220419143857dWcbI2.png)  
 
 然后第二个元素与第三个元素比较，将大的移动到后面；第三个元素与第四个元素比较......，这样一直进行下去，直到倒数第二个元素和最后一个元素进行比较，称为一趟冒泡排序，结束后最大的元素已经移到了索引最大处。下面的图展示了每一次比较并交换后的数组：
 
-   ![img](https://data.educoder.net/api/attachments/189246)  
+   ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/20220419143851B85zEK.png)  
 
 可以看到，一趟冒泡排序结束后，最大的元素`9`移到了索引最大处。
 
@@ -468,7 +468,7 @@ function mainJs(myArray) {
 
 接下来对除了最后一个元素的数组进行第二趟冒泡排序，结果是第二大的元素到了索引第二大的地方。这样一直进行下去，直到整个数组有序或者某一趟排序的时候不存在元素的交换。  
 
-   ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:07:14-189251.png)  
+   ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/20220419143846qmg41o.png)  
 
 第四趟冒泡过程中，未发生元素的交换，结束。
 
@@ -508,7 +508,7 @@ console.log(arr);
 
 原理：遍历数组，记录下最大元素的索引值，将最大的元素与数组最后一个元素交换，这样最大的元素到了索引值最大的地方，称为一趟选择排序。与冒泡不同的是，只会发生一次交换。
 
-   ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:07:14-189254.png)  
+   ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/202204191438380wEZZ7.png)  
 
 可以看到`9`移到了索引最大处。
 
@@ -516,7 +516,7 @@ console.log(arr);
 
 第二趟选择排序是在除了最后一个元素的数组中选择最大的元素，将它与索引值第二大的元素交换，结束后第二大的元素也到了最终的位置上。这样一直进行下去，一共`n-1`趟选择排序。  
 
-   ![img](https://cdn.jsdelivr.net/gh/wholon/image@main/2022-04-06-22:07:14-189255.png)  
+   ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/20220419143832LIh0fJ.png)  
 
 ```js
 //选择排序 
