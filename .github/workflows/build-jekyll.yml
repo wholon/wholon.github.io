@@ -2,7 +2,7 @@ name: Build and Deploy to Github Pages
 
 on:
   schedule:
-    - cron:  '0 * * * *'
+    - cron:  '0/5 * * * *' # 每五分钟执行一次 用于测试
   push:
     branches:
       - main  # Here source code branch is `main`, it could be other branch
