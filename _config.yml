@@ -257,7 +257,7 @@ titles_from_headings:
 # plugin 文章最后更改日期，首先获取 git log 中的日期
 # 如果没有，则获取文件的 mtime
 last-modified-at:
-  date-format: '%d-%b-%y'
+  date-format: '%Y:%B:%A:%d:%S:%R' # 2022-04-20 07:01:10 +0800
 
 # collections:
 #  posts:
