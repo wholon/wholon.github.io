@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>定时任务CRON - Holon's Blog</title>
 
 <meta name="description" content="{minute} {hour} {day-of-month} {month} {day-of-week} {full-path-to-shell-script}  minute: 区间为 0 – 59  hour: 区间为0 – 23  day-of-month: 区间为0 – 31  month: 区间为1 –...">
-<link rel="canonical" href="https://wholon.github.io/posts/cs/os/linux/2022/04/20/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1CRON/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
+<link rel="canonical" href="https://wholon.github.io/posts/cs/os/mac/2022/04/20/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1CRON/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -554,9 +554,9 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
     
       
         
-          
-        
       
+        
+          
         
       
     
@@ -607,7 +607,7 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
       <li>></li>
       <li>
         <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/os/linux/">Linux</a>
+           href="/posts/cs/os/mac/">Mac</a>
       </li>
     
     
@@ -622,7 +622,7 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月20日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="定时任务CRON">0</span> 阅读</li></ul><!-- 展示更新时间 -->
     <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-04-20T21:10:45+08:00">2022-04-20 21:10:45</time>
+      <time itemprop="dateModified" datetime="2022-04-20T22:20:06+08:00">2022-04-20 22:20:06</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
@@ -640,6 +640,54 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
   <li>month: 区间为1 – 12. 1 是1月. 12是12月.</li>
   <li>Day-of-week: 区间为0 – 7. 周日可以是0或7.</li>
 </ul>
+
+<h2 id="mac-创建定时任务">Mac 创建定时任务</h2>
+
+<ol>
+  <li>
+    <p>新建文件如 <code class="language-plaintext highlighter-rouge">~/.mycron</code></p>
+  </li>
+  <li>
+    <p>文件格式应满足 CRON 格式，比如</p>
+
+    <pre><code class="language-cron"># 每1分钟执行一次myCommand
+* * * * * myCommand
+   
+# 每小时的第3和第15分钟执行
+3,15 * * * * myCommand
+   
+# 在上午8点到11点的第3和第15分钟执行
+3,15 8-11 * * * myCommand
+   
+# 每隔两天的上午8点到11点的第3和第15分钟执行
+3,15 8-11 */2  *  * myCommand
+   
+# 每周一上午8点到11点的第3和第15分钟执行
+3,15 8-11 * * 1 myCommand
+   
+# 晚上11点到早上7点之间，每隔一小时重启smb
+* 23-7/1 * * * /etc/init.d/smb restart
+</code></pre>
+  </li>
+  <li>
+    <p>通过crontab 命令，我们可以在固定的间隔时间执行指定的系统指令或 shell script脚本。时间间隔的单位可以是分钟、小时、日、月、周及以上的任意组合。这个命令非常适合周期性的日志分析或数据备份等工作。</p>
+
+    <p><strong>命令格式</strong></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crontab <span class="o">[</span><span class="nt">-u</span> user] file
+crontab <span class="o">[</span><span class="nt">-u</span> user] <span class="o">[</span> <span class="nt">-e</span> | <span class="nt">-l</span> | <span class="nt">-r</span> <span class="o">]</span>
+</code></pre></div>    </div>
+
+    <ul>
+      <li>-u user：用来设定某个用户的crontab服务；</li>
+      <li>file：file是命令文件的名字,表示将file做为crontab的任务列表文件并载入crontab。如果在命令行中没有指定这个文件，crontab命令将接受标准输入（键盘）上键入的命令，并将它们载入crontab。</li>
+      <li>-e：编辑某个用户的crontab文件内容。如果不指定用户，则表示编辑当前用户的crontab文件。</li>
+      <li>-l：显示某个用户的crontab文件内容，如果不指定用户，则表示显示当前用户的crontab文件内容。</li>
+      <li>-r：从/var/spool/cron目录中删除某个用户的crontab文件，如果不指定用户，则默认删除当前用户的crontab文件。</li>
+      <li>-i：在删除用户的crontab文件时给确认提示。</li>
+    </ul>
+  </li>
+</ol>
 </div><div class="d-print-none"><footer class="article__footer">
   <!-- 原 更新时间 位置 --><!-- start custom article footer snippet -->
 

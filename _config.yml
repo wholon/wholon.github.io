@@ -243,7 +243,7 @@ defaults:
 plugins:
   # - jekyll-feed
   - jekyll-paginate
-  - jekyll-sitemap
+  # - jekyll-sitemap
   - jemoji
   - jekyll-titles-from-headings
   - jekyll-last-modified-at
