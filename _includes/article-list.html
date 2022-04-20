@@ -1,6 +1,9 @@
+<!-- 文章摘要 -->
 {%- assign _excerpt_truncate = include.excerpt_truncate | default: 300 -%}
 
+<!-- 文章摘要类型 -->
 {%- assign _excerpt_type = include.excerpt_type -%}
+
 
 {%- include snippets/get-locale-string.html key='READMORE' -%}
 {%- assign _locale_readmore = __return -%}
