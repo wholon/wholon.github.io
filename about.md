@@ -9,9 +9,6 @@ article_header:
   image:
     src: https://holon-image.oss-cn-beijing.aliyuncs.com/20220420034340l3koG2.jpeg
 ---
-最后编辑于：{{ page.last_modified_at }}
-
-{% last_modified_at %}
 
 愿中国青年都摆脱冷气，只是向上走，不必听自暴自弃者流的话。能做事的做事，能发声的发声。有一分热，发一分光，就令萤火一般，也可以在黑暗里发一点光，不必等候炬火。
 
