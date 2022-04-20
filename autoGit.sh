@@ -3,7 +3,10 @@
 # 获取脚本所在绝对路径
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 cd $SHELL_FOLDER
+
 git add .
 git commit -m "$1"
 git push origin
 
+# 拉取远程仓库推送到 ph-pages 分支
+jgd --branch-from=main
