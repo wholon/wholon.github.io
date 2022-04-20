@@ -499,6 +499,154 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
 <!-- end custom main top snippet -->
 <article itemscope itemtype="http://schema.org/WebPage"><header style="display:none;"><h1>主页</h1></header><meta itemprop="headline" content="主页"><meta itemprop="author" content="Holon"/><div class="js-article-content"><div class="layout--articles"><!-- 文章摘要 --><!-- 文章摘要类型 --><div class="article-list items items--divided"><article class="item"><div class="item__content">
+          <header><a href="/posts/cs/tool/2021/11/26/%E7%AE%80%E5%8C%96%E5%8D%9A%E5%AE%A2%E6%8E%A8%E9%80%81%E6%93%8D%E4%BD%9C/"><h2 itemprop="headline" class="item__header">简化博客推送操作</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">前言
+
+使用 GitHub Pages 的好处在于
+
+
+  写文章与展示文章解耦。写文章可以在本地，使用各种方便的 Markdown 客户端，而不用被绑定在特定的 CMS 或博客网站的编辑器上。
+  内容与网站解耦。本地只负责内容的生产，网站只负责展示，不依赖于具体的服务器和主题。
+
+
+问题
+
+每次写完之后都需要运行以下命令
+
+git add .
+git commit -m "comments"
+git push origin
+
+
+有没有方式能够简化这种繁琐的推送过程呢？
+
+解决方式
+
+
+  
+    在当前 Git 仓库下新建 autoGit.sh 脚本文件
+  
+  
+    在脚本...</div><p><a href="/posts/cs/tool/2021/11/26/%E7%AE%80%E5%8C%96%E5%8D%9A%E5%AE%A2%E6%8E%A8%E9%80%81%E6%93%8D%E4%BD%9C/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+      
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/tool/">开发工具</a>
+      </li>
+    
+
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 11月26日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="简化博客推送操作">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-11-26T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
           <header><a href="/posts/cs/lang/c&c++/2021/11/26/C++%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84/"><h2 itemprop="headline" class="item__header">C++控制结构</h2></a></header>
           <div class="item__description"><div class="article__content" itemprop="description articleBody">控制转移语句</div><p><a href="/posts/cs/lang/c&c++/2021/11/26/C++%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84/">阅读更多</a></p></div><div class="article__info clearfix">
 <!--      展示标签 --><!--展示文章分类-->
@@ -619,7 +767,7 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 11月26日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="C++控制结构">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">最后编辑于
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
       <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
@@ -772,7 +920,7 @@ using namespace std;
 
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 11月25日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="C++ 数据类型、运算符与表达式">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">最后编辑于
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
       <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
@@ -908,7 +1056,7 @@ using namespace std;
 
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 11月24日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Safari安装Chrome扩展">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">最后编辑于
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
       <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
@@ -1051,7 +1199,7 @@ int main() {
 
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 11月23日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="C++第一个程序">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">最后编辑于
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
       <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
@@ -1117,7 +1265,7 @@ Our story is coming from a lipstick. In 1999, a brand manager of P&amp;G, Kevin 
 
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 11月18日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Introduction of IoT">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">最后编辑于
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
       <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
@@ -1125,141 +1273,8 @@ Our story is coming from a lipstick. In 1999, a brand manager of P&amp;G, Kevin 
     </span><!-- </div> -->
     <!-- /展示更新时间 -->
     </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-11-18T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/network/2021/11/12/CDN%E5%8A%A0%E9%80%9F%E5%BE%AA%E7%8E%AF%E9%87%8D%E5%AE%9A%E5%90%91/"><h2 itemprop="headline" class="item__header">CDN加速循环重定向</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">## 解决使用 CDN 加速 GitHub Pages 时遇到的“发生了太多重定向”的问题
-
-
-
-主要原因在于上图中的回源HOST应该填写为你加速的域名，正确的请求过程：
-
-客户 –holon.wang–&gt; CDN 节点 –holon.wang–&gt; GitHub Pages 服务器
-
-​																									｜
-
-客户    &lt;–内容–          CDN 节点	&lt;–内容– 		GitHub Pages 服务器
-
-如果把回源Host设置为你的[你的GitHub用户名].github.io，因为你在 GitHub 端配置了 CNAM...</div><p><a href="/posts/cs/network/2021/11/12/CDN%E5%8A%A0%E9%80%9F%E5%BE%AA%E7%8E%AF%E9%87%8D%E5%AE%9A%E5%90%91/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-      
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/network/">计算机网络</a>
-      </li>
-    
-
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 11月12日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="CDN加速循环重定向">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">最后编辑于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-11-12T00:00:00+08:00"></div>
       </article></div>
-</div><div class="layout--home"><div class="pagination"><p>共计 125 篇文章，21 页。</p>
+</div><div class="layout--home"><div class="pagination"><p>共计 126 篇文章，21 页。</p>
     <div class="pagination__menu">
       <ul class="menu menu--nowrap"><li><a class="button button--secondary button--circle" href="/page10">
             <i class="fas fa-angle-left"></i>

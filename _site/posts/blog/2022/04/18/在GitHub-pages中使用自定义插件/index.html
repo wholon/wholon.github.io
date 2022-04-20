@@ -552,7 +552,7 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月18日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="在GitHub pages中使用自定义插件">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">最后编辑于
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
       <time itemprop="dateModified" datetime="2022-04-20T07:06:07+08:00">2022-04-20 07:06:07</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
@@ -569,6 +569,91 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
   <p><strong>if you want to make Jekyll site run as if it were local, such as let the custom plugins work properly, this action can be very useful for you, beacause it’s really convenient to build and deploy the Jekyll site to Github Pages.</strong></p>
 </blockquote>
+
+<h2 id="遇到的问题">遇到的问题</h2>
+
+<p>这个 Action 对于一些依赖 git-log 的插件并没有很好的支持。因为它会在服务器端部署一个 Jekyll 并用其生成静态文件，然后在 gh-pages分支下新建拷贝所有的新生成的静态文件，从而打乱 git-log。</p>
+
+<p>由于是在服务器端新建的环境，所以 git-log 也就失去了效用从而不在支持 jekyll-last-modified-at 插件。</p>
+
+<h2 id="解决方法">解决方法</h2>
+
+<h3 id="方法1-结合github-action">方法1: 结合GitHub Action</h3>
+
+<ol>
+  <li>
+    <p>博客根目录下新建 <code class="language-plaintext highlighter-rouge">.github/workflow/copy-folder.yml</code> 文件</p>
+
+    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Copy folder to other branch</span>
+   
+<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">]</span>
+   
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">copy</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Copy my folder</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">copy</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">SRC_FOLDER_PATH</span><span class="pi">:</span> <span class="s1">'</span><span class="s">_site'</span>
+          <span class="na">TARGET_BRANCH</span><span class="pi">:</span> <span class="s1">'</span><span class="s">gh-pages'</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">files=$(find $SRC_FOLDER_PATH -type f) # get the file list</span>
+          <span class="s">git config --global user.name 'GitHub Action'</span>
+          <span class="s">git config --global user.email 'action@github.com'</span>
+          <span class="s">git fetch                         # fetch branches</span>
+          <span class="s">git checkout $TARGET_BRANCH       # checkout to your branch</span>
+          <span class="s">git checkout ${GITHUB_REF##*/} -- $files # copy files from the source branch</span>
+          <span class="s">git add -A</span>
+          <span class="s">git diff-index --quiet HEAD ||  git commit -am "deploy files"  # commit to the repository (ignore if no modification)</span>
+          <span class="s">git push origin $TARGET_BRANCH # push to remote branch</span>
+</code></pre></div>    </div>
+
+    <p>其作用是把 main 分支下的 <code class="language-plaintext highlighter-rouge">SRC_FOLDER_PATH</code> 文件下的内容复制到 <code class="language-plaintext highlighter-rouge">TARGET_BRANCH</code> 分支</p>
+
+    <blockquote>
+      <p>如果博客默认生成在 <code class="language-plaintext highlighter-rouge">_sits</code> 文件夹中，那么你需要将其从 <code class="language-plaintext highlighter-rouge">.gitignore</code>移出。</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>在博客根目录下新建文件 <code class="language-plaintext highlighter-rouge">autoGit.sh</code> 用于简化推送。</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#! /bin/zsh</span>
+<span class="c"># 自动化推送脚本, 在 ~/.zshrc 里面设置脚本运行的 alias</span>
+<span class="c"># 获取脚本所在绝对路径</span>
+<span class="nv">SHELL_FOLDER</span><span class="o">=</span><span class="si">$(</span><span class="nb">cd</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">dirname</span> <span class="s2">"</span><span class="nv">$0</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span><span class="p">;</span><span class="nb">pwd</span><span class="si">)</span>
+<span class="nb">cd</span> <span class="nv">$SHELL_FOLDER</span>
+   
+<span class="c"># 以生产模式 build 网站</span>
+<span class="nv">JEKYLL_ENV</span><span class="o">=</span>production bundle <span class="nb">exec </span>jekyll build
+git add <span class="nb">.</span>
+<span class="c"># 变量1是传送的参数，也就是本次 git 的摘要</span>
+git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> 
+git push origin
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>给 <code class="language-plaintext highlighter-rouge">autoGit.sh</code> 设置别名，比如如果你用的是 zsh，那么你可以在 <code class="language-plaintext highlighter-rouge">~/zsh.rc</code> 里面插入以下命令</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 给向wholon.github.io push文章设置别名</span>
+<span class="nb">alias </span><span class="nv">blog</span><span class="o">=</span><span class="s2">"zsh /Users/holon/Documents/GitHub/wholon.github.io/autoGit.sh"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>在终端任意位置输入</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blog <span class="s2">"本次博客更新内容"</span>
+</code></pre></div>    </div>
+
+    <p>即可推送到远程仓库。</p>
+  </li>
+  <li>
+    <p>尝试过本地编译完毕推送到 github:main 分支，然后通过 GitHub Action 自动拉取到 pages 分支。结果依然是扰乱了 git-log。</p>
+  </li>
+</ol>
+
+<p>在本地编译静态文件。有一个很好用的 gem 插件</p>
 </div><div class="d-print-none"><footer class="article__footer">
   <!-- 原 更新时间 位置 --><!-- start custom article footer snippet -->
 

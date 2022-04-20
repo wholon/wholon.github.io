@@ -6,3 +6,81 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
 >
 >  **if you want to make Jekyll site run as if it were local, such as let the custom plugins work properly, this action can be very useful for you, beacause it's really convenient to build and deploy the Jekyll site to Github Pages.**
 
+## 遇到的问题
+
+这个 Action 对于一些依赖 git-log 的插件并没有很好的支持。因为它会在服务器端部署一个 Jekyll 并用其生成静态文件，然后在 gh-pages分支下新建拷贝所有的新生成的静态文件，从而打乱 git-log。
+
+由于是在服务器端新建的环境，所以 git-log 也就失去了效用从而不在支持 jekyll-last-modified-at 插件。
+
+## 解决方法
+
+### 方法1: 结合GitHub Action 
+
+1. 博客根目录下新建 `.github/workflow/copy-folder.yml` 文件
+
+   ```yml
+   name: Copy folder to other branch
+   
+   on: [push]
+   
+   jobs:
+     copy:
+       name: Copy my folder
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v2
+         - name: copy
+           env:
+             SRC_FOLDER_PATH: '_site'
+             TARGET_BRANCH: 'gh-pages'
+           run: |
+             files=$(find $SRC_FOLDER_PATH -type f) # get the file list
+             git config --global user.name 'GitHub Action'
+             git config --global user.email 'action@github.com'
+             git fetch                         # fetch branches
+             git checkout $TARGET_BRANCH       # checkout to your branch
+             git checkout ${GITHUB_REF##*/} -- $files # copy files from the source branch
+             git add -A
+             git diff-index --quiet HEAD ||  git commit -am "deploy files"  # commit to the repository (ignore if no modification)
+             git push origin $TARGET_BRANCH # push to remote branch
+   ```
+
+   其作用是把 main 分支下的 `SRC_FOLDER_PATH` 文件下的内容复制到 `TARGET_BRANCH` 分支
+
+   > 如果博客默认生成在 `_sits` 文件夹中，那么你需要将其从 `.gitignore`移出。
+
+2. 在博客根目录下新建文件 `autoGit.sh` 用于简化推送。
+
+   ```shell
+   #! /bin/zsh
+   # 自动化推送脚本, 在 ~/.zshrc 里面设置脚本运行的 alias
+   # 获取脚本所在绝对路径
+   SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
+   cd $SHELL_FOLDER
+   
+   # 以生产模式 build 网站
+   JEKYLL_ENV=production bundle exec jekyll build
+   git add .
+   # 变量1是传送的参数，也就是本次 git 的摘要
+   git commit -m "$1" 
+   git push origin
+   ```
+
+3. 给 `autoGit.sh` 设置别名，比如如果你用的是 zsh，那么你可以在 `~/zsh.rc` 里面插入以下命令
+
+   ```shell
+   # 给向wholon.github.io push文章设置别名
+   alias blog="zsh /Users/holon/Documents/GitHub/wholon.github.io/autoGit.sh"
+   ```
+
+4. 在终端任意位置输入
+
+   ```shell
+   blog "本次博客更新内容"
+   ```
+
+   即可推送到远程仓库。
+
+1. 尝试过本地编译完毕推送到 github:main 分支，然后通过 GitHub Action 自动拉取到 pages 分支。结果依然是扰乱了 git-log。
+
+在本地编译静态文件。有一个很好用的 gem 插件 

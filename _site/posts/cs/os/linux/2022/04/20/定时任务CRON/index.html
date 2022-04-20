@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>定时任务CRON - Holon's Blog</title>
 
 <meta name="description" content="{minute} {hour} {day-of-month} {month} {day-of-week} {full-path-to-shell-script}  minute: 区间为 0 – 59  hour: 区间为0 – 23  day-of-month: 区间为0 – 31  month: 区间为1 –...">
-<link rel="canonical" href="https://wholon.github.io/posts/blog/2022/04/20/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1CRON/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
+<link rel="canonical" href="https://wholon.github.io/posts/cs/os/linux/2022/04/20/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1CRON/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -488,7 +488,7 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 </svg>
 <a title="Think Different" href="/">Holon's Blog</a></div>
 <!--        <p>Think Different</p>--><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/ai/">人工智能</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item navigation__item--active"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item navigation__item--active"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/ai/">人工智能</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
@@ -511,13 +511,13 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
       
   
     
-  
-    
-  
-    
-  
-    
       
+  
+    
+  
+    
+  
+    
   
     
   
@@ -528,18 +528,87 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
   
   
   
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+      
+
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
 
   <ul class="left-col menu">
     
       <li>位置：</li>
       <li>
         <a class="button button--secondary button--pill button--sm"
-           href="/posts/blog/">随笔</a>
+           href="/posts/cs/">计算机科学</a>
       </li>
     
 
     
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/os/">操作系统</a>
+      </li>
+    
 
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/os/linux/">Linux</a>
+      </li>
     
     
   </ul>
@@ -552,8 +621,8 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月20日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="定时任务CRON">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">最后编辑于
-      <time itemprop="dateModified" datetime="2022-04-20T17:34:06+08:00">2022-04-20 17:34:06</time>
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-04-20T17:34:00+08:00">2022-04-20 17:34:00</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
@@ -627,7 +696,7 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/cs/lang/javascript/2022/04/19/%E6%96%87%E6%A1%A3%E5%85%83%E7%B4%A0%E7%9A%84%E6%93%8D%E4%BD%9C/">文档元素的操作</a></div><div class="next"><span>下篇</span><a href="/posts/cs/lang/css/2022/04/20/CSS%E8%A1%A8%E6%A0%BC%E6%A0%B7%E5%BC%8F/">CSS表格样式</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/cs/lang/javascript/2022/04/20/%E6%96%87%E6%A1%A3%E8%8A%82%E7%82%B9%E6%A0%91%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C/">文档节点树上的操作</a></div></div></div>
 
 </div>
 

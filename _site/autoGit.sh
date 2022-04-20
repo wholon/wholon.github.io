@@ -4,9 +4,9 @@
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 cd $SHELL_FOLDER
 
+# 以生产模式 build 网站
+JEKYLL_ENV=production bundle exec jekyll build
 git add .
-git commit -m "$1"
+# 变量1是传送的参数，也就是本次 git 的摘要
+git commit -m "$1" 
 git push origin
-
-# 拉取远程仓库推送到 ph-pages 分支
-jgd --branch-from=main
