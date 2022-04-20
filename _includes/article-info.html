@@ -79,26 +79,28 @@
           {%- endif -%}
         </ul>
       {%- endif -%}
-        <!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> -->
-      {%- if page.last_modified_at -%}
-    {%- include snippets/get-locale-string.html key='ARTICLE_DATE_FORMAT' -%}
-    {%- assign _locale_date_format = __return -%}
-
-    {%- include snippets/get-locale-string.html key='LAST_UPDATED' -%}
-    {%- assign _locale_last_update = __return -%}
-    <span class="right-col">{{ _locale_last_update }}
-      <time itemprop="dateModified" datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: '%Y-%m-%d %H:%M:%S' }}</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span>
-  {%- elsif page.date -%}
-    <meta itemprop="dateModified" content="{{ page.date | date_to_xmlschema }}">
-  {%- endif -%}
-    <!-- </div> -->
-    <!-- /展示更新时间 -->
+        
     </div>
+    <!-- 展示更新时间 -->
+    {% if page.layout != "home" %}
+    <div class="article__info clearfix">
+      {%- if page.last_modified_at > include.article.date -%}
+        {%- include snippets/get-locale-string.html key='ARTICLE_DATE_FORMAT' -%}
+        {%- assign _locale_date_format = __return -%}
+
+        {%- include snippets/get-locale-string.html key='LAST_UPDATED' -%}
+        {%- assign _locale_last_update = __return -%}
+        <!-- <ul class="right-col menu"> -->
+          <li class="right-col menu">
+            <i class="fa-solid fa-file-pen"></i><time itemprop="dateModified" datetime="{{ page.last_modified_at | date_to_xmlschema }}">&nbsp;{{ page.last_modified_at | date: '%Y年%m月%d日 %a %H:%M:%S' }}</time>
+          </li>
+        <!-- </ul> -->
+      {%- elsif page.date -%}
+        <meta itemprop="dateModified" content="{{ page.date | date_to_xmlschema }}">
+      {%- endif -%}
+    </div>
+    <!-- /展示更新时间 -->
+    {% endif %}
   {%- endif -%}
 {%- endif -%}
 

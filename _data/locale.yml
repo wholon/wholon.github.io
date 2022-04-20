@@ -51,7 +51,7 @@ zh-Hans: &ZH_HANS
   EMAIL_ME                : "给我发邮件。"
   EMAIL_US                : "给我们发邮件。"
   COPYRIGHT_DATES         : "2022"
-
+  PAGE_LAST_MODIFIED_AT   : "%Y年 %m月%d日"
 zh:
   <<: *ZH_HANS
 zh-CN:
