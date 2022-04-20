@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="zh">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>在GitHub pages中使用自定义插件 - Holon's Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>JavaScript事件处理 - Holon's Blog</title>
 
-<meta name="description" content="Stack Overflow问题 Jekyll: How to use custom plugins with GitHub pages?  🪂 A Github Action to deploy the Jekyll site conveniently for GitHub Pages.https://gith...">
-<link rel="canonical" href="https://wholon.github.io/posts/blog/2022/04/18/%E5%9C%A8GitHub-pages%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="注册事件处理程序页面上的每一个元素，会发生几种不同的事件，比如表单元素，可能会发生提交事件，也可能发生重置事件，我们需要为每一个事件绑定一个事件处理程序，也叫为事件注册事件处理程序。下面是三种注册事件处理程序的方法。为JavaScript对象设置一个函数页面上的元素对应一个JavaScript对象，元素的每一个事...">
+<link rel="canonical" href="https://wholon.github.io/posts/cs/lang/javascript/2022/04/21/JavaScript%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -488,21 +488,21 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 </svg>
 <a title="Think Different" href="/">Holon's Blog</a></div>
 <!--        <p>Think Different</p>--><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/ai/">人工智能</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item navigation__item--active"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item navigation__item--active"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/ai/">人工智能</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
               <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root">
     <!-- 固定于 TOC 顶部的文章标题 -->
-    <a href="#" name="点击返回顶部">在GitHub pages中使用自定义插件</a>
+    <a href="#" name="点击返回顶部">JavaScript事件处理</a>
 </div>
 </aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>在GitHub pages中使用自定义插件</h1></header></div><meta itemprop="headline" content="在GitHub pages中使用自定义插件"><div class="article__info clearfix">
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>JavaScript事件处理</h1></header></div><meta itemprop="headline" content="JavaScript事件处理"><div class="article__info clearfix">
 <!--      展示标签 --><!--展示文章分类-->
       <!-- 获取设置项：是否开启显示文章位置 -->
   <!-- 获取页面网址 -->
@@ -511,13 +511,13 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
       
   
     
-  
-    
-  
-    
-  
-    
       
+  
+    
+  
+    
+  
+    
   
     
   
@@ -528,18 +528,87 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
   
   
   
+    
+    
+      
+
+    
+    
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
 
   <ul class="left-col menu">
     
       <li>位置：</li>
       <li>
         <a class="button button--secondary button--pill button--sm"
-           href="/posts/blog/">随笔</a>
+           href="/posts/cs/">计算机科学</a>
       </li>
     
 
     
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/">编程语言</a>
+      </li>
+    
 
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/javascript/">JavaScript</a>
+      </li>
     
     
   </ul>
@@ -550,129 +619,748 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
   
 
 
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月18日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="在GitHub pages中使用自定义插件">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月21日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="JavaScript事件处理">0</span> 阅读</li></ul><!-- 展示更新时间 -->
     <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-04-20T21:54:54+08:00">2022-04-20 21:54:54</time>
+      <time itemprop="dateModified" datetime="2022-04-18T23:14:21+08:00">2022-04-18 23:14:21</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
     </span><!-- </div> -->
     <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-18T00:00:00+08:00"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-21T00:00:00+08:00"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>Stack Overflow问题 <a href="https://stackoverflow.com/questions/53215356/jekyll-how-to-use-custom-plugins-with-github-pages">Jekyll: How to use custom plugins with GitHub pages?</a></p>
+<div class="article__content" itemprop="articleBody"><h2 id="注册事件处理程序">注册事件处理程序</h2>
 
-<blockquote>
-  <p>🪂 A Github Action to deploy the Jekyll site conveniently for GitHub Pages.https://github.com/jeffreytse/jekyll-deploy-action</p>
+<p>页面上的每一个元素，会发生几种不同的事件，比如表单元素，可能会发生提交事件，也可能发生重置事件，我们需要为每一个事件绑定一个事件处理程序，也叫为事件注册事件处理程序。</p>
 
-  <p><strong>if you want to make Jekyll site run as if it were local, such as let the custom plugins work properly, this action can be very useful for you, beacause it’s really convenient to build and deploy the Jekyll site to Github Pages.</strong></p>
-</blockquote>
+<p>下面是三种注册事件处理程序的方法。</p>
 
-<h2 id="遇到的问题">遇到的问题</h2>
+<h3 id="为javascript对象设置一个函数">为JavaScript对象设置一个函数</h3>
 
-<p>这个 Action 对于一些依赖 git-log 的插件并没有很好的支持。因为它会在服务器端部署一个 Jekyll 并用其生成静态文件，然后在 gh-pages分支下新建拷贝所有的新生成的静态文件，从而打乱 git-log。</p>
+<p>页面上的元素对应一个<code class="language-plaintext highlighter-rouge">JavaScript</code>对象，元素的每一个事件对应对象的一个属性，比如：</p>
 
-<p>由于是在服务器端新建的环境，所以 git-log 也就失去了效用从而不在支持 jekyll-last-modified-at 插件。</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">"myForm"</span><span class="nt">&gt;&lt;/form&gt;</span>  
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">var</span> <span class="nx">myForm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">myForm</span><span class="dl">"</span><span class="p">);</span>  
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
 
-<h2 id="解决方法">解决方法</h2>
+<p><code class="language-plaintext highlighter-rouge">myForm</code>对应页面中<code class="language-plaintext highlighter-rouge">id</code>值为<code class="language-plaintext highlighter-rouge">myForm</code>的表单，<code class="language-plaintext highlighter-rouge">myForm.onsubmit</code>对应表单提交事件，<code class="language-plaintext highlighter-rouge">myForm.onreset</code>对应表单重置事件。通过为这些属性设置一个函数类型的值，实现事件处理程序的注册：</p>
 
-<h3 id="方法1-结合github-action">方法1: 结合GitHub Action</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//为表单提交事件注册处理程序 </span>
+<span class="nx">myForm</span><span class="p">.</span><span class="nx">onsubmit</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>  
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">表单提交的事件处理程序</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>  <span class="c1">//为表单重置事件注册处理程序 </span>
+<span class="nx">myForm</span><span class="p">.</span><span class="nx">onreset</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>  
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">表单重置的事件处理程序</span><span class="dl">"</span><span class="p">);</span> 
+<span class="p">}</span>  
+</code></pre></div></div>
 
-<ol>
+<h3 id="设置html标签属性的值为事件处理程序">设置HTML标签属性的值为事件处理程序</h3>
+
+<p>比如，设置<code class="language-plaintext highlighter-rouge">form</code>标签的<code class="language-plaintext highlighter-rouge">onsubmit</code>属性的值为事件处理程序：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">onsubmit=</span><span class="s">"submitForm()"</span><span class="nt">&gt;&lt;/form&gt;</span>  
+<span class="nt">&lt;script&gt;</span>
+    <span class="kd">function</span> <span class="nx">submitForm</span><span class="p">()</span> <span class="p">{</span>   
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">表单提交的事件处理程序</span><span class="dl">"</span><span class="p">);</span> 
+    <span class="p">}</span>  
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>这样提交表单时，就会触发<code class="language-plaintext highlighter-rouge">submitForm()</code>函数。</p>
+
+<h3 id="调用addeventlistener函数">调用addEventListener()函数</h3>
+
+<p>页面元素对应的<code class="language-plaintext highlighter-rouge">JS</code>对象，通过调用<code class="language-plaintext highlighter-rouge">addEventListener()</code>函数也可以注册事件处理程序，函数的第一个参数是事件的类型，第二个参数是事件处理程序：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">"myForm"</span><span class="nt">&gt;&lt;/form&gt;</span>  
+<span class="nt">&lt;script&gt;</span>
+    <span class="kd">var</span> <span class="nx">myForm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">myForm</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">myForm</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">submit</span><span class="dl">"</span><span class="p">,</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>  
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">表单提交中</span><span class="dl">"</span><span class="p">);</span> 
+    <span class="p">});</span>  
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">submit</code>表示这是一个表单提交事件，后面的匿名函数即表单提交的事件处理程序。</p>
+
+<h3 id="编程要求">编程要求</h3>
+
+<p>补全代码片段中<code class="language-plaintext highlighter-rouge">Begin</code>至<code class="language-plaintext highlighter-rouge">End</code>中间的代码，具体要求如下：</p>
+
+<ul>
   <li>
-    <p>博客根目录下新建 <code class="language-plaintext highlighter-rouge">.github/workflow/copy-folder.yml</code> 文件</p>
-
-    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Copy folder to other branch</span>
-   
-<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">]</span>
-   
-<span class="na">jobs</span><span class="pi">:</span>
-  <span class="na">copy</span><span class="pi">:</span>
-    <span class="na">name</span><span class="pi">:</span> <span class="s">Copy my folder</span>
-    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
-    <span class="na">steps</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">copy</span>
-        <span class="na">env</span><span class="pi">:</span>
-          <span class="na">SRC_FOLDER_PATH</span><span class="pi">:</span> <span class="s1">'</span><span class="s">_site'</span>
-          <span class="na">TARGET_BRANCH</span><span class="pi">:</span> <span class="s1">'</span><span class="s">gh-pages'</span>
-        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
-          <span class="s">files=$(find $SRC_FOLDER_PATH -type f) # get the file list</span>
-          <span class="s">git config --global user.name 'GitHub Action'</span>
-          <span class="s">git config --global user.email 'action@github.com'</span>
-          <span class="s">git fetch                         # fetch branches</span>
-          <span class="s">git checkout $TARGET_BRANCH       # checkout to your branch</span>
-          <span class="s">git checkout ${GITHUB_REF##*/} -- $files # copy files from the source branch</span>
-          <span class="s">git add -A</span>
-          <span class="s">git diff-index --quiet HEAD ||  git commit -am "deploy files"  # commit to the repository (ignore if no modification)</span>
-          <span class="s">git push origin $TARGET_BRANCH # push to remote branch</span>
-</code></pre></div>    </div>
-
-    <p>其作用是把 main 分支下的 <code class="language-plaintext highlighter-rouge">SRC_FOLDER_PATH</code> 文件下的内容复制到 <code class="language-plaintext highlighter-rouge">TARGET_BRANCH</code> 分支</p>
-
-    <blockquote>
-      <p>如果博客默认生成在 <code class="language-plaintext highlighter-rouge">_sits</code> 文件夹中，那么你需要将其从 <code class="language-plaintext highlighter-rouge">.gitignore</code>移出。</p>
-    </blockquote>
+    <p>通过<code class="language-plaintext highlighter-rouge">getElementById()</code>获取<code class="language-plaintext highlighter-rouge">id</code>为<code class="language-plaintext highlighter-rouge">button2</code>的按钮，赋值给变量<code class="language-plaintext highlighter-rouge">button2</code>，然后使用<code class="language-plaintext highlighter-rouge">button2.onclick()</code>方法为该按钮绑定事件处理程序<code class="language-plaintext highlighter-rouge">listenButton2()</code>；</p>
   </li>
   <li>
-    <p>在博客根目录下新建文件 <code class="language-plaintext highlighter-rouge">autoGit.sh</code> 用于简化推送。</p>
-
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#! /bin/zsh</span>
-<span class="c"># 自动化推送脚本, 在 ~/.zshrc 里面设置脚本运行的 alias</span>
-<span class="c"># 获取脚本所在绝对路径</span>
-<span class="nv">SHELL_FOLDER</span><span class="o">=</span><span class="si">$(</span><span class="nb">cd</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">dirname</span> <span class="s2">"</span><span class="nv">$0</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span><span class="p">;</span><span class="nb">pwd</span><span class="si">)</span>
-<span class="nb">cd</span> <span class="nv">$SHELL_FOLDER</span>
-   
-<span class="c"># 以生产模式 build 网站</span>
-<span class="nv">JEKYLL_ENV</span><span class="o">=</span>production bundle <span class="nb">exec </span>jekyll build
-git add <span class="nb">.</span>
-<span class="c"># 变量1是传送的参数，也就是本次 git 的摘要</span>
-git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> 
-git push origin
-</code></pre></div>    </div>
+    <p>通过<code class="language-plaintext highlighter-rouge">getElementById()</code>获取<code class="language-plaintext highlighter-rouge">id</code>为<code class="language-plaintext highlighter-rouge">button3</code>的按钮，赋值给变量<code class="language-plaintext highlighter-rouge">button3</code>，然后使用<code class="language-plaintext highlighter-rouge">button3.addEventListener()</code>方法为该按钮绑定<code class="language-plaintext highlighter-rouge">click</code>事件的事件处理程序<code class="language-plaintext highlighter-rouge">listenButton3()</code>。</p>
   </li>
-  <li>
-    <p>给 <code class="language-plaintext highlighter-rouge">autoGit.sh</code> 设置别名，比如如果你用的是 zsh，那么你可以在 <code class="language-plaintext highlighter-rouge">~/zsh.rc</code> 里面插入以下命令</p>
+</ul>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 给向wholon.github.io push文章设置别名</span>
-<span class="nb">alias </span><span class="nv">blog</span><span class="o">=</span><span class="s2">"zsh /Users/holon/Documents/GitHub/wholon.github.io/autoGit.sh"</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>在终端任意位置输入</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"zh"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"button1"</span> <span class="na">onclick=</span><span class="s">"listenButton1()"</span><span class="nt">&gt;</span>按钮1<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"button2"</span><span class="nt">&gt;</span>按钮2<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"button3"</span><span class="nt">&gt;</span>按钮3<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="kd">function</span> <span class="nx">listenButton1</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听button1</span><span class="dl">"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">listenButton2</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听button2</span><span class="dl">"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">listenButton3</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">监听button3</span><span class="dl">"</span><span class="p">);</span>
+        <span class="p">}</span>
+		<span class="c1">//请在此处编写代码</span>
+		<span class="cm">/********** Begin **********/</span>
+        <span class="kd">var</span> <span class="nx">button2</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">button2</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">button2</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="nx">listenButton2</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">button3</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">button3</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">button3</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="nx">listenButton3</span><span class="p">);</span>
+        
+		<span class="cm">/********** End **********/</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blog <span class="s2">"本次博客更新摘要"</span>
-</code></pre></div>    </div>
+<h2 id="文档加载事件">文档加载事件</h2>
 
-    <p>即可推送到远程仓库。</p>
-  </li>
-  <li>
-    <p>成功。</p>
-  </li>
-</ol>
+<p>文档，指的是网页上的所有元素构成的一种格式化文本。文档加载事件指浏览器从服务器下载并渲染完文档后发生的事件。</p>
 
-<blockquote>
-  <p>此方法不行，这种方式只是相当于复制了 <code class="language-plaintext highlighter-rouge">SRC_FOLDER_PATH</code> 整个文件到  <code class="language-plaintext highlighter-rouge">TARGET_BRANCH</code> ，而我们需要 <code class="language-plaintext highlighter-rouge">SRC_FOLDER_PATH</code> 目录展开。</p>
-</blockquote>
+<p>文档加载事件名字为<code class="language-plaintext highlighter-rouge">load</code>。</p>
 
-<h3 id="方法2-结合-jgp-插件">方法2: 结合 jgp 插件</h3>
+<h3 id="文档加载事件-1">文档加载事件</h3>
 
-<ol>
-  <li>
-    <p>在本地编译静态文件。有一个很好用的 gem 插件 <a href="https://www.yegor256.com/2014/06/24/jekyll-github-deploy.html">Deploy Jekyll to GitHub Pages</a>。</p>
+<p>当文档加载完成后，就会触发文档加载事件监听程序（即上一关所说的事件处理程序），一般我们会在这个时候监测用户浏览器的类型、版本，从而加载不同的脚本。</p>
 
-    <p>它会从运行插件所在的目录推断远程仓库地址，然后从选择的分支拉取文件到本地，然后本地编译，最后再推送到 pages 分支。可以用 <code class="language-plaintext highlighter-rouge">jgd -h</code> 查看帮助。</p>
-  </li>
-  <li>
-    <p>这种方法也能实现自定义插件。但是看的出来，需要先把本地修改的文件推送到远程再使用这个插件拉取，十分的费力，不建议使用。</p>
-  </li>
-</ol>
+<p>在大多数情况下，文档记载事件绑定在<code class="language-plaintext highlighter-rouge">body</code>元素上，表示网页主体加载完成后触发该事件，也有少数情况下绑定在<code class="language-plaintext highlighter-rouge">image</code>等元素上，表示相关的元素加载完成后触发该事件。</p>
 
-<p>方法3: 使用 Travis</p>
+<p>文档加载完成后监测用户的浏览器类型并在控制台打印：</p>
 
-<h3 id="等待文章开头提到的-githubaction优化支持-git-log">等待文章开头提到的 GitHubAction优化支持 git-log</h3>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body</span> <span class="na">onload=</span><span class="s">"detectBrowser()"</span><span class="nt">&gt;&lt;/body&gt;</span>  
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">function</span> <span class="nx">detectBrowser</span><span class="p">(){</span>    
+    <span class="kd">var</span> <span class="nx">userAgent</span> <span class="o">=</span> <span class="nb">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">;</span> <span class="c1">//取得浏览器的userAgent字符串   </span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">"</span><span class="s2">Opera</span><span class="dl">"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//判断是否是Opera浏览器    </span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Opera</span><span class="dl">"</span><span class="p">);</span>   
+    <span class="p">};</span>   
+    <span class="k">if</span> <span class="p">(</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">"</span><span class="s2">Firefox</span><span class="dl">"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="c1">//判断是否是Firefox浏览器     </span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Firefox</span><span class="dl">"</span><span class="p">);</span>  
+    <span class="p">}</span>    
+    <span class="k">if</span> <span class="p">(</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">"</span><span class="s2">Chrome</span><span class="dl">"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="c1">//判断是否是Chrome浏览器    </span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Chrome</span><span class="dl">"</span><span class="p">);</span>   
+    <span class="p">}</span>    
+    <span class="k">if</span> <span class="p">(</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">"</span><span class="s2">Safari</span><span class="dl">"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">//判断是否是Safari浏览器    </span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Safari</span><span class="dl">"</span><span class="p">);</span>   
+    <span class="p">}</span>    
+    <span class="k">if</span> <span class="p">(</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">"</span><span class="s2">compatible</span><span class="dl">"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nx">userAgent</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">"</span><span class="s2">MSIE</span><span class="dl">"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>      
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">IE</span><span class="dl">"</span><span class="p">);</span>   
+    <span class="p">};</span> 
+<span class="p">}</span>  
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<h3 id="编程要求-1">编程要求</h3>
+
+<p>补全代码片段中<code class="language-plaintext highlighter-rouge">Begin</code>至<code class="language-plaintext highlighter-rouge">End</code>中间的代码，具体要求如下：</p>
+
+<ul>
+  <li>在文档加载完成后（即文档加载事件发生后），在控制台输出<code class="language-plaintext highlighter-rouge">Welcome!</code>；</li>
+  <li>字符串放在英文双引号内。</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">onload=</span><span class="s">"loadEvent()"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="kd">function</span> <span class="nx">loadEvent</span><span class="p">()</span> <span class="p">{</span>
+		<span class="c1">//请在此处编写代码</span>
+		<span class="cm">/********** Begin **********/</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Welcome!</span><span class="dl">"</span><span class="p">);</span>
+        
+		<span class="cm">/********** End **********/</span>
+        <span class="p">}</span>       
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="鼠标事件">鼠标事件</h2>
+
+<p>鼠标是计算机最常见的外设之一，鼠标事件指用户操作鼠标的过程中触发的事件。</p>
+
+<h3 id="常见的鼠标事件">常见的鼠标事件</h3>
+
+<p>说到鼠标事件，最常见的无非是鼠标单击事件<code class="language-plaintext highlighter-rouge">click</code>，很多按钮都会绑定一个<code class="language-plaintext highlighter-rouge">onclick()</code>函数，表示当用户单击鼠标后会执行的函数。其实还有很多鼠标事件，比如双击鼠标、按下鼠标等，下面是一个总结：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>事件处理函数</th>
+      <th>触发条件</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>click</td>
+      <td>onclick</td>
+      <td>按下并且释放鼠标</td>
+    </tr>
+    <tr>
+      <td>dbclick</td>
+      <td>ondbclick</td>
+      <td>双击鼠标</td>
+    </tr>
+    <tr>
+      <td>mousedown</td>
+      <td>onmousedown</td>
+      <td>按下鼠标按键</td>
+    </tr>
+    <tr>
+      <td>mouseup</td>
+      <td>onmouseup</td>
+      <td>释放鼠标按键</td>
+    </tr>
+    <tr>
+      <td>mousemove</td>
+      <td>onmousemove</td>
+      <td>移动鼠标</td>
+    </tr>
+    <tr>
+      <td>mouseover</td>
+      <td>onmouseover</td>
+      <td>鼠标进入元素</td>
+    </tr>
+    <tr>
+      <td>mouseout</td>
+      <td>onmouseout</td>
+      <td>鼠标离开元素</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>为页面上的某一个元素绑定一个鼠标事件，当用户在该元素上<strong>用鼠标</strong>执行了<strong>指定的动作</strong>后，就会触发指定的鼠标事件处理程序，开始执行函数。</p>
+
+<h3 id="鼠标的按下和释放">鼠标的按下和释放</h3>
+
+<p><code class="language-plaintext highlighter-rouge">mousedowm</code>表示鼠标按下的事件，<code class="language-plaintext highlighter-rouge">onmousedown</code>是用户按下鼠标后会触发的事件处理程序；<code class="language-plaintext highlighter-rouge">mouseup</code>表示鼠标按键释放的事件，<code class="language-plaintext highlighter-rouge">onmouseup</code>表示用户释放鼠标按键后会触发的事件处理函数。</p>
+
+<p>下面是一个例子，页面上有一行文字“点我”，用户在文字上按下鼠标按键后，文字会变成“鼠标已经按下”，而用户释放鼠标后，文字会变成“鼠标已经释放”。</p>
+
+<p><code class="language-plaintext highlighter-rouge">html</code>代码如下：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>   
+    <span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"p"</span> <span class="na">onmousedown=</span><span class="s">"downfunc()"</span> <span class="na">onmouseup=</span><span class="s">"upfunc()"</span><span class="nt">&gt;</span>    
+        点我  
+    <span class="nt">&lt;/p&gt;</span> 
+<span class="nt">&lt;/body&gt;</span>  
+</code></pre></div></div>
+
+<p>页面的效果如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121754348.png" alt="img" /></p>
+
+<p>事件处理函数的代码如下：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">downfunc</span><span class="p">()</span> <span class="p">{</span>   
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">p</span><span class="dl">"</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">鼠标已经按下</span><span class="dl">"</span><span class="p">;</span> 
+<span class="p">}</span> 
+<span class="kd">function</span> <span class="nx">upfunc</span><span class="p">()</span> <span class="p">{</span>  
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">p</span><span class="dl">"</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">鼠标已经释放</span><span class="dl">"</span><span class="p">;</span> 
+<span class="p">}</span>  
+</code></pre></div></div>
+
+<p>用户在文字上面先按下鼠标，再释放鼠标，效果如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121754266.gif" alt="img" /></p>
+
+<h3 id="编程要求-2">编程要求</h3>
+
+<p>补全代码片段中<code class="language-plaintext highlighter-rouge">Begin</code>至<code class="language-plaintext highlighter-rouge">End</code>中间的代码，具体要求如下：</p>
+
+<ul>
+  <li>第一步：通过<code class="language-plaintext highlighter-rouge">id</code>获取<code class="language-plaintext highlighter-rouge">button</code>（按钮）元素，赋给变量<code class="language-plaintext highlighter-rouge">myButton</code>；</li>
+  <li>第二步：通过<code class="language-plaintext highlighter-rouge">addEventListener</code>为按钮绑定一个事件处理程序，用来处理按钮的鼠标单击事件；</li>
+  <li>第三步：在事件处理程序中，通过<code class="language-plaintext highlighter-rouge">id</code>获取<code class="language-plaintext highlighter-rouge">p</code>元素，赋给变量<code class="language-plaintext highlighter-rouge">myElement</code>，然后设置当按钮被单击后，<code class="language-plaintext highlighter-rouge">p</code>里面的文本被改变为<code class="language-plaintext highlighter-rouge">clicked</code>；</li>
+  <li>字符串类型的参数用<code class="language-plaintext highlighter-rouge">""</code>包含在内；</li>
+  <li>请严格按照步骤操作。</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"p"</span><span class="nt">&gt;</span>
+            text
+        <span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"but"</span><span class="nt">&gt;</span>
+            button
+        <span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+			<span class="c1">//请在此处编写代码</span>
+			<span class="cm">/********** Begin **********/</span>
+            <span class="kd">var</span> <span class="nx">myButton</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">but</span><span class="dl">"</span><span class="p">);</span>
+            <span class="nx">myButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">myElement</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">p</span><span class="dl">"</span><span class="p">);</span>
+                <span class="nx">myElement</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">clicked</span><span class="dl">"</span><span class="p">;</span>
+            <span class="p">})</span>
+            
+			<span class="cm">/********** End **********/</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="键盘事件">键盘事件</h2>
+
+<p>键盘事件，是指用户敲击键盘上的按键所代表的事件。</p>
+
+<p>键盘事件有三种：</p>
+
+<ul>
+  <li>按键按下：<code class="language-plaintext highlighter-rouge">keydown</code>，用户按下键盘上的键；</li>
+  <li>按键释放：<code class="language-plaintext highlighter-rouge">keyup</code>，用户释放按键；</li>
+  <li>点击按键：<code class="language-plaintext highlighter-rouge">keypress</code>，用户按下并且释放了按键。</li>
+</ul>
+
+<h3 id="点击按键">点击按键</h3>
+
+<p><code class="language-plaintext highlighter-rouge">keypress</code>表示用户点击某个按键的事件，该事件会触发<code class="language-plaintext highlighter-rouge">onkeypress()</code>事件处理程序，<code class="language-plaintext highlighter-rouge">onkeypress()</code>有一个<code class="language-plaintext highlighter-rouge">event</code>参数，其中<code class="language-plaintext highlighter-rouge">event.which</code>表示点击的按键的编码。这个编码是该按键的<code class="language-plaintext highlighter-rouge">unicode</code>编码。</p>
+
+<p>需要注意的是，按下键盘上的<code class="language-plaintext highlighter-rouge">A</code>时，<code class="language-plaintext highlighter-rouge">keyCode</code>值是<code class="language-plaintext highlighter-rouge">a</code>的编码，只有同时按下<code class="language-plaintext highlighter-rouge">shift</code>和<code class="language-plaintext highlighter-rouge">A</code>，<code class="language-plaintext highlighter-rouge">keyCode</code>的值才是<code class="language-plaintext highlighter-rouge">A</code>的编码。</p>
+
+<p>下面是一个例子，当用户点击键盘上的按键时，会打印出该按键的编码值：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body</span> <span class="na">onkeypress=</span><span class="s">"keyEvent(event)"</span><span class="nt">&gt;</span>   
+    <span class="nt">&lt;p&gt;</span>          keypress event      <span class="nt">&lt;/p&gt;</span> 
+<span class="nt">&lt;/body&gt;</span> 
+<span class="nt">&lt;script&gt;</span>   
+    <span class="kd">function</span> <span class="nx">keyEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>    
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">编码是:</span><span class="dl">"</span><span class="o">+</span><span class="nx">event</span><span class="p">.</span><span class="nx">which</span><span class="p">);</span>  
+    <span class="p">}</span> 
+<span class="nt">&lt;/script&gt;</span>  
+</code></pre></div></div>
+
+<p>比如我们按下<code class="language-plaintext highlighter-rouge">B</code>时，控制台如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121754381.png" alt="img" /></p>
+
+<p>同时按下<code class="language-plaintext highlighter-rouge">B</code>和<code class="language-plaintext highlighter-rouge">shift</code>，控制台如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121754180.png" alt="img" /></p>
+
+<h3 id="按下按键">按下按键</h3>
+
+<p><code class="language-plaintext highlighter-rouge">keydown</code>表示用户按下按键，同上面一样，它也有一个<code class="language-plaintext highlighter-rouge">event.which</code>表示按下的按键的编码。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body</span> <span class="na">onkeydown=</span><span class="s">"downEvent(event)"</span><span class="nt">&gt;</span> 
+<span class="nt">&lt;/body&gt;</span> 
+<span class="nt">&lt;script&gt;</span>    
+    <span class="kd">function</span> <span class="nx">downEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>       
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">编码是:</span><span class="dl">"</span><span class="o">+</span><span class="nx">event</span><span class="p">.</span><span class="nx">which</span><span class="p">);</span>   
+    <span class="p">}</span> 
+<span class="nt">&lt;/script&gt;</span>  
+</code></pre></div></div>
+
+<p>如果你按下按键后没有释放，控制台将会一直进行打印，比如按下的是<code class="language-plaintext highlighter-rouge">1</code>，控制台的打印结果如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121754136.png" alt="img" /></p>
+
+<p>灰色的数字<code class="language-plaintext highlighter-rouge">20</code>表示这条信息已经打印了<code class="language-plaintext highlighter-rouge">20</code>次。</p>
+
+<h3 id="释放按键">释放按键</h3>
+
+<p><code class="language-plaintext highlighter-rouge">keyup</code>表示用户释放按键，可以有一个参数<code class="language-plaintext highlighter-rouge">event</code>，<code class="language-plaintext highlighter-rouge">event.which</code>表示释放的按键的编码。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body</span> <span class="na">onkeyup=</span><span class="s">"upEvent(event)"</span><span class="nt">&gt;</span> 
+<span class="nt">&lt;/body&gt;</span> 
+<span class="nt">&lt;script&gt;</span>   
+    <span class="kd">function</span> <span class="nx">upEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>    
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">编码是:</span><span class="dl">"</span><span class="o">+</span><span class="nx">event</span><span class="p">.</span><span class="nx">which</span><span class="p">);</span>  
+    <span class="p">}</span> 
+<span class="nt">&lt;/script&gt;</span>  
+</code></pre></div></div>
+
+<p>比如，当用户按下<code class="language-plaintext highlighter-rouge">1</code>时，控制台没有输出，释放<code class="language-plaintext highlighter-rouge">1</code>后，控制台输出如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121755219.png" alt="img" /></p>
+
+<h3 id="编程要求-3">编程要求</h3>
+
+<p>补全代码片段中<code class="language-plaintext highlighter-rouge">Begin</code>至<code class="language-plaintext highlighter-rouge">End</code>中间的代码，具体要求如下，请按步骤操作：</p>
+
+<ul>
+  <li>获取用户按下的按键的编码，赋值给变量<code class="language-plaintext highlighter-rouge">code</code>；</li>
+  <li>判断<code class="language-plaintext highlighter-rouge">code</code>的值是否为<code class="language-plaintext highlighter-rouge">13</code>，是则在控制台打印<code class="language-plaintext highlighter-rouge">cannot use enter</code>。</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body</span> <span class="na">onkeypress=</span><span class="s">"pressEvent(event)"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+        	<span class="kd">function</span> <span class="nx">pressEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+				<span class="c1">//请在此处编写代码</span>
+				<span class="cm">/********** Begin **********/</span>
+                <span class="kd">var</span> <span class="nx">code</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">which</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">13</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">cannot use enter</span><span class="dl">"</span><span class="p">);</span>
+                <span class="p">}</span>
+                
+                
+				<span class="cm">/********** End **********/</span>
+    		<span class="p">}</span>          
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="表单事件">表单事件</h2>
+
+<p>表单，即<code class="language-plaintext highlighter-rouge">form</code>，是页面最基本的元素之一，通常，用户的输入会放置在表单里面，然后提交给后台。</p>
+
+<p><code class="language-plaintext highlighter-rouge">form</code>有很多子元素，分别表示不同类型的用户输入：例如<code class="language-plaintext highlighter-rouge">input</code>表示文本等类型；<code class="language-plaintext highlighter-rouge">select</code>表示下拉列表；<code class="language-plaintext highlighter-rouge">button</code>表示按钮。</p>
+
+<p>这些子元素可以被绑定一些事件，比如<code class="language-plaintext highlighter-rouge">change</code>表示用户的输入发生了改变。这些事件是表单元素特有的。</p>
+
+<h3 id="change事件">change事件</h3>
+
+<p><code class="language-plaintext highlighter-rouge">change</code>事件表示当前元素<strong>失去焦点</strong>并且元素的<strong>内容发生了改变</strong>。失去焦点，指光标不在该元素上，比如光标本来在文本输入框里面，当用户在页面的其他地方点击了鼠标，文本框就会失去焦点。</p>
+
+<p>下面是一个例子：当用户输入文本，并且鼠标点击页面上的其他地方后，我们将在控制台打印出用户的输入。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>   
+    <span class="nt">&lt;form&gt;</span>     
+        <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"t1"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">onchange=</span><span class="s">"changeEve()"</span><span class="nt">/&gt;</span>   
+    <span class="nt">&lt;/form&gt;</span>     
+    <span class="nt">&lt;script&gt;</span>       
+        <span class="kd">function</span> <span class="nx">changeEve</span><span class="p">()</span> <span class="p">{</span>       
+            <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">t1</span><span class="dl">"</span><span class="p">);</span> 
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>    
+        <span class="p">}</span>   
+    <span class="nt">&lt;/script&gt;</span> 
+<span class="nt">&lt;/body&gt;</span>  
+</code></pre></div></div>
+
+<p>比如当用户输入<code class="language-plaintext highlighter-rouge">I changed</code>后，在页面的其他地方点击鼠标，控制台如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121755895.png" alt="img" /></p>
+
+<h3 id="select事件">select事件</h3>
+
+<p><code class="language-plaintext highlighter-rouge">select</code>事件：文本框中的文本被用户选中时发生。</p>
+
+<p>只能作用在<code class="language-plaintext highlighter-rouge">&lt;input type="text"&gt;</code>的文本框里面，可以用<code class="language-plaintext highlighter-rouge">window.getSelection().toString()</code>获取选择的文本。</p>
+
+<p>下面的例子：当用户选择了一段文本后，我们在控制台打印出用户选择的文本：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>   
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">"赵钱孙李，周吴郑王"</span> <span class="na">onselect=</span><span class="s">"selectEve()"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;script&gt;</span>     
+        <span class="kd">function</span> <span class="nx">selectEve</span><span class="p">()</span> <span class="p">{</span>  
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">getSelection</span><span class="p">().</span><span class="nx">toString</span><span class="p">());</span>    
+        <span class="p">}</span>    
+    <span class="nt">&lt;/script&gt;</span> 
+<span class="nt">&lt;/body&gt;</span>  
+</code></pre></div></div>
+
+<p>比如我们选择了<code class="language-plaintext highlighter-rouge">郑王</code>，然后松开鼠标，控制台的输出如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121755517.png" alt="img" /></p>
+
+<h3 id="submit事件">submit事件</h3>
+
+<p>表单的提交事件。</p>
+
+<p>表单里面包含了用户输入的信息，最终要传到后台的服务器进行处理，这样就有一个表单的提交过程，<code class="language-plaintext highlighter-rouge">submit</code>即表单提交事件。</p>
+
+<p>通常情况下，在<code class="language-plaintext highlighter-rouge">submit</code>的事件处理函数中，校验用户的输入是否符合要求，比如密码的长度够不够。</p>
+
+<p>下面的例子，用户提交表单时，用<code class="language-plaintext highlighter-rouge">js</code>校验用户输入的密码长度是否达到<code class="language-plaintext highlighter-rouge">6</code>位。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>   
+    <span class="nt">&lt;form</span> <span class="na">onsubmit=</span><span class="s">"subEve()"</span><span class="nt">&gt;</span>   
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">id=</span><span class="s">"pw"</span><span class="nt">/&gt;</span>     
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"提交"</span> <span class="nt">/&gt;</span>   
+    <span class="nt">&lt;/form&gt;</span>   
+    <span class="nt">&lt;script&gt;</span>    
+        <span class="kd">function</span> <span class="nx">subEve</span><span class="p">()</span> <span class="p">{</span>     
+            <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">pw</span><span class="dl">"</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="nx">content</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="p">{</span>       
+                <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">密码不可以小于6位</span><span class="dl">"</span><span class="p">);</span>   
+            <span class="p">}</span>   
+        <span class="p">}</span>   
+    <span class="nt">&lt;/script&gt;</span> 
+<span class="nt">&lt;/body&gt;</span>  
+</code></pre></div></div>
+
+<p>这时，用户在密码输入框输入<code class="language-plaintext highlighter-rouge">123</code>，点击提交，页面会弹出一个警告框如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121755829.png" alt="img" /></p>
+
+<h3 id="编程要求-4">编程要求</h3>
+
+<p>补全代码片段中<code class="language-plaintext highlighter-rouge">Begin</code>至<code class="language-plaintext highlighter-rouge">End</code>中间的代码，具体要求如下：</p>
+
+<ul>
+  <li>通过<code class="language-plaintext highlighter-rouge">id</code>属性获取<code class="language-plaintext highlighter-rouge">id</code>为<code class="language-plaintext highlighter-rouge">input</code>的文本框，赋值给变量<code class="language-plaintext highlighter-rouge">ele</code>；</li>
+  <li>获取输入框中当前文本的长度，赋值给变量<code class="language-plaintext highlighter-rouge">len</code>；</li>
+  <li>判断<code class="language-plaintext highlighter-rouge">len</code>的值是否小于等于<code class="language-plaintext highlighter-rouge">12</code>，是则打印出<code class="language-plaintext highlighter-rouge">too short input</code>；</li>
+  <li>字符串参数务必置于双引号之内。</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+    	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    	<span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+    	<span class="nt">&lt;form&gt;</span>
+        	<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"input"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">onchange=</span><span class="s">"changeEvent()"</span> <span class="nt">/&gt;</span>
+			<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"input2"</span> <span class="na">type=</span><span class="s">"text"</span>  <span class="nt">/&gt;</span>
+    	<span class="nt">&lt;/form&gt;</span>
+    	<span class="nt">&lt;script&gt;</span>
+    		<span class="kd">function</span> <span class="nx">changeEvent</span><span class="p">()</span> <span class="p">{</span>
+			<span class="c1">//请在此处编写代码</span>
+			<span class="cm">/********** Begin **********/</span>
+            <span class="kd">var</span> <span class="nx">ele</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">input</span><span class="dl">"</span><span class="p">);</span>
+			<span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">ele</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="nx">len</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">)</span> <span class="p">{</span>
+				<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">too short input</span><span class="dl">"</span><span class="p">);</span>
+			<span class="p">}</span>
+            
+            
+			<span class="cm">/********** End **********/</span>
+    		<span class="p">}</span>
+    	<span class="nt">&lt;/script&gt;</span>
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="拖动事件">拖动事件</h2>
+
+<h3 id="元素的拖放">元素的拖放</h3>
+
+<p>鼠标指向元素，按下鼠标，然后移动鼠标到另一个地方释放，即拖动元素。</p>
+
+<p>相比<code class="language-plaintext highlighter-rouge">html4</code>以及之前的版本，<code class="language-plaintext highlighter-rouge">html5</code>增加了一个全新的属性<code class="language-plaintext highlighter-rouge">draggable</code>，表示元素是否支持拖动，默认的情况下，图片和超链接元素是支持拖动的，其他元素不支持。</p>
+
+<p>将元素的<code class="language-plaintext highlighter-rouge">draggable</code>属性设置为<code class="language-plaintext highlighter-rouge">true</code>，即表示元素支持拖动。如：下面设置了<code class="language-plaintext highlighter-rouge">p</code>元素支持拖动：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"p1"</span> <span class="na">draggable=</span><span class="s">"true"</span><span class="nt">&gt;</span>  
+    元素支持鼠标的拖动 
+<span class="nt">&lt;/p&gt;</span>  
+</code></pre></div></div>
+
+<p>也可以用下面的<code class="language-plaintext highlighter-rouge">JavaScript</code>代码设置<code class="language-plaintext highlighter-rouge">p</code>为可拖动的：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">p1</span><span class="dl">"</span><span class="p">).</span><span class="nx">draggable</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>  
+</code></pre></div></div>
+
+<h3 id="ondrag">ondrag</h3>
+
+<p><code class="language-plaintext highlighter-rouge">ondrag()</code>是元素正在拖动时触发的事件处理程序。如果元素一直在拖动的过程中，<code class="language-plaintext highlighter-rouge">ondrag()</code>会每隔<code class="language-plaintext highlighter-rouge">350ms</code>被触发一次，比如，在下面的例子中，我们一直在拖动<code class="language-plaintext highlighter-rouge">p</code>元素，控制台会一直打印拖动的信息：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>    
+    <span class="nt">&lt;div&gt;</span>     
+        <span class="nt">&lt;p</span> <span class="na">ondrag=</span><span class="s">"dragging(event)"</span> <span class="na">draggable=</span><span class="s">"true"</span><span class="nt">&gt;</span>拖动我!<span class="nt">&lt;/p&gt;</span>  
+    <span class="nt">&lt;/div&gt;</span>   
+    <span class="nt">&lt;script&gt;</span>   
+        <span class="kd">function</span> <span class="nx">dragging</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>    
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">正在拖动</span><span class="dl">"</span><span class="p">);</span>     
+        <span class="p">}</span>    
+    <span class="nt">&lt;/script&gt;</span> 
+<span class="nt">&lt;/body&gt;</span>  
+</code></pre></div></div>
+
+<p>拖动不放下，控制台如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121755359.png" alt="img" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">111</code>表示这条信息已经打印了<code class="language-plaintext highlighter-rouge">111</code>次。</p>
+
+<h3 id="ondragstart">ondragstart</h3>
+
+<p>用户开始拖动元素时触发，可以带有一个<code class="language-plaintext highlighter-rouge">event</code>参数，其中的<code class="language-plaintext highlighter-rouge">event.target</code>表示拖动的元素，比如，下面的例子中，用户开始拖动元素时，触发了<code class="language-plaintext highlighter-rouge">ondragstart</code>程序，我们尝试打印一下<code class="language-plaintext highlighter-rouge">event.target</code>的内容：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>    
+    <span class="nt">&lt;p</span> <span class="na">ondragstart=</span><span class="s">"dragStart(event)"</span>  <span class="na">draggable=</span><span class="s">"true"</span><span class="nt">&gt;</span>拖动我!<span class="nt">&lt;/p&gt;</span>      
+    <span class="nt">&lt;script&gt;</span>     
+        <span class="kd">function</span> <span class="nx">dragStart</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>    
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>    
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">你要拖动的文本的内容是：</span><span class="dl">"</span><span class="o">+</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">innerText</span><span class="p">);</span> 
+        <span class="p">}</span>   
+    <span class="nt">&lt;/script&gt;</span> 
+<span class="nt">&lt;/body&gt;</span>  
+</code></pre></div></div>
+
+<p>拖动文本，效果如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121755965.png" alt="img" /></p>
+
+<p>第一行是要拖动的文本元素，第二行显示了文本里面的内容。</p>
+
+<h3 id="编程要求-5">编程要求</h3>
+
+<p>补全代码片段中<code class="language-plaintext highlighter-rouge">Begin</code>至<code class="language-plaintext highlighter-rouge">End</code>中间的代码，具体要求如下：</p>
+
+<ul>
+  <li>在第一个<code class="language-plaintext highlighter-rouge">Begin</code>和<code class="language-plaintext highlighter-rouge">End</code>中间设置<code class="language-plaintext highlighter-rouge">p</code>元素为可拖动的；</li>
+  <li>在第二个<code class="language-plaintext highlighter-rouge">Begin</code>和<code class="language-plaintext highlighter-rouge">End</code>中间使用<code class="language-plaintext highlighter-rouge">event.target.innerText</code>在控制台打印<code class="language-plaintext highlighter-rouge">p</code>元素里面的内容；</li>
+  <li>要求必须按照以上的步骤执行。</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+        	<span class="c">&lt;!-- 请在此处编写代码 --&gt;</span>
+            <span class="c">&lt;!---------Begin---------&gt;</span>
+            <span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"p1"</span> <span class="na">ondrag=</span><span class="s">"dragging(event)"</span> <span class="na">draggable=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/p&gt;</span>
+            <span class="c">&lt;!---------End---------&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+            <span class="kd">function</span> <span class="nx">dragging</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+			<span class="cm">/********** Begin **********/</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">innerText</span><span class="p">);</span>
+            
+            
+			<span class="cm">/********** End **********/</span>
+            <span class="p">}</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+
+</code></pre></div></div>
+
+<h2 id="事件冒泡">事件冒泡</h2>
+
+<h3 id="文档树">文档树</h3>
+
+<p>在前面的学习中，我们说过，文档元素之间有层次关系，比如：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>    
+    <span class="nt">&lt;div</span> <span class="na">onclick=</span><span class="s">"clickParent()"</span><span class="nt">&gt;</span>    
+        <span class="nt">&lt;p</span> <span class="na">onclick=</span><span class="s">"clickChild()"</span><span class="nt">&gt;</span>点我<span class="nt">&lt;/p&gt;</span>     
+        <span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"p"</span><span class="nt">&gt;</span>content<span class="nt">&lt;/p&gt;</span>   
+    <span class="nt">&lt;/div&gt;</span>   
+    <span class="nt">&lt;script&gt;</span>      
+        <span class="kd">function</span> <span class="nx">clickChild</span><span class="p">()</span> <span class="p">{</span>        
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">子</span><span class="dl">"</span><span class="p">);</span>     
+        <span class="p">}</span>      
+        <span class="kd">function</span> <span class="nx">clickParent</span><span class="p">()</span> <span class="p">{</span>    
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">父</span><span class="dl">"</span><span class="p">);</span>     
+        <span class="p">}</span> 
+    <span class="nt">&lt;/script&gt;</span> 
+<span class="nt">&lt;/body&gt;</span>  
+</code></pre></div></div>
+
+<p>对应这样一个模型：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121755260.png" alt="img" /></p>
+
+<p>其中，箭头的方向是子节点的方向，而反过来则是父节点的方向。比如，两个<code class="language-plaintext highlighter-rouge">p</code>元素的父节点（父元素）都是<code class="language-plaintext highlighter-rouge">div</code>元素。</p>
+
+<h3 id="事件冒泡-1">事件冒泡</h3>
+
+<p>在上面的例子中，点击<code class="language-plaintext highlighter-rouge">p</code>元素里面的内容，显然会触发<code class="language-plaintext highlighter-rouge">p</code>元素的事件处理程序<code class="language-plaintext highlighter-rouge">clickChild</code>。然后，因为<code class="language-plaintext highlighter-rouge">p</code>元素是放在<code class="language-plaintext highlighter-rouge">div</code>里面的，点击<code class="language-plaintext highlighter-rouge">p</code>元素相当于点击了<code class="language-plaintext highlighter-rouge">div</code>元素，会触发<code class="language-plaintext highlighter-rouge">div</code>的事件处理程序<code class="language-plaintext highlighter-rouge">clickParent</code>，这个过程被称为<strong>事件冒泡</strong>。</p>
+
+<p>事件冒泡是指，某个事件触发了某个元素的事件处理程序，接下来，就会自动沿着节点树往<strong>根节点</strong>的方向依次触发<strong>经过的路径</strong>上的所有元素的某个事件的处理程序。</p>
+
+<p>比如上面的例子中，用鼠标点击<code class="language-plaintext highlighter-rouge">p</code>标签里面的文字<code class="language-plaintext highlighter-rouge">点我</code>，控制台的打印结果如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121755470.png" alt="img" /></p>
+
+<p>第一行是子元素的<code class="language-plaintext highlighter-rouge">click</code>事件的事件处理程序的输出，第二行是父元素的，这里有一个先后的顺序，即从子元素一直到根节点。</p>
+
+<h3 id="事件冒泡的控制">事件冒泡的控制</h3>
+
+<p>事件冒泡不是所有的时候都受到欢迎，有的时候需要控制它的发生，使用<code class="language-plaintext highlighter-rouge">event.stopPropagation()</code>即可。</p>
+
+<p>比如，对于上面的例子，我们在子元素的事件处理程序<code class="language-plaintext highlighter-rouge">clickChild()</code>的最后一行添加一行代码：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">clickChild</span><span class="p">()</span> <span class="p">{</span>  
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">子</span><span class="dl">"</span><span class="p">);</span>  
+    <span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">?</span><span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">cancelBubble</span><span class="o">=</span><span class="kc">true</span><span class="p">:</span><span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span> 
+<span class="p">}</span>  
+</code></pre></div></div>
+
+<p>这个时候再次点击<code class="language-plaintext highlighter-rouge">p</code>里面的内容，控制台的输出如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204121756145.png" alt="img" /></p>
+
+<p>可以看出，事件没有冒泡到父元素上面。所以，想要在哪里停止事件的冒泡，就在它的子元素的事件处理程序的最后调用<code class="language-plaintext highlighter-rouge">event.stopPropagation()</code>即可。</p>
+
+<h3 id="编程要求-6">编程要求</h3>
+
+<p>补全代码片段中<code class="language-plaintext highlighter-rouge">Begin</code>至<code class="language-plaintext highlighter-rouge">End</code>中间的代码，具体要求如下：</p>
+
+<ul>
+  <li>在<code class="language-plaintext highlighter-rouge">id</code>为<code class="language-plaintext highlighter-rouge">div2</code>的元素上面阻止<code class="language-plaintext highlighter-rouge">click</code>事件的冒泡。</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"div1"</span> <span class="na">onclick=</span><span class="s">"click1()"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"div2"</span> <span class="na">onclick=</span><span class="s">"click2()"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"p"</span> <span class="na">onclick=</span><span class="s">"click3()"</span><span class="nt">&gt;</span>click me!<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="kd">function</span> <span class="nx">click1</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">root</span><span class="dl">"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">click2</span><span class="p">()</span> <span class="p">{</span>
+			<span class="c1">//请在此处编写代码</span>
+			<span class="cm">/********** Begin **********/</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">?</span><span class="nb">window</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">cancelBubble</span><span class="o">=</span><span class="kc">true</span><span class="p">:</span><span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+            
+			<span class="cm">/********** End **********/</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">parent</span><span class="dl">"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">click3</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">child</span><span class="dl">"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
 </div><div class="d-print-none"><footer class="article__footer">
   <!-- 原 更新时间 位置 --><!-- start custom article footer snippet -->
 
@@ -729,7 +1417,7 @@ git push origin
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/blog/2022/04/18/Jekyll%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E7%9A%84url%E6%A0%BC%E5%BC%8F/">Jekyll自动生成的url格式</a></div><div class="next"><span>下篇</span><a href="/posts/cs/lang/css/2022/04/18/CSS%E6%96%87%E5%AD%97%E4%B8%8E%E5%AD%97%E4%BD%93%E6%A0%B7%E5%BC%8F/">CSS文字与字体样式</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/cs/lang/css/2022/04/21/%E4%BD%BF%E7%94%A8flex%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F/">使用flex布局实现顶部导航栏</a></div></div></div>
 
 </div>
 
@@ -1524,10 +2212,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         $("#site-view").text(view);
       });
       // 文章浏览量增加
-      var key =   '在GitHub pages中使用自定义插件';
-      var title = "在GitHub pages中使用自定义插件";
+      var key =   'JavaScript事件处理';
+      var title = "JavaScript事件处理";
       pageview.increase(key, key, function(view) {
-        $("[data-page-key='在GitHub pages中使用自定义插件']").text(view);
+        $("[data-page-key='JavaScript事件处理']").text(view);
       });
     });
   </script><!-- start custom pageview snippet (for the post) -->
@@ -1627,10 +2315,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         $("#site-view").text(view);
       });
       // 文章浏览量增加
-      var key =   '在GitHub pages中使用自定义插件';
-      var title = "在GitHub pages中使用自定义插件";
+      var key =   'JavaScript事件处理';
+      var title = "JavaScript事件处理";
       pageview.increase(key, key, function(view) {
-        $("[data-page-key='在GitHub pages中使用自定义插件']").text(view);
+        $("[data-page-key='JavaScript事件处理']").text(view);
       });
     });
   </script>-->

@@ -499,6 +499,312 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
 <!-- end custom main top snippet -->
 <article itemscope itemtype="http://schema.org/WebPage"><header style="display:none;"><h1>主页</h1></header><meta itemprop="headline" content="主页"><meta itemprop="author" content="Holon"/><div class="js-article-content"><div class="layout--articles"><!-- 文章摘要 --><!-- 文章摘要类型 --><div class="article-list items items--divided"><article class="item"><div class="item__content">
+          <header><a href="/posts/cs/lang/javascript/2022/04/21/JavaScript%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/"><h2 itemprop="headline" class="item__header">JavaScript事件处理</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">注册事件处理程序
+
+页面上的每一个元素，会发生几种不同的事件，比如表单元素，可能会发生提交事件，也可能发生重置事件，我们需要为每一个事件绑定一个事件处理程序，也叫为事件注册事件处理程序。
+
+下面是三种注册事件处理程序的方法。
+
+为JavaScript对象设置一个函数
+
+页面上的元素对应一个JavaScript对象，元素的每一个事件对应对象的一个属性，比如：
+
+&lt;form id="myForm"&gt;&lt;/form&gt;  
+&lt;script&gt;
+var myForm = document.getElementById("myForm");  
+&lt;/script...</div><p><a href="/posts/cs/lang/javascript/2022/04/21/JavaScript%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+      
+
+    
+    
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/">编程语言</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/javascript/">JavaScript</a>
+      </li>
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月21日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="JavaScript事件处理">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-21T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
+          <header><a href="/posts/cs/lang/css/2022/04/21/%E4%BD%BF%E7%94%A8flex%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F/"><h2 itemprop="headline" class="item__header">使用flex布局实现顶部导航栏</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">使用flex布局实现Educoder顶部导航栏容器布局
+
+任务描述
+
+本关任务：使用flex布局实现容器两端对齐的效果。
+
+
+  flex：收缩、屈伸
+
+
+效果如下：
+
+
+
+相关知识
+
+使用flex布局实现左右分开布局的方式有多种：
+
+
+  
+    使用flex布局justify-content: space-between属性
+
+    
+      justify: 使…齐行
+    
+  
+  
+    使用flex布局flex:1 权重布局
+  
+
+
+使用flex布局justify-content: space-between属性
+
+首先我们来看第一种实现方式：
+
+&lt;di...</div><p><a href="/posts/cs/lang/css/2022/04/21/%E4%BD%BF%E7%94%A8flex%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+      
+
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/">编程语言</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/css/">CSS</a>
+      </li>
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月21日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="使用flex布局实现顶部导航栏">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-21T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
           <header><a href="/posts/cs/os/mac/2022/04/20/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1CRON/"><h2 itemprop="headline" class="item__header">定时任务CRON</h2></a></header>
           <div class="item__description"><div class="article__content" itemprop="description articleBody">{minute} {hour} {day-of-month} {month} {day-of-week} {full-path-to-shell-script}
 
@@ -1004,301 +1310,8 @@ HTML 页面：
     </span><!-- </div> -->
     <!-- /展示更新时间 -->
     </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-20T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/lang/javascript/2022/04/19/%E6%96%87%E6%A1%A3%E5%85%83%E7%B4%A0%E7%9A%84%E6%93%8D%E4%BD%9C/"><h2 itemprop="headline" class="item__header">文档元素的操作</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">通过id获取文档元素
-
-什么是DOM
-
-Document Object Module，简称DOM，中文名文档对象模型。在网页上，组成页面（又叫文档）的一个个对象被组织在树形结构中，用这种结构表示它们之间的层次关系，表示文档中对象的标准模型就称为DOM。
-
-DOM的作用是给HTML文档提供一个标准的树状模型，这样开发人员就能够通过DOM提供的接口去操作HTML里面的元素。
-
-文档元素
-
-先看一段网页代码：
-
-&lt;html&gt;    
-    &lt;head&gt;     
-        &lt;title&gt;这里是标题&lt;/title&gt;  
-    &lt;/h...</div><p><a href="/posts/cs/lang/javascript/2022/04/19/%E6%96%87%E6%A1%A3%E5%85%83%E7%B4%A0%E7%9A%84%E6%93%8D%E4%BD%9C/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-      
-
-    
-    
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/">编程语言</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/javascript/">JavaScript</a>
-      </li>
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月19日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="文档元素的操作">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-19T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/lang/css/2022/04/19/CSS%E8%83%8C%E6%99%AF%E6%A0%B7%E5%BC%8F/"><h2 itemprop="headline" class="item__header">CSS背景样式</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">背景颜色
-
-
-  background-color 属性可以设置元素的背景颜色。
-
-  如果想将一个元素的背景颜色改为 green，可以在 style 里面这样写：
-
-  .green-background {
-  background-color: green;
-}
-  
-
-
-我们可以使用background-color为元素设置背景色，通常属性值为颜色名称或颜色编码。
-
-因为HTML文档中body元素包含了HTML文档的所有内容，所以如果要改变整个页面的背景颜色，只需要设置body元素的background-color属性。
-
-使用十六进制编码表示背景颜色
-
-
-  你知道在 CSS ...</div><p><a href="/posts/cs/lang/css/2022/04/19/CSS%E8%83%8C%E6%99%AF%E6%A0%B7%E5%BC%8F/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-      
-
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/">编程语言</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/css/">CSS</a>
-      </li>
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月19日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="CSS背景样式">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-19T00:00:00+08:00"></div>
       </article></div>
-</div><div class="layout--home"><div class="pagination"><p>共计 126 篇文章，21 页。</p>
+</div><div class="layout--home"><div class="pagination"><p>共计 128 篇文章，22 页。</p>
     <div class="pagination__menu">
       <ul class="menu menu--nowrap"><li><div class="button button--secondary button--circle disabled">
             <i class="fas fa-angle-left"></i>
@@ -1311,7 +1324,7 @@ DOM的作用是给HTML文档提供一个标准的树状模型，这样开发人�
                 </li><li>
                   <a class="button button--secondary button--circle" href="/page4"><span>4</span></a>
                 </li><li><span class="pagination__omit"><i class="fas fa-ellipsis-h"></i></span></li><li>
-                  <a class="button button--secondary button--circle" href="/page21"><span>21</span></a>
+                  <a class="button button--secondary button--circle" href="/page22"><span>22</span></a>
                 </li><li><a class="button button--secondary button--circle" href="/page2">
             <i class="fas fa-angle-right"></i>
           </a></li></ul>

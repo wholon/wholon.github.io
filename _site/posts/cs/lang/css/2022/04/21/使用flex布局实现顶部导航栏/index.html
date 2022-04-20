@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="zh">
   <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>在GitHub pages中使用自定义插件 - Holon's Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>使用flex布局实现顶部导航栏 - Holon's Blog</title>
 
-<meta name="description" content="Stack Overflow问题 Jekyll: How to use custom plugins with GitHub pages?  🪂 A Github Action to deploy the Jekyll site conveniently for GitHub Pages.https://gith...">
-<link rel="canonical" href="https://wholon.github.io/posts/blog/2022/04/18/%E5%9C%A8GitHub-pages%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="description" content="使用flex布局实现Educoder顶部导航栏容器布局任务描述本关任务：使用flex布局实现容器两端对齐的效果。  flex：收缩、屈伸效果如下：相关知识使用flex布局实现左右分开布局的方式有多种：      使用flex布局justify-content: space-between属性          j...">
+<link rel="canonical" href="https://wholon.github.io/posts/cs/lang/css/2022/04/21/%E4%BD%BF%E7%94%A8flex%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
 
 <meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/browserconfig.xml">
 
@@ -488,21 +488,21 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 </svg>
 <a title="Think Different" href="/">Holon's Blog</a></div>
 <!--        <p>Think Different</p>--><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
-        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/ai/">人工智能</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item navigation__item--active"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item navigation__item--active"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/ai/">人工智能</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
       </nav></div>
   </header>
 </div><div class="page__content"><div class ="main"><div class="grid grid--reverse">
 
               <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root">
     <!-- 固定于 TOC 顶部的文章标题 -->
-    <a href="#" name="点击返回顶部">在GitHub pages中使用自定义插件</a>
+    <a href="#" name="点击返回顶部">使用flex布局实现顶部导航栏</a>
 </div>
 </aside></div>
 
               <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
 
 <!-- end custom main top snippet -->
-<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>在GitHub pages中使用自定义插件</h1></header></div><meta itemprop="headline" content="在GitHub pages中使用自定义插件"><div class="article__info clearfix">
+<article itemscope itemtype="http://schema.org/Article"><div class="article__header"><header><h1>使用flex布局实现顶部导航栏</h1></header></div><meta itemprop="headline" content="使用flex布局实现顶部导航栏"><div class="article__info clearfix">
 <!--      展示标签 --><!--展示文章分类-->
       <!-- 获取设置项：是否开启显示文章位置 -->
   <!-- 获取页面网址 -->
@@ -511,13 +511,13 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
       
   
     
-  
-    
-  
-    
-  
-    
       
+  
+    
+  
+    
+  
+    
   
     
   
@@ -528,18 +528,87 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
   
   
   
+    
+    
+      
+
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
 
   <ul class="left-col menu">
     
       <li>位置：</li>
       <li>
         <a class="button button--secondary button--pill button--sm"
-           href="/posts/blog/">随笔</a>
+           href="/posts/cs/">计算机科学</a>
       </li>
     
 
     
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/">编程语言</a>
+      </li>
+    
 
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/css/">CSS</a>
+      </li>
     
     
   </ul>
@@ -550,129 +619,719 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
   
 
 
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月18日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="在GitHub pages中使用自定义插件">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月21日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="使用flex布局实现顶部导航栏">0</span> 阅读</li></ul><!-- 展示更新时间 -->
     <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-04-20T21:54:54+08:00">2022-04-20 21:54:54</time>
+      <time itemprop="dateModified" datetime="2022-04-19T14:15:50+08:00">2022-04-19 14:15:50</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
     </span><!-- </div> -->
     <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-18T00:00:00+08:00"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-21T00:00:00+08:00"><div class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
 
 <!-- end custom article top snippet -->
-<div class="article__content" itemprop="articleBody"><p>Stack Overflow问题 <a href="https://stackoverflow.com/questions/53215356/jekyll-how-to-use-custom-plugins-with-github-pages">Jekyll: How to use custom plugins with GitHub pages?</a></p>
+<div class="article__content" itemprop="articleBody"><h2 id="使用flex布局实现educoder顶部导航栏容器布局">使用flex布局实现Educoder顶部导航栏容器布局</h2>
+
+<h3 id="任务描述">任务描述</h3>
+
+<p>本关任务：使用<code class="language-plaintext highlighter-rouge">flex</code>布局实现<strong>容器两端对齐的效果</strong>。</p>
 
 <blockquote>
-  <p>🪂 A Github Action to deploy the Jekyll site conveniently for GitHub Pages.https://github.com/jeffreytse/jekyll-deploy-action</p>
-
-  <p><strong>if you want to make Jekyll site run as if it were local, such as let the custom plugins work properly, this action can be very useful for you, beacause it’s really convenient to build and deploy the Jekyll site to Github Pages.</strong></p>
+  <p>flex：收缩、屈伸</p>
 </blockquote>
 
-<h2 id="遇到的问题">遇到的问题</h2>
+<p>效果如下：</p>
 
-<p>这个 Action 对于一些依赖 git-log 的插件并没有很好的支持。因为它会在服务器端部署一个 Jekyll 并用其生成静态文件，然后在 gh-pages分支下新建拷贝所有的新生成的静态文件，从而打乱 git-log。</p>
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417123755nyrIBe.png" alt="img" /></p>
 
-<p>由于是在服务器端新建的环境，所以 git-log 也就失去了效用从而不在支持 jekyll-last-modified-at 插件。</p>
+<h3 id="相关知识">相关知识</h3>
 
-<h2 id="解决方法">解决方法</h2>
-
-<h3 id="方法1-结合github-action">方法1: 结合GitHub Action</h3>
+<p>使用<code class="language-plaintext highlighter-rouge">flex</code>布局实现左右分开布局的方式有多种：</p>
 
 <ol>
   <li>
-    <p>博客根目录下新建 <code class="language-plaintext highlighter-rouge">.github/workflow/copy-folder.yml</code> 文件</p>
-
-    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Copy folder to other branch</span>
-   
-<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">]</span>
-   
-<span class="na">jobs</span><span class="pi">:</span>
-  <span class="na">copy</span><span class="pi">:</span>
-    <span class="na">name</span><span class="pi">:</span> <span class="s">Copy my folder</span>
-    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
-    <span class="na">steps</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
-      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">copy</span>
-        <span class="na">env</span><span class="pi">:</span>
-          <span class="na">SRC_FOLDER_PATH</span><span class="pi">:</span> <span class="s1">'</span><span class="s">_site'</span>
-          <span class="na">TARGET_BRANCH</span><span class="pi">:</span> <span class="s1">'</span><span class="s">gh-pages'</span>
-        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
-          <span class="s">files=$(find $SRC_FOLDER_PATH -type f) # get the file list</span>
-          <span class="s">git config --global user.name 'GitHub Action'</span>
-          <span class="s">git config --global user.email 'action@github.com'</span>
-          <span class="s">git fetch                         # fetch branches</span>
-          <span class="s">git checkout $TARGET_BRANCH       # checkout to your branch</span>
-          <span class="s">git checkout ${GITHUB_REF##*/} -- $files # copy files from the source branch</span>
-          <span class="s">git add -A</span>
-          <span class="s">git diff-index --quiet HEAD ||  git commit -am "deploy files"  # commit to the repository (ignore if no modification)</span>
-          <span class="s">git push origin $TARGET_BRANCH # push to remote branch</span>
-</code></pre></div>    </div>
-
-    <p>其作用是把 main 分支下的 <code class="language-plaintext highlighter-rouge">SRC_FOLDER_PATH</code> 文件下的内容复制到 <code class="language-plaintext highlighter-rouge">TARGET_BRANCH</code> 分支</p>
+    <p>使用<code class="language-plaintext highlighter-rouge">flex</code>布局<code class="language-plaintext highlighter-rouge">justify-content: space-between</code>属性</p>
 
     <blockquote>
-      <p>如果博客默认生成在 <code class="language-plaintext highlighter-rouge">_sits</code> 文件夹中，那么你需要将其从 <code class="language-plaintext highlighter-rouge">.gitignore</code>移出。</p>
+      <p>justify: 使…齐行</p>
     </blockquote>
   </li>
   <li>
-    <p>在博客根目录下新建文件 <code class="language-plaintext highlighter-rouge">autoGit.sh</code> 用于简化推送。</p>
-
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#! /bin/zsh</span>
-<span class="c"># 自动化推送脚本, 在 ~/.zshrc 里面设置脚本运行的 alias</span>
-<span class="c"># 获取脚本所在绝对路径</span>
-<span class="nv">SHELL_FOLDER</span><span class="o">=</span><span class="si">$(</span><span class="nb">cd</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">dirname</span> <span class="s2">"</span><span class="nv">$0</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span><span class="p">;</span><span class="nb">pwd</span><span class="si">)</span>
-<span class="nb">cd</span> <span class="nv">$SHELL_FOLDER</span>
-   
-<span class="c"># 以生产模式 build 网站</span>
-<span class="nv">JEKYLL_ENV</span><span class="o">=</span>production bundle <span class="nb">exec </span>jekyll build
-git add <span class="nb">.</span>
-<span class="c"># 变量1是传送的参数，也就是本次 git 的摘要</span>
-git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> 
-git push origin
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>给 <code class="language-plaintext highlighter-rouge">autoGit.sh</code> 设置别名，比如如果你用的是 zsh，那么你可以在 <code class="language-plaintext highlighter-rouge">~/zsh.rc</code> 里面插入以下命令</p>
-
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 给向wholon.github.io push文章设置别名</span>
-<span class="nb">alias </span><span class="nv">blog</span><span class="o">=</span><span class="s2">"zsh /Users/holon/Documents/GitHub/wholon.github.io/autoGit.sh"</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>在终端任意位置输入</p>
-
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blog <span class="s2">"本次博客更新摘要"</span>
-</code></pre></div>    </div>
-
-    <p>即可推送到远程仓库。</p>
-  </li>
-  <li>
-    <p>成功。</p>
+    <p>使用<code class="language-plaintext highlighter-rouge">flex</code>布局<code class="language-plaintext highlighter-rouge">flex:1</code> 权重布局</p>
   </li>
 </ol>
 
-<blockquote>
-  <p>此方法不行，这种方式只是相当于复制了 <code class="language-plaintext highlighter-rouge">SRC_FOLDER_PATH</code> 整个文件到  <code class="language-plaintext highlighter-rouge">TARGET_BRANCH</code> ，而我们需要 <code class="language-plaintext highlighter-rouge">SRC_FOLDER_PATH</code> 目录展开。</p>
-</blockquote>
+<h4 id="使用flex布局justify-content-space-between属性">使用flex布局justify-content: space-between属性</h4>
 
-<h3 id="方法2-结合-jgp-插件">方法2: 结合 jgp 插件</h3>
+<p>首先我们来看第一种实现方式：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"parent-wrap"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #1cbbb4;"</span><span class="nt">&gt;</span>左边容器<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #8dc63f;"</span><span class="nt">&gt;</span>右边容器<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+.parent-wrap {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+}  
+</code></pre></div></div>
+
+<p>效果如图：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417123755Cj7fUg.png" alt="img" /></p>
+
+<h4 id="使用flex布局flex1权重布局">使用flex布局flex:1权重布局</h4>
+
+<p>接下来看第二种实现方式，同样使用<code class="language-plaintext highlighter-rouge">flex</code>布局：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"parent-wrap"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"left-wrap"</span> <span class="na">style=</span><span class="s">"background: #1cbbb4;"</span><span class="nt">&gt;</span>左边容器<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #8dc63f;"</span><span class="nt">&gt;</span>右边容器<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>  
+.parent-wrap {
+    height: 60px;
+    display: flex;
+}
+
+.left-wrap {
+    flex: 1
+}
+</code></pre></div></div>
+
+<p>效果图：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417123755paar0p.png" alt="img" /></p>
+
+<p>第二种效果可能很多同学会问，为什么不直接让两个<code class="language-plaintext highlighter-rouge">div</code>都使用<code class="language-plaintext highlighter-rouge">flex:1</code>属性，这个很好解释，只有左侧使用<code class="language-plaintext highlighter-rouge">flex:1</code>属性的情况下，右侧容器宽度是根据内容来的，这样的话内容多长，右侧容器就有多长，如果两者都使用<code class="language-plaintext highlighter-rouge">flex:1</code>属性，右侧容器需要使用内容右对齐属性。</p>
+
+<h3 id="编程要求">编程要求</h3>
+
+<p>补充代码，使用<code class="language-plaintext highlighter-rouge">flex</code>布局初步实现顶部导航栏最外层容器两端对齐的效果，具体要求如下：</p>
 
 <ol>
-  <li>
-    <p>在本地编译静态文件。有一个很好用的 gem 插件 <a href="https://www.yegor256.com/2014/06/24/jekyll-github-deploy.html">Deploy Jekyll to GitHub Pages</a>。</p>
-
-    <p>它会从运行插件所在的目录推断远程仓库地址，然后从选择的分支拉取文件到本地，然后本地编译，最后再推送到 pages 分支。可以用 <code class="language-plaintext highlighter-rouge">jgd -h</code> 查看帮助。</p>
-  </li>
-  <li>
-    <p>这种方法也能实现自定义插件。但是看的出来，需要先把本地修改的文件推送到远程再使用这个插件拉取，十分的费力，不建议使用。</p>
-  </li>
+  <li>页面最小宽度：<code class="language-plaintext highlighter-rouge">1200px</code></li>
+  <li>导航栏背景颜色<code class="language-plaintext highlighter-rouge">16</code>进制：<code class="language-plaintext highlighter-rouge">#24292D</code></li>
+  <li>导航栏高度：<code class="language-plaintext highlighter-rouge">60px</code></li>
 </ol>
 
-<p>方法3: 使用 Travis</p>
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417123755nyrIBe.png" alt="img" /></p>
 
-<h3 id="等待文章开头提到的-githubaction优化支持-git-log">等待文章开头提到的 GitHubAction优化支持 git-log</h3>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Educoder<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"step1/verify.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+    <span class="nt">body</span> <span class="p">{</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.color-white</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c">/*********** Begin ************/</span>
+    <span class="nc">.container</span> <span class="p">{</span>
+        <span class="nl">min-width</span><span class="p">:</span> <span class="m">1200px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">header</span> <span class="p">{</span>
+        <span class="nl">background-color</span><span class="p">:</span> <span class="m">#24292D</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">60px</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="n">space-between</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c">/*********** End ************/</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;header&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"left-wrap color-white"</span><span class="nt">&gt;</span>左边容器<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"right-wrap color-white"</span><span class="nt">&gt;</span>右边容器<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="实现左侧文字导航列表">实现左侧文字导航列表</h2>
+
+<h3 id="任务描述-1">任务描述</h3>
+
+<p>本关任务：实现导航栏的左侧文字导航列表。</p>
+
+<p>效果图如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417165807MnoVDK.png" alt="img" /></p>
+
+<h3 id="相关知识-1">相关知识</h3>
+
+<p>使用<code class="language-plaintext highlighter-rouge">flex</code>进行水平排列布局：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"parent-wrap"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #0081ff;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #9c26b0;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #a5673f;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+.parent-wrap {
+    width: 300px;
+    height: 60px;
+    display: flex;
+}
+
+.parent-wrap &gt; div {
+    flex: 1;
+    text-align: center;
+    line-height: 60px;
+}  
+</code></pre></div></div>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417165807Ki4I1o.png" alt="img" /></p>
+
+<h3 id="编程要求-1">编程要求</h3>
+
+<p>补充代码，使用<code class="language-plaintext highlighter-rouge">flex</code>布局实现顶部导航栏左侧<code class="language-plaintext highlighter-rouge">logo</code>与文字列表效果，具体要求如下：</p>
+
+<ol>
+  <li>文字列表使用<code class="language-plaintext highlighter-rouge">flex</code>布局，文字颜色为<strong>白色</strong>，文字大小：<code class="language-plaintext highlighter-rouge">16px</code></li>
+  <li>文字容器宽度<code class="language-plaintext highlighter-rouge">64px</code>，各文字容器之间距离<code class="language-plaintext highlighter-rouge">30px</code></li>
+  <li><code class="language-plaintext highlighter-rouge">logo</code>宽高：<code class="language-plaintext highlighter-rouge">40px * 38px</code></li>
+  <li><code class="language-plaintext highlighter-rouge">logo</code>距离屏幕左侧<code class="language-plaintext highlighter-rouge">25px</code>，距离文字列表<code class="language-plaintext highlighter-rouge">30px</code></li>
+  <li><code class="language-plaintext highlighter-rouge">logo</code>图片地址：<code class="language-plaintext highlighter-rouge">https://holon-image.oss-cn-beijing.aliyuncs.com/20220417171149MFWRBY.png</code></li>
+  <li>‘在线竞赛’右上方<code class="language-plaintext highlighter-rouge">HOT</code>使用<code class="language-plaintext highlighter-rouge">base64</code>格式：<code class="language-plaintext highlighter-rouge">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAQCAYAAAAFzx/vAAACl0lEQVRIS62UP0gbURzHP09DUrHW1EqHuLhYBC0t1NOCg4M432IXhxZKDwShxUA7iuLmoLUEXHSRghk1OLgaaCrnn6FD6aFUEDoIYq5NxBBNXnkvl3hWi4N5y927e+/3+f2+vz9CQhCYAl4C96nSkoC4sJUGFoEPQsJH4F2VODeZmVVARQ/fdPI2/1W0XsSuAqr30qqrg85O2N0F1726V2ciEejqQp6fI1IppOsivG9+p5TRguOQcxxOgbzaK5kvAQ0DbBtME5lIgGEg/PupKUQ0CtksBIOQz8PQEDIQQKysXBFhf3yc3YmJSkQ1/wNK0wQfUO8PDhBbW8j5eRgehnAYsb6ObGzkuLWVQ+DUMHhm22ybJr/VfUBDfE8dYUVTLyK5tASOAy0tCMtCAUVzMywsIPv6EMmklic3Okr99DRf2trI7e1x1zDosW2+mSaZf4AVeNGfwzJQ5TCTgVAI0dGhJda5m5uD3l5yqRQ/gcDICI9iMba7u8ltblJvGDy1bb77gApUbg8d7XVADfAkVTnVEabTkEySjUZxZmY4AdqXl2nq72enoUHn6Y5h8MS2+WGa/Ekk/H2o5VVgBdRtob3wikYDfEDlwFkiQX51lbqBAdIbG9SGQoR7ejgYG+NwclIbVMDHto3jAf1VpFJQA2lRgFngrfZAyWZZEI+XchiJULAsTuJxfjkOLtA0OEhDezuyWCSzs8PJ2lqlCgORCA8ti6N4XLdDuTaKXh9K+KSKJlgsjbZXAsIXTQk54Ag4Bs6AWq/alHPlc0oZ9a6MquUzrr97/9wCLD6A975xV7og4Svw3Lu/BrwQkL3NpPHfvQ64D7QCn4HXohRc1dZ1QDWJYnqy+1umSshLQAn3gDcCpqtk/4qZv02gFT1dbcRiAAAAAElFTkSuQmCC</code></li>
+  <li>文字列表从左至右依次为：实践课程、翻转课堂、实训项目、在线竞赛、教学案例、交流问答</li>
+</ol>
+
+<p>效果图如下：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417165807a1EOhd.png" alt="img" /></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Educoder<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"step2/verify.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+    <span class="nt">body</span> <span class="p">{</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.container</span> <span class="p">{</span>
+        <span class="nl">min-width</span><span class="p">:</span> <span class="m">1200px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.flex</span> <span class="p">{</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">header</span> <span class="p">{</span>
+        <span class="nl">background</span><span class="p">:</span> <span class="m">#24292D</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">60px</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="n">space-between</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">header</span> <span class="o">&gt;</span> <span class="nt">div</span> <span class="p">{</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c">/*********** Begin ************/</span>
+    <span class="nc">.logo-block</span> <span class="p">{</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.logo</span> <span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">38px</span><span class="p">;</span>
+        <span class="nl">margin-right</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.menu-item</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="m">#ffffff</span><span class="p">;</span>
+        <span class="nl">font-size</span><span class="p">:</span> <span class="m">16px</span><span class="p">;</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">64px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+        <span class="nl">margin-right</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.hot</span> <span class="p">{</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+        <span class="nl">top</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+        <span class="nl">right</span><span class="p">:</span> <span class="m">-22px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c">/*********** End ************/</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"flex"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"left-wrap"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--********** Begin **********--&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"logo-block"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"https://holon-image.oss-cn-beijing.aliyuncs.com/20220417171149MFWRBY.png"</span> <span class="na">class=</span><span class="s">"logo"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-block full-height flex"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>实践课程<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>翻转课堂<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>实训项目<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>在线竞赛<span class="nt">&lt;img</span> <span class="na">class=</span><span class="s">"hot"</span> <span class="na">src=</span><span class="s">"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAQCAYAAAAFzx/vAAACl0lEQVRIS62UP0gbURzHP09DUrHW1EqHuLhYBC0t1NOCg4M432IXhxZKDwShxUA7iuLmoLUEXHSRghk1OLgaaCrnn6FD6aFUEDoIYq5NxBBNXnkvl3hWi4N5y927e+/3+f2+vz9CQhCYAl4C96nSkoC4sJUGFoEPQsJH4F2VODeZmVVARQ/fdPI2/1W0XsSuAqr30qqrg85O2N0F1726V2ciEejqQp6fI1IppOsivG9+p5TRguOQcxxOgbzaK5kvAQ0DbBtME5lIgGEg/PupKUQ0CtksBIOQz8PQEDIQQKysXBFhf3yc3YmJSkQ1/wNK0wQfUO8PDhBbW8j5eRgehnAYsb6ObGzkuLWVQ+DUMHhm22ybJr/VfUBDfE8dYUVTLyK5tASOAy0tCMtCAUVzMywsIPv6EMmklic3Okr99DRf2trI7e1x1zDosW2+mSaZf4AVeNGfwzJQ5TCTgVAI0dGhJda5m5uD3l5yqRQ/gcDICI9iMba7u8ltblJvGDy1bb77gApUbg8d7XVADfAkVTnVEabTkEySjUZxZmY4AdqXl2nq72enoUHn6Y5h8MS2+WGa/Ekk/H2o5VVgBdRtob3wikYDfEDlwFkiQX51lbqBAdIbG9SGQoR7ejgYG+NwclIbVMDHto3jAf1VpFJQA2lRgFngrfZAyWZZEI+XchiJULAsTuJxfjkOLtA0OEhDezuyWCSzs8PJ2lqlCgORCA8ti6N4XLdDuTaKXh9K+KSKJlgsjbZXAsIXTQk54Ag4Bs6AWq/alHPlc0oZ9a6MquUzrr97/9wCLD6A975xV7og4Svw3Lu/BrwQkL3NpPHfvQ64D7QCn4HXohRc1dZ1QDWJYnqy+1umSshLQAn3gDcCpqtk/4qZv02gFT1dbcRiAAAAAElFTkSuQmCC"</span><span class="nt">&gt;&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>教学案例<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>交流问答<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="c">&lt;!--********** End **********--&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"right-wrap"</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+</code></pre></div></div>
+
+<h2 id="实现右侧功能图标排序">实现右侧功能图标排序</h2>
+
+<h3 id="任务描述-2">任务描述</h3>
+
+<p>本关任务：实现导航栏右侧功能图标排序。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417171342jY73e4.png" alt="img" /></p>
+
+<h3 id="相关知识-2">相关知识</h3>
+
+<p>使用<code class="language-plaintext highlighter-rouge">flex</code>进行水平排列布局：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"parent-wrap"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #0081ff;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #9c26b0;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background: #a5673f;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+.parent-wrap {
+    width: 300px;
+    height: 60px;
+    display: flex;
+}
+
+.parent-wrap &gt; div {
+    flex: 1;
+    text-align: center;
+    line-height: 60px;
+}  
+</code></pre></div></div>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417171342ftlCYk.png" alt="img" /></p>
+
+<h3 id="编程要求-2">编程要求</h3>
+
+<p>补充代码，使用<code class="language-plaintext highlighter-rouge">flex</code>布局实现<code class="language-plaintext highlighter-rouge">Educoder</code>顶部导航栏右侧头像与图标列表效果，具体要求如下：</p>
+
+<ol>
+  <li>头像大小：<code class="language-plaintext highlighter-rouge">34px * 34px</code>；</li>
+  <li>图标大小：<code class="language-plaintext highlighter-rouge">16px * 16px</code>；</li>
+  <li>头像距离屏幕右侧：<code class="language-plaintext highlighter-rouge">25px</code>，距离图标：<code class="language-plaintext highlighter-rouge">15px</code>；</li>
+  <li>图标容器宽高：<code class="language-plaintext highlighter-rouge">48px * 60px</code>；</li>
+  <li>头像链接：<code class="language-plaintext highlighter-rouge">https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172203Uxxmtz.png</code></li>
+  <li>各图标链接如下：</li>
+</ol>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172225sXz8LL.png" alt="img" />：<code class="language-plaintext highlighter-rouge">https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172225sXz8LL.png</code></p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172241ghCN0r.png" alt="img" />：<code class="language-plaintext highlighter-rouge">https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172241ghCN0r.png</code></p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172303wVBW4N.png" alt="img" />：<code class="language-plaintext highlighter-rouge">https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172303wVBW4N.png</code></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Educoder<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"step3/verify.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+    <span class="nt">body</span> <span class="p">{</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.container</span> <span class="p">{</span>
+        <span class="nl">min-width</span><span class="p">:</span> <span class="m">1200px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.flex</span> <span class="p">{</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.full-height</span><span class="p">{</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">header</span> <span class="p">{</span>
+        <span class="nl">background</span><span class="p">:</span> <span class="m">#24292D</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">60px</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="n">space-between</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">header</span> <span class="o">&gt;</span> <span class="nt">div</span> <span class="p">{</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.logo-block</span><span class="p">{</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.logo</span> <span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">38px</span><span class="p">;</span>
+        <span class="nl">margin-right</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.menu-item</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="m">#ffffff</span><span class="p">;</span>
+        <span class="nl">font-size</span><span class="p">:</span> <span class="m">16px</span><span class="p">;</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">64px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+        <span class="nl">margin-right</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.hot</span><span class="p">{</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+        <span class="nl">top</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+        <span class="nl">right</span><span class="p">:</span> <span class="m">-22px</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c">/*********** Begin ************/</span>
+    <span class="nc">.user</span> <span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">34px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">34px</span><span class="p">;</span>
+        <span class="nl">margin-left</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nc">.icon-item</span> <span class="p">{</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">48px</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c">/*********** End ************/</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"flex"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"left-wrap"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"logo-block"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"https://www.educoder.net/images/educoder/headNavLogo.png?1526520218"</span> <span class="na">class=</span><span class="s">"logo"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-block full-height flex"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>实践课程<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>翻转课堂<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>实训项目<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>在线竞赛<span class="nt">&lt;img</span> <span class="na">class=</span><span class="s">"hot"</span> <span class="na">src=</span><span class="s">"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAQCAYAAAAFzx/vAAACl0lEQVRIS62UP0gbURzHP09DUrHW1EqHuLhYBC0t1NOCg4M432IXhxZKDwShxUA7iuLmoLUEXHSRghk1OLgaaCrnn6FD6aFUEDoIYq5NxBBNXnkvl3hWi4N5y927e+/3+f2+vz9CQhCYAl4C96nSkoC4sJUGFoEPQsJH4F2VODeZmVVARQ/fdPI2/1W0XsSuAqr30qqrg85O2N0F1726V2ciEejqQp6fI1IppOsivG9+p5TRguOQcxxOgbzaK5kvAQ0DbBtME5lIgGEg/PupKUQ0CtksBIOQz8PQEDIQQKysXBFhf3yc3YmJSkQ1/wNK0wQfUO8PDhBbW8j5eRgehnAYsb6ObGzkuLWVQ+DUMHhm22ybJr/VfUBDfE8dYUVTLyK5tASOAy0tCMtCAUVzMywsIPv6EMmklic3Okr99DRf2trI7e1x1zDosW2+mSaZf4AVeNGfwzJQ5TCTgVAI0dGhJda5m5uD3l5yqRQ/gcDICI9iMba7u8ltblJvGDy1bb77gApUbg8d7XVADfAkVTnVEabTkEySjUZxZmY4AdqXl2nq72enoUHn6Y5h8MS2+WGa/Ekk/H2o5VVgBdRtob3wikYDfEDlwFkiQX51lbqBAdIbG9SGQoR7ejgYG+NwclIbVMDHto3jAf1VpFJQA2lRgFngrfZAyWZZEI+XchiJULAsTuJxfjkOLtA0OEhDezuyWCSzs8PJ2lqlCgORCA8ti6N4XLdDuTaKXh9K+KSKJlgsjbZXAsIXTQk54Ag4Bs6AWq/alHPlc0oZ9a6MquUzrr97/9wCLD6A975xV7og4Svw3Lu/BrwQkL3NpPHfvQ64D7QCn4HXohRc1dZ1QDWJYnqy+1umSshLQAn3gDcCpqtk/4qZv02gFT1dbcRiAAAAAElFTkSuQmCC"</span><span class="nt">&gt;&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>教学案例<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>交流问答<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"right-wrap"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--********** Begin **********--&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon-list full-height flex"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon-item"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"`https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172225sXz8LL.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon-item"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"`https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172241ghCN0r.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon-item"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"`https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172303wVBW4N.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">class=</span><span class="s">"user"</span> <span class="na">src=</span><span class="s">"`https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172203Uxxmtz.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--********** End **********--&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+</code></pre></div></div>
+
+<h2 id="实现左侧鼠标悬停效果与选中状态">实现左侧鼠标悬停效果与选中状态</h2>
+
+<h3 id="任务描述-3">任务描述</h3>
+
+<p>本关任务：实现左侧鼠标悬停效果。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172755peYveN.gif" alt="img" /></p>
+
+<h3 id="相关知识-3">相关知识</h3>
+
+<p>整个鼠标悬停效果可分为两部分，一是悬浮效果，二是选中的列表变色。</p>
+
+<h4 id="悬浮效果">悬浮效果</h4>
+
+<p>鼠标悬停效果我们可以使用<code class="language-plaintext highlighter-rouge">hover</code>伪类实现（文字颜色变淡）</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"text"</span><span class="nt">&gt;</span>实践课程<span class="nt">&lt;/div&gt;</span>
+.text{ 
+	opacity: .7;
+}  
+</code></pre></div></div>
+
+<blockquote>
+  <p>opacity: 不透明、浑浊</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">tips</code>：当值为<strong>小于</strong><code class="language-plaintext highlighter-rouge">1</code>的小数时，可以不写前面的<code class="language-plaintext highlighter-rouge">0</code>，当值为<code class="language-plaintext highlighter-rouge">0</code>像素时可以省略后面的像素单位。下面举个例子：</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.text</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">.7</span><span class="p">);</span>
+    <span class="nl">opacity</span><span class="p">:</span> <span class="m">.7</span><span class="p">;</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">15px</span> <span class="m">15px</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>  
+</code></pre></div></div>
+
+<p>这样有利于与其他属性进行区分。</p>
+
+<h4 id="选中列表变色">选中列表变色</h4>
+
+<p>蓝色选中样式则需要使用到伪元素<code class="language-plaintext highlighter-rouge">:after</code>，<strong>该写法在实际开发过程中会大量使用</strong></p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172755qiheev.png" alt="img" /></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"parent-wrap"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div&gt;&lt;span</span> <span class="na">class=</span><span class="s">"nav-text"</span><span class="nt">&gt;</span>导航1<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;&lt;span</span> <span class="na">class=</span><span class="s">"nav-text"</span><span class="nt">&gt;</span>导航2<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;&lt;span</span> <span class="na">class=</span><span class="s">"nav-text"</span><span class="nt">&gt;</span>导航3<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;&lt;span</span> <span class="na">class=</span><span class="s">"nav-text"</span><span class="nt">&gt;</span>导航4<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+.parent-wrap {
+    height: 60px;
+    width: 500px;
+    display: flex;
+    background: #cccccc;
+}
+
+.parent-wrap &gt; div {
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.nav-text {
+    position: relative;
+}  
+</code></pre></div></div>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172755zyGZkn.png" alt="img" /></p>
+
+<p>如图，我们实现了一个简单的导航，只需要再加一个选中类（实际开发中会通过<code class="language-plaintext highlighter-rouge">js</code>动态控制选中类）即可实现效果。</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/*选中类样式，文字颜色改变*/</span>
+<span class="nc">.active</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#459be5</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/*底部出现横杠*/</span>
+<span class="nc">.active</span><span class="nd">:after</span> <span class="p">{</span>
+    <span class="nl">content</span><span class="p">:</span> <span class="s2">''</span><span class="p">;</span>
+    <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">2px</span><span class="p">;</span>
+    <span class="nl">bottom</span><span class="p">:</span> <span class="m">-10px</span><span class="p">;</span>
+    <span class="nl">left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">14px</span><span class="p">;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#459be5</span><span class="p">;</span>
+<span class="p">}</span>  
+</code></pre></div></div>
+
+<p>我们只需要给需要加上样式的元素加上该类即可实现效果：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"nav-text active"</span><span class="nt">&gt;</span>导航1<span class="nt">&lt;/span&gt;</span>
+</code></pre></div></div>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172755MKtyAE.png" alt="img" /></p>
+
+<p>说明：文字居中此处为什么使用<code class="language-plaintext highlighter-rouge">flex</code>布局的<code class="language-plaintext highlighter-rouge">justify-content: center;align-items: center;</code> 而不使用<code class="language-plaintext highlighter-rouge">line-height:60px;text-align:center</code>解释如下 —— 使用<code class="language-plaintext highlighter-rouge">line-height</code>垂直居中在文字超过一行的情况下会出现两行文字之间相差<code class="language-plaintext highlighter-rouge">60px</code>的问题。</p>
+
+<p>举个例子：我们将导航<code class="language-plaintext highlighter-rouge">1</code>文字加长</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"nav-text"</span><span class="nt">&gt;</span>导航1导航1导航1导航1<span class="nt">&lt;/span&gt;</span>
+</code></pre></div></div>
+
+<p>运行效果：</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/202204171727551PVVK2.png" alt="img" /></p>
+
+<p>很明显，第四个导航<code class="language-plaintext highlighter-rouge">1</code>文字超出了容器，正是由于使用了<code class="language-plaintext highlighter-rouge">line-height:60px</code>导致，<strong>使用<code class="language-plaintext highlighter-rouge">flex</code>布局居中则可以很好的避免这一问题</strong>。</p>
+
+<h3 id="编程要求-3">编程要求</h3>
+
+<p>补充代码，使用<code class="language-plaintext highlighter-rouge">hover</code>伪类实现鼠标悬停效果，使用<code class="language-plaintext highlighter-rouge">:after</code>伪元素实现列表选中效果，具体要求如下：</p>
+
+<ol>
+  <li>鼠标悬停时文字透明度：<code class="language-plaintext highlighter-rouge">70%</code>；</li>
+  <li>使用<code class="language-plaintext highlighter-rouge">:after</code>伪元素为第一个菜单文字左下角添加蓝色线条；</li>
+  <li>蓝色线条宽度：<code class="language-plaintext highlighter-rouge">14px</code>，高度：<code class="language-plaintext highlighter-rouge">2px</code>，颜色：<code class="language-plaintext highlighter-rouge">#459be5</code>，线条距离文字高度：<code class="language-plaintext highlighter-rouge">10px</code>；</li>
+  <li>当鼠标悬停时任意文字或图标上时，当前项光标显示为一只手。</li>
+</ol>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Educoder<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"step4/verify.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+    <span class="nt">body</span> <span class="p">{</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.container</span> <span class="p">{</span>
+        <span class="nl">min-width</span><span class="p">:</span> <span class="m">1200px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.flex</span> <span class="p">{</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.full-height</span> <span class="p">{</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">header</span> <span class="p">{</span>
+        <span class="nl">background</span><span class="p">:</span> <span class="m">#24292D</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">60px</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="n">space-between</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">header</span> <span class="o">&gt;</span> <span class="nt">div</span> <span class="p">{</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.logo-block</span> <span class="p">{</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.logo</span> <span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">38px</span><span class="p">;</span>
+        <span class="nl">margin-right</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.menu-item</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="m">#ffffff</span><span class="p">;</span>
+        <span class="nl">font-size</span><span class="p">:</span> <span class="m">16px</span><span class="p">;</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">64px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+        <span class="nl">margin-right</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+        <span class="nl">cursor</span><span class="p">:</span> <span class="nb">pointer</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.hot</span> <span class="p">{</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+        <span class="nl">top</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+        <span class="nl">right</span><span class="p">:</span> <span class="m">-22px</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.icon-item</span> <span class="p">{</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">48px</span><span class="p">;</span>
+        <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+        <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+        <span class="nl">cursor</span><span class="p">:</span> <span class="nb">pointer</span><span class="p">;</span>
+        <span class="nl">justify-content</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.user</span> <span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">34px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">34px</span><span class="p">;</span>
+        <span class="nl">margin-left</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+        <span class="nl">cursor</span><span class="p">:</span> <span class="nb">pointer</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c">/*********** Begin ************/</span>
+    <span class="nc">.menu-item</span><span class="nd">:hover</span> <span class="p">{</span>
+        <span class="nl">opacity</span><span class="p">:</span> <span class="m">.7</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.active</span> <span class="p">{</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="m">#459be5</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nc">.active</span><span class="nd">:after</span> <span class="p">{</span>
+        <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+        <span class="nl">content</span><span class="p">:</span> <span class="s1">" "</span><span class="p">;</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">14px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">2px</span><span class="p">;</span>
+        <span class="nl">background</span><span class="p">:</span> <span class="m">#459be5</span><span class="p">;</span>
+        <span class="nl">bottom</span><span class="p">:</span> <span class="m">-10px</span><span class="p">;</span>
+        <span class="nl">left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c">/*********** End ************/</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"flex"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"left-wrap"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"logo-block"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"https://www.educoder.net/images/educoder/headNavLogo.png?1526520218"</span> <span class="na">class=</span><span class="s">"logo"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-block full-height flex"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;</span>实践课程<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>翻转课堂<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>实训项目<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>在线竞赛<span class="nt">&lt;img</span> <span class="na">class=</span><span class="s">"hot"</span> <span class="na">src=</span><span class="s">"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAQCAYAAAAFzx/vAAACl0lEQVRIS62UP0gbURzHP09DUrHW1EqHuLhYBC0t1NOCg4M432IXhxZKDwShxUA7iuLmoLUEXHSRghk1OLgaaCrnn6FD6aFUEDoIYq5NxBBNXnkvl3hWi4N5y927e+/3+f2+vz9CQhCYAl4C96nSkoC4sJUGFoEPQsJH4F2VODeZmVVARQ/fdPI2/1W0XsSuAqr30qqrg85O2N0F1726V2ciEejqQp6fI1IppOsivG9+p5TRguOQcxxOgbzaK5kvAQ0DbBtME5lIgGEg/PupKUQ0CtksBIOQz8PQEDIQQKysXBFhf3yc3YmJSkQ1/wNK0wQfUO8PDhBbW8j5eRgehnAYsb6ObGzkuLWVQ+DUMHhm22ybJr/VfUBDfE8dYUVTLyK5tASOAy0tCMtCAUVzMywsIPv6EMmklic3Okr99DRf2trI7e1x1zDosW2+mSaZf4AVeNGfwzJQ5TCTgVAI0dGhJda5m5uD3l5yqRQ/gcDICI9iMba7u8ltblJvGDy1bb77gApUbg8d7XVADfAkVTnVEabTkEySjUZxZmY4AdqXl2nq72enoUHn6Y5h8MS2+WGa/Ekk/H2o5VVgBdRtob3wikYDfEDlwFkiQX51lbqBAdIbG9SGQoR7ejgYG+NwclIbVMDHto3jAf1VpFJQA2lRgFngrfZAyWZZEI+XchiJULAsTuJxfjkOLtA0OEhDezuyWCSzs8PJ2lqlCgORCA8ti6N4XLdDuTaKXh9K+KSKJlgsjbZXAsIXTQk54Ag4Bs6AWq/alHPlc0oZ9a6MquUzrr97/9wCLD6A975xV7og4Svw3Lu/BrwQkL3NpPHfvQ64D7QCn4HXohRc1dZ1QDWJYnqy+1umSshLQAn3gDcCpqtk/4qZv02gFT1dbcRiAAAAAElFTkSuQmCC"</span><span class="nt">&gt;&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>教学案例<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"menu-item"</span><span class="nt">&gt;&lt;span&gt;</span>交流问答<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"right-wrap"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--********** Begin **********--&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon-list full-height flex"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon-item"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"`https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172225sXz8LL.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon-item"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"`https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172241ghCN0r.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon-item"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"`https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172303wVBW4N.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">class=</span><span class="s">"user"</span> <span class="na">src=</span><span class="s">"`https://holon-image.oss-cn-beijing.aliyuncs.com/20220417172203Uxxmtz.png"</span> <span class="na">alt=</span><span class="s">""</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--********** End **********--&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
 </div><div class="d-print-none"><footer class="article__footer">
   <!-- 原 更新时间 位置 --><!-- start custom article footer snippet -->
 
@@ -729,7 +1388,7 @@ git push origin
       </a>
     </p>
   </div></div></footer>
-<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/blog/2022/04/18/Jekyll%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E7%9A%84url%E6%A0%BC%E5%BC%8F/">Jekyll自动生成的url格式</a></div><div class="next"><span>下篇</span><a href="/posts/cs/lang/css/2022/04/18/CSS%E6%96%87%E5%AD%97%E4%B8%8E%E5%AD%97%E4%BD%93%E6%A0%B7%E5%BC%8F/">CSS文字与字体样式</a></div></div></div>
+<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/cs/os/mac/2022/04/20/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1CRON/">定时任务CRON</a></div><div class="next"><span>下篇</span><a href="/posts/cs/lang/javascript/2022/04/21/JavaScript%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86/">JavaScript事件处理</a></div></div></div>
 
 </div>
 
@@ -1524,10 +2183,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         $("#site-view").text(view);
       });
       // 文章浏览量增加
-      var key =   '在GitHub pages中使用自定义插件';
-      var title = "在GitHub pages中使用自定义插件";
+      var key =   '使用flex布局实现顶部导航栏';
+      var title = "使用flex布局实现顶部导航栏";
       pageview.increase(key, key, function(view) {
-        $("[data-page-key='在GitHub pages中使用自定义插件']").text(view);
+        $("[data-page-key='使用flex布局实现顶部导航栏']").text(view);
       });
     });
   </script><!-- start custom pageview snippet (for the post) -->
@@ -1627,10 +2286,10 @@ window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
         $("#site-view").text(view);
       });
       // 文章浏览量增加
-      var key =   '在GitHub pages中使用自定义插件';
-      var title = "在GitHub pages中使用自定义插件";
+      var key =   '使用flex布局实现顶部导航栏';
+      var title = "使用flex布局实现顶部导航栏";
       pageview.increase(key, key, function(view) {
-        $("[data-page-key='在GitHub pages中使用自定义插件']").text(view);
+        $("[data-page-key='使用flex布局实现顶部导航栏']").text(view);
       });
     });
   </script>-->

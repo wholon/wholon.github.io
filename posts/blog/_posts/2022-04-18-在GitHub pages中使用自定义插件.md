@@ -83,6 +83,8 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
 
 5. 成功。
 
+> 此方法不行，这种方式只是相当于复制了 `SRC_FOLDER_PATH` 整个文件到  `TARGET_BRANCH` ，而我们需要 `SRC_FOLDER_PATH` 目录展开。
+
 ### 方法2: 结合 jgp 插件
 
 1. 在本地编译静态文件。有一个很好用的 gem 插件 [Deploy Jekyll to GitHub Pages](https://www.yegor256.com/2014/06/24/jekyll-github-deploy.html)。
@@ -90,5 +92,7 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
    它会从运行插件所在的目录推断远程仓库地址，然后从选择的分支拉取文件到本地，然后本地编译，最后再推送到 pages 分支。可以用 `jgd -h` 查看帮助。
 
 2. 这种方法也能实现自定义插件。但是看的出来，需要先把本地修改的文件推送到远程再使用这个插件拉取，十分的费力，不建议使用。
+
+方法3: 使用 Travis
 
 ### 等待文章开头提到的 GitHubAction优化支持 git-log

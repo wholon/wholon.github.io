@@ -499,6 +499,282 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
 <!-- end custom main top snippet -->
 <article itemscope itemtype="http://schema.org/WebPage"><header style="display:none;"><h1>主页</h1></header><meta itemprop="headline" content="主页"><meta itemprop="author" content="Holon"/><div class="js-article-content"><div class="layout--articles"><!-- 文章摘要 --><!-- 文章摘要类型 --><div class="article-list items items--divided"><article class="item"><div class="item__content">
+          <header><a href="/posts/cs/lang/java/2021/09/21/Spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1/"><h2 itemprop="headline" class="item__header">Spring声明式事务</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">Spring声明式事务
+
+所有的事物都由PlatformTransactionManager负责管理。事务由TransactionStatus负责表示。之所以抽象出这两个玩意儿，是因为JavaEE除了提供JDBC事务外，还支持分布式事务JTA(Java Transation API)。然而分布式事务非常慢，所以使用率不高。Spring为了同时支持JDBC和JTA两种事物类型，就抽象出了上面的两个玩意儿。
+
+Spring事务注解
+
+
+  
+    
+      注解
+      翻译
+      作用
+    
+  
+  
+    
+      @EnableTransactionMana...</div><p><a href="/posts/cs/lang/java/2021/09/21/Spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+      
+
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/">编程语言</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/java/">Java</a>
+      </li>
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 09月21日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Spring声明式事务">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-09-21T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
+          <header><a href="/posts/cs/lang/java/2021/09/19/%E4%BD%BF%E7%94%A8Spring%E6%8F%90%E4%BE%9B%E7%9A%84JdbcDaoSupport/"><h2 itemprop="headline" class="item__header">使用Spring提供的JdbcDaoSupport</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">在传统的多层应用程序中，通常是Web层调用业务层，业务层调用数据访问层。业务层负责处理各种业务逻辑，而数据访问层只负责对数据进行增删改查。因此，实现数据访问层就是用JdbcTemplate实现对数据库的操作。
+
+ORM：Object-Relational Mapping。这种把关系数据库的表记录映射为Java对象的过程</div><p><a href="/posts/cs/lang/java/2021/09/19/%E4%BD%BF%E7%94%A8Spring%E6%8F%90%E4%BE%9B%E7%9A%84JdbcDaoSupport/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+      
+
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/">编程语言</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/java/">Java</a>
+      </li>
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 09月19日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="使用Spring提供的JdbcDaoSupport">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-09-19T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
           <header><a href="/posts/cs/lang/java/2021/09/17/Spring5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><h2 itemprop="headline" class="item__header">Spring5学习笔记</h2></a></header>
           <div class="item__description"><div class="article__content" itemprop="description articleBody">Spring框架概述
 
@@ -1070,279 +1346,8 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
     </span><!-- </div> -->
     <!-- /展示更新时间 -->
     </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-09-12T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/lang/java/2021/09/10/Spring%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"><h2 itemprop="headline" class="item__header">Spring学习资料</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">廖雪峰的Spring教程
-
-造轮子：实现一个简易的Spring-IoC容器</div><p><a href="/posts/cs/lang/java/2021/09/10/Spring%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-      
-
-    
-    
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/">编程语言</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/java/">Java</a>
-      </li>
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 09月10日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Spring学习资料">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-09-10T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/lang/java/2021/09/09/Java%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"><h2 itemprop="headline" class="item__header">Java编程技术</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">参考资料
-
-韩顺平 - 零基础 30 天学会 Java（900 多集，顺序安排很合理，每个知识真正的打碎了，通俗、有示例、有实战、有思想）
-西安电子科技大学 - 王煦：Java程序设计
-廖雪峰 Java 教程
-Java 特点（看不懂没事，别背！）
-
-通过JVM屏蔽底层操作系统的差异
-环境搭建
-
-JDK、JRE、JVM的关系？
-JVM：Java Virtual Machine，Java虚拟机，构建于操作系统之上，用以屏蔽操作系统底层差异从而实现Java的跨平台特性。像是一个代理人，这种在上层应用和底层实现之间穿插一层从而屏蔽底层差异的方式是一种软件编程思想。比如我们的浏览器现在有多种，如果...</div><p><a href="/posts/cs/lang/java/2021/09/09/Java%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-      
-
-    
-    
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/">编程语言</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/java/">Java</a>
-      </li>
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 09月09日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Java编程技术">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-09-09T00:00:00+08:00"></div>
       </article></div>
-</div><div class="layout--home"><div class="pagination"><p>共计 126 篇文章，21 页。</p>
+</div><div class="layout--home"><div class="pagination"><p>共计 128 篇文章，22 页。</p>
     <div class="pagination__menu">
       <ul class="menu menu--nowrap"><li><a class="button button--secondary button--circle" href="/page15">
             <i class="fas fa-angle-left"></i>
@@ -1355,7 +1360,7 @@ JVM：Java Virtual Machine，Java虚拟机，构建于操作系统之上，用�
             </li><li>
                   <a class="button button--secondary button--circle" href="/page17"><span>17</span></a>
                 </li><li><span class="pagination__omit"><i class="fas fa-ellipsis-h"></i></span></li><li>
-                  <a class="button button--secondary button--circle" href="/page21"><span>21</span></a>
+                  <a class="button button--secondary button--circle" href="/page22"><span>22</span></a>
                 </li><li><a class="button button--secondary button--circle" href="/page17">
             <i class="fas fa-angle-right"></i>
           </a></li></ul>

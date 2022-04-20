@@ -499,6 +499,153 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
 <!-- end custom main top snippet -->
 <article itemscope itemtype="http://schema.org/WebPage"><header style="display:none;"><h1>主页</h1></header><meta itemprop="headline" content="主页"><meta itemprop="author" content="Holon"/><div class="js-article-content"><div class="layout--articles"><!-- 文章摘要 --><!-- 文章摘要类型 --><div class="article-list items items--divided"><article class="item"><div class="item__content">
+          <header><a href="/posts/blog/2022/04/18/Jekyll%E4%BB%8E%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%AD%E6%8F%90%E5%8F%96%E7%9A%84%E9%A1%B5%E9%9D%A2%E6%A0%87%E9%A2%98%E8%8B%B1%E6%96%87%E5%8D%95%E8%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E9%97%AE%E9%A2%98/"><h2 itemprop="headline" class="item__header">Jekyll从文件名中提取的页面标题英文单词大小写问题</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">问题描述
+
+使用 Jekyll 书写博客时，如果没有在 YAML front matter 中指定 title，那么解析器将从文件名中提取 title 作为 page.title。
+
+但是存在一个问题。
+
+比如有文件 2020-02-02-HTML简介，Jekyll 将提取到 page.title 格式化为了 Html简介，有文件 2022-02-02-first SECOND，Jekyll 将提取到 page.title 格式化为了 First second，这对于需要在标题中书写专有名词或者缩写时十分不便。
+
+原因在于 Jekyll 的默认标题格式是 capitalize。
+
+有关这...</div><p><a href="/posts/blog/2022/04/18/Jekyll%E4%BB%8E%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%AD%E6%8F%90%E5%8F%96%E7%9A%84%E9%A1%B5%E9%9D%A2%E6%A0%87%E9%A2%98%E8%8B%B1%E6%96%87%E5%8D%95%E8%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E9%97%AE%E9%A2%98/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+      
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/blog/">随笔</a>
+      </li>
+    
+
+    
+
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月18日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Jekyll从文件名中提取的页面标题英文单词大小写问题">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-18T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
+          <header><a href="/posts/blog/2022/04/18/Jekyll%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AE%E5%8F%82%E6%95%B0/"><h2 itemprop="headline" class="item__header">Jekyll一些内置参数</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">Jekyll内置参数
+
+Jekyll 内置了一些参数，可以通过 Liquid 模版语言调用。
+
+全局变量
+
+
+  site: 整个站点的信息
+  page: 当前页面的所有信息
+  content: 所有布局文件被渲染之后的内容(In layout files, the rendered content of the Post or Page being wrapped. )
+  paginator:这个配置是要配置的，相当于自定义变量
+
+
+site参数
+
+site.time  : 运行jekyll命令的时间
+site.pages : 所有页面，注意是页面
+site.posts ：所有文...</div><p><a href="/posts/blog/2022/04/18/Jekyll%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AE%E5%8F%82%E6%95%B0/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+      
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/blog/">随笔</a>
+      </li>
+    
+
+    
+
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月18日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Jekyll一些内置参数">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-18T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
           <header><a href="/posts/blog/2022/04/18/GitHubPages%E4%B8%AD%E7%9A%84Jekyll%E6%8F%92%E4%BB%B6%E7%99%BD%E5%90%8D%E5%8D%95/"><h2 itemprop="headline" class="item__header">GitHubPages中的Jekyll插件白名单</h2></a></header>
           <div class="item__description"><div class="article__content" itemprop="description articleBody">GitHub Pages cannot build sites using unsupported plugins. If you want to use unsupported plugins, generate your site locally and then push your site’s static files to GitHub.
 
@@ -939,310 +1086,8 @@ GitHub pages 默认插件
     </span><!-- </div> -->
     <!-- /展示更新时间 -->
     </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-17T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/lang/javascript/2022/04/16/JSON/"><h2 itemprop="headline" class="item__header">JSON</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">JSON对象
-
-JSON既然是用来传递数据的，必然要先存储数据，存储数据需要采用一定的数据格式，JSON常用的数据格式有JSON对象、JSON数组和JSON字符串。
-
-什么是JSON对象
-
-JSON对象（通常叫JSON）是一种文本数据的交换格式，用于存储和传输数据。示例如下：
-
-{
-    "name":"Jerry",
-    "age":15
-}
-
-
-这就是一个简单的json对象，它的规则是：
-
-
-  数据以键/值对的形式存在；
-  数据之间用逗号间隔；
-  大括号表示保存对象；
-  方括号表示保存数组。
-
-
-JSON对象与Javascript对象的区别
-
-在实训四里面，我们讲过Ja...</div><p><a href="/posts/cs/lang/javascript/2022/04/16/JSON/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-      
-
-    
-    
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/">编程语言</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/javascript/">JavaScript</a>
-      </li>
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月16日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="JSON">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-16T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/lang/html/2022/04/16/HTML%E5%9F%BA%E6%9C%AC%E6%A0%87%E7%AD%BE/"><h2 itemprop="headline" class="item__header">HTML基本标签</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">创建第一个 HTML 标签
-
-相关知识
-
-&lt;h1&gt;welcome&lt;/h1&gt;
-
-
-上面这行代码它表示一个HTML元素。
-
-大多数 HTML 元素都是由开始标签和结束标签组成的，通常成对出现 。
-
-开始标签：用尖括号&lt;&gt;包裹关键词，像&lt;h1&gt;这样。
-结束标签：用&lt;/&gt;包裹和开始标签一样的关键词，像&lt;/h1&gt;这样。
-
-可以发现： 结束标签就比开始标签多了一个斜杠/。
-
-是不是很简单，开始你的挑战吧！
-
-
-  按照惯例，所有 HTML 标签都应该是小写字母，例如应使用 &lt;p&gt;&lt;/p&gt;，而不会使用 &l...</div><p><a href="/posts/cs/lang/html/2022/04/16/HTML%E5%9F%BA%E6%9C%AC%E6%A0%87%E7%AD%BE/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-      
-
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/">编程语言</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/lang/html/">HTML</a>
-      </li>
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月16日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="HTML基本标签">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-04-16T00:00:00+08:00"></div>
       </article></div>
-</div><div class="layout--home"><div class="pagination"><p>共计 126 篇文章，21 页。</p>
+</div><div class="layout--home"><div class="pagination"><p>共计 128 篇文章，22 页。</p>
     <div class="pagination__menu">
       <ul class="menu menu--nowrap"><li><a class="button button--secondary button--circle" href="/page3">
             <i class="fas fa-angle-left"></i>
@@ -1255,7 +1100,7 @@ JSON对象与Javascript对象的区别
             </li><li>
                   <a class="button button--secondary button--circle" href="/page5"><span>5</span></a>
                 </li><li><span class="pagination__omit"><i class="fas fa-ellipsis-h"></i></span></li><li>
-                  <a class="button button--secondary button--circle" href="/page21"><span>21</span></a>
+                  <a class="button button--secondary button--circle" href="/page22"><span>22</span></a>
                 </li><li><a class="button button--secondary button--circle" href="/page5">
             <i class="fas fa-angle-right"></i>
           </a></li></ul>

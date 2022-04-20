@@ -499,6 +499,291 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
 
 <!-- end custom main top snippet -->
 <article itemscope itemtype="http://schema.org/WebPage"><header style="display:none;"><h1>主页</h1></header><meta itemprop="headline" content="主页"><meta itemprop="author" content="Holon"/><div class="js-article-content"><div class="layout--articles"><!-- 文章摘要 --><!-- 文章摘要类型 --><div class="article-list items items--divided"><article class="item"><div class="item__content">
+          <header><a href="/posts/cs/os/linux/2021/10/30/%E5%B8%B8%E7%94%A8Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84/"><h2 itemprop="headline" class="item__header">常用Linux服务器软件目录组织结构</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">前言
+对于初学 Linux 服务器的人而言，经常会被各种服务器软件的各种配置文件和可运行文件的路径感到困扰，本文总结了几种常用的 Linux 服务器软件的文件组织方式，希望通过本文的总结能够从中探寻到一定的规律。事实上，一般的开源软件都遵行 Filesystem Hierarchy Standard，有兴趣的读者可以自行查阅观看。
+
+本文的主要总结目标也是通过各种 Linux 系统在线安装的软件的默认的文件组织方案而言，自行编译安装的软件不在本文讨论范围内。
+
+Nginx
+有关 Nginx 的详细内容，可以参考这篇博文 Nginx新手向
+安装
+对于 Debian/Ubuntu 系列的 L...</div><p><a href="/posts/cs/os/linux/2021/10/30/%E5%B8%B8%E7%94%A8Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+      
+
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/os/">操作系统</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/os/linux/">Linux</a>
+      </li>
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 10月30日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="常用Linux服务器软件目录组织结构">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-10-30T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
+          <header><a href="/posts/cs/tool/2021/10/28/Nginx%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><h2 itemprop="headline" class="item__header">Nginx学习笔记</h2></a></header>
+          <div class="item__description"><div class="article__content" itemprop="description articleBody">Nginx
+
+参考资料
+
+优秀博文
+8分钟带你深入浅出搞懂Nginx
+连前端都看得懂的《Nginx 入门指南》
+官方文档
+Nginx 官方网站
+Nginx 中文文档
+
+前言
+学习一个编程软件的步骤：
+
+  搭建环境
+  Hello World
+
+
+Nginx 介绍
+什么是 Nginx
+Nginx 是高性能的 HTTP 和反向代理的服务器，处理高并发能力是十分强大的，能经受高负 载的考验,有报告表明能支持高达 50,000 个并发连接数。
+Nginx 可以做什么事情
+
+正向代理
+(1)需要在客户端配置代理服务器进行指定网站访问
+
+graph LR
+A[客户端]--&gt;B[配置在客户端的...</div><p><a href="/posts/cs/tool/2021/10/28/Nginx%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">阅读更多</a></p></div><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+      
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/tool/">开发工具</a>
+      </li>
+    
+
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 10月28日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Nginx学习笔记">0</span> 阅读</li></ul><!-- 展示更新时间 -->
+    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
+      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
+      
+      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
+    </span><!-- </div> -->
+    <!-- /展示更新时间 -->
+    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-10-28T00:00:00+08:00"></div>
+      </article><article class="item"><div class="item__content">
           <header><a href="/posts/cs/os/linux/2021/10/26/Linux%E7%BB%88%E7%AB%AF%E5%A4%9A%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6/"><h2 itemprop="headline" class="item__header">Linux终端多窗口管理软件</h2></a></header>
           <div class="item__description"><div class="article__content" itemprop="description articleBody">基本上只有tmux和screen两款。
 
@@ -1053,289 +1338,8 @@ docker COMMAND –help命令查看
     </span><!-- </div> -->
     <!-- /展示更新时间 -->
     </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-10-20T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/os/mac/2021/10/16/Mac%E5%B0%8F%E6%8A%80%E5%B7%A7-%E6%8F%90%E9%AB%98%E7%BB%88%E7%AB%AF%E7%BD%91%E9%80%9F/"><h2 itemprop="headline" class="item__header">Mac小技巧-提高终端网速</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">【问题描述】
-
-假设你通过一系列操作已经完成了能够通过浏览器流畅的访问GitHub，但是当你打开终端，发现使用git clone时依然网速捉急，你开始上网查找解决方案，大部分人都告诉你修改源，但是除了git外，你还有其它命令行程序可能会遇到网速不佳的情况，难道每遇到一个都要修改一次源吗？可是你明明已经能够流程的访问GitHub了啊，为什么之前做的努力在终端这里仿佛失效了呢？通过修改源的方式一点都不优雅，有没有能一劳永逸的方式呢？
-【相关问题】
-为什么我的终端连接不了网？
-git clone速度慢
-终端下载速度慢
-如何提高终端访问网络速度
-【问题出现的原因】
-终端程序在大多数操作系统中实现...</div><p><a href="/posts/cs/os/mac/2021/10/16/Mac%E5%B0%8F%E6%8A%80%E5%B7%A7-%E6%8F%90%E9%AB%98%E7%BB%88%E7%AB%AF%E7%BD%91%E9%80%9F/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-  
-    
-    
-      
-
-    
-    
-      
-        
-      
-        
-          
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/os/">操作系统</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/os/mac/">Mac</a>
-      </li>
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 10月16日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Mac小技巧-提高终端网速">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-10-16T00:00:00+08:00"></div>
-      </article><article class="item"><div class="item__content">
-          <header><a href="/posts/cs/os/mac/2021/10/14/Mac%E5%B0%8F%E6%8A%80%E5%B7%A7-%E4%BF%A1%E6%81%AF%E5%92%8C%E5%89%AA%E8%B4%B4%E6%9D%BF%E4%B8%8D%E5%90%8C%E6%AD%A5/"><h2 itemprop="headline" class="item__header">Mac小技巧-信息和剪贴板不同步</h2></a></header>
-          <div class="item__description"><div class="article__content" itemprop="description articleBody">信息
-想要设备间信息共享，需要在各个设备间打开iMessage，一般通过在手机端实现。
-【步骤】
-
-  首先查看iPhone端iCloud设置页面，确定自己打开了信息的iCloud同步。
-  进入iCloud备份，手动备份。
-  手机端备份成功后，打开Mac端信息，进入设置项，同步信息。
-  如果手机包含了双卡，那么一定要进入到信息设置里把iMessage信息 -&gt;发送与接收的地址全部打开，在设备间同步信息的前提是该手机号打开了iMessage。
-
-
-【可能的原因分析】
-造成信息推送失败的可能原因分析：
-
-  App Store登陆了其它账号导致了iCloud信息自动关闭了。
-  ...</div><p><a href="/posts/cs/os/mac/2021/10/14/Mac%E5%B0%8F%E6%8A%80%E5%B7%A7-%E4%BF%A1%E6%81%AF%E5%92%8C%E5%89%AA%E8%B4%B4%E6%9D%BF%E4%B8%8D%E5%90%8C%E6%AD%A5/">阅读更多</a></p></div><div class="article__info clearfix">
-<!--      展示标签 --><!--展示文章分类-->
-      <!-- 获取设置项：是否开启显示文章位置 -->
-  <!-- 获取页面网址 -->
-  
-    
-      
-  
-    
-      
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  <!-- 获取当前侧边栏分类 -->
-  
-  
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-  
-    
-    
-      
-
-    
-    
-      
-        
-      
-        
-          
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-    
-    
-
-    
-    
-      
-        
-      
-        
-      
-    
-  
-    
-    
-
-    
-    
-  
-
-  <ul class="left-col menu">
-    
-      <li>位置：</li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/">计算机科学</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/os/">操作系统</a>
-      </li>
-    
-
-    
-      <li>></li>
-      <li>
-        <a class="button button--secondary button--pill button--sm"
-           href="/posts/cs/os/mac/">Mac</a>
-      </li>
-    
-    
-  </ul>
-
-<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
-  
-  
-  
-
-
-      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2021年 10月14日</span>
-            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Mac小技巧-信息和剪贴板不同步">0</span> 阅读</li></ul><!-- 展示更新时间 -->
-    <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-03-31T15:57:10+08:00">2022-03-31 15:57:10</time>
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
-      
-      <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
-    </span><!-- </div> -->
-    <!-- /展示更新时间 -->
-    </div><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2021-10-14T00:00:00+08:00"></div>
       </article></div>
-</div><div class="layout--home"><div class="pagination"><p>共计 126 篇文章，21 页。</p>
+</div><div class="layout--home"><div class="pagination"><p>共计 128 篇文章，22 页。</p>
     <div class="pagination__menu">
       <ul class="menu menu--nowrap"><li><a class="button button--secondary button--circle" href="/page13">
             <i class="fas fa-angle-left"></i>
@@ -1348,7 +1352,7 @@ git clone速度慢
             </li><li>
                   <a class="button button--secondary button--circle" href="/page15"><span>15</span></a>
                 </li><li><span class="pagination__omit"><i class="fas fa-ellipsis-h"></i></span></li><li>
-                  <a class="button button--secondary button--circle" href="/page21"><span>21</span></a>
+                  <a class="button button--secondary button--circle" href="/page22"><span>22</span></a>
                 </li><li><a class="button button--secondary button--circle" href="/page15">
             <i class="fas fa-angle-right"></i>
           </a></li></ul>
