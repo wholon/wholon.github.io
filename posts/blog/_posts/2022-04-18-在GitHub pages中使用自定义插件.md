@@ -81,6 +81,8 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
 
    即可推送到远程仓库。
 
+5. 成功。
+
 1. 尝试过本地编译完毕推送到 github:main 分支，然后通过 GitHub Action 自动拉取到 pages 分支。结果依然是扰乱了 git-log。
 
 在本地编译静态文件。有一个很好用的 gem 插件 
