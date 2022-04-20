@@ -71,6 +71,8 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
    ```shell
    # 给向wholon.github.io push文章设置别名
    alias blog="zsh /Users/holon/Documents/GitHub/wholon.github.io/autoGit.sh"
+   # 如果不想看到长篇的重点输出内容，可以输入
+   alias blog="nohup zsh /Users/holon/Documents/GitHub/wholon.github.io/autoGit.sh &"
    ```
 
 4. 在终端任意位置输入
