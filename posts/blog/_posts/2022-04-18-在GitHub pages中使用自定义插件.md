@@ -93,6 +93,50 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
 
 2. 这种方法也能实现自定义插件。但是看的出来，需要先把本地修改的文件推送到远程再使用这个插件拉取，十分的费力，不建议使用。
 
-方法3: 使用 Travis
+### 方法3: 使用 Travis
+
+需要付费
+
+### 方法4: 本地构建✨
+
+将方法1中提到的 `autoGit.sh` 文件改为以下内容
+
+```shell
+#! /bin/zsh
+# 自动化推送脚本, 在 ~/.zshrc 里面设置脚本运行的 alias
+# 获取脚本所在绝对路径
+SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
+cd $SHELL_FOLDER
+
+# 切换到 main
+git checkout main
+
+# 删除 _site网站下所有内容
+rm -rf _site/*
+
+# 从远程 clone gh-pages分支
+git clone -b gh-pages https://github.com/wholon/wholon.github.io.git _site
+# 以生产模式 build 网站
+JEKYLL_ENV=production bundle exec jekyll build
+
+# 推送编译好的博客
+cd _site
+echo "[主页](https://holon.wang)" > README.md
+git add .
+git commit -m "$1"
+git push origin
+
+# 推送源代码
+cd ..
+git checkout main
+git add .
+# 变量1是传送的参数，也就是本次 git 的摘要
+git commit -m "$1" 
+git push origin
+```
+
+运行该脚本即可。
+
+> GitHub pages需要部署在 gh-pages分支。
 
 ### 等待文章开头提到的 GitHubAction优化支持 git-log

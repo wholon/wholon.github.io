@@ -670,7 +670,52 @@ git push origin
   </li>
 </ol>
 
-<p>方法3: 使用 Travis</p>
+<h3 id="方法3-使用-travis">方法3: 使用 Travis</h3>
+
+<p>需要付费</p>
+
+<h3 id="方法4-本地构建">方法4: 本地构建✨</h3>
+
+<p>将方法1中提到的 <code class="language-plaintext highlighter-rouge">autoGit.sh</code> 文件改为以下内容</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#! /bin/zsh</span>
+<span class="c"># 自动化推送脚本, 在 ~/.zshrc 里面设置脚本运行的 alias</span>
+<span class="c"># 获取脚本所在绝对路径</span>
+<span class="nv">SHELL_FOLDER</span><span class="o">=</span><span class="si">$(</span><span class="nb">cd</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">dirname</span> <span class="s2">"</span><span class="nv">$0</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span><span class="p">;</span><span class="nb">pwd</span><span class="si">)</span>
+<span class="nb">cd</span> <span class="nv">$SHELL_FOLDER</span>
+
+<span class="c"># 切换到 main</span>
+git checkout main
+
+<span class="c"># 删除 _site网站下所有内容</span>
+<span class="nb">rm</span> <span class="nt">-rf</span> _site/<span class="k">*</span>
+
+<span class="c"># 从远程 clone gh-pages分支</span>
+git clone <span class="nt">-b</span> gh-pages https://github.com/wholon/wholon.github.io.git _site
+<span class="c"># 以生产模式 build 网站</span>
+<span class="nv">JEKYLL_ENV</span><span class="o">=</span>production bundle <span class="nb">exec </span>jekyll build
+
+<span class="c"># 推送编译好的博客</span>
+<span class="nb">cd </span>_site
+<span class="nb">echo</span> <span class="s2">"[主页](https://holon.wang)"</span> <span class="o">&gt;</span> README.md
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+git push origin
+
+<span class="c"># 推送源代码</span>
+<span class="nb">cd</span> ..
+git checkout main
+git add <span class="nb">.</span>
+<span class="c"># 变量1是传送的参数，也就是本次 git 的摘要</span>
+git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> 
+git push origin
+</code></pre></div></div>
+
+<p>运行该脚本即可。</p>
+
+<blockquote>
+  <p>GitHub pages需要部署在 gh-pages分支。</p>
+</blockquote>
 
 <h3 id="等待文章开头提到的-githubaction优化支持-git-log">等待文章开头提到的 GitHubAction优化支持 git-log</h3>
 </div><div class="d-print-none"><footer class="article__footer">

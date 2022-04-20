@@ -29,5 +29,3 @@ git add .
 # 变量1是传送的参数，也就是本次 git 的摘要
 git commit -m "$1" 
 git push origin
-
-
