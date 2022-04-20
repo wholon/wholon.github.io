@@ -20,7 +20,9 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: '_site'
+          target-directory: '/'
           destination-github-username: 'wholon'
           destination-repository-name: 'wholon.github.io'
-          user-email: holon.cn@gmail.com
-          target-directory: '/'
+          user-email: 'holon.cn@gmail.com'
+          target-branch: 'gh-pages'
+          commit-message: '部署博客'
