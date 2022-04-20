@@ -20,7 +20,7 @@
 text_skin: dark # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 highlight_theme: tomorrow-night-bright # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 url     : https://wholon.github.io # the base hostname & protocol for your site e.g. https://www.someone.com
-baseurl : "" # does not include hostname
+baseurl : "" # does not include hostname 默认情况下 github pages 会添加 /pages/username/ 在 URLs 中  见此处 https://stackoverflow.com/questions/63143468/jekyll-remove-github-user-name-and-repo-name-from-generated-urls
 title   : Holon's Blog # 踏歌行
 # this means to ignore newlines until "Language & timezone"
 description: >-
