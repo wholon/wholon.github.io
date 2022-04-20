@@ -245,8 +245,8 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
-  # - jekyll-titles-from-headings
-  # - jekyll-last-modified-at
+  - jekyll-titles-from-headings
+  - jekyll-last-modified-at
   
 # plugin 从文章第一个标题中摘取标题
 titles_from_headings:
