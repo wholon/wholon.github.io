@@ -99,6 +99,8 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
 
 ### 方法4: 本地构建✨
 
+> [How do I push jekyll _site directory to gh-pages branch, and leave the source in master?](https://stackoverflow.com/questions/17835937/how-do-i-push-jekyll-site-directory-to-gh-pages-branch-and-leave-the-source-in)
+
 将方法1中提到的 `autoGit.sh` 文件改为以下内容
 
 ```shell

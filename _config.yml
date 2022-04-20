@@ -219,6 +219,7 @@ exclude:
   - /screenshots
   - /test
   - /vendor
+  - autoGit.sh
 
 defaults:
   - scope:
@@ -258,7 +259,7 @@ titles_from_headings:
 # 如果没有，则获取文件的 mtime
 last-modified-at:
   date-format: '%Y:%B:%A:%d:%S:%R' # 2022-04-20 07:01:10 +0800
-  use-git-cache: true # 使用 git 缓存 1000 个文件只需要调用 1 次 git log
+  use-git-cache: false # 使用 git 缓存 1000 个文件只需要调用 1 次 git log
   # override-date: true
 
 # collections:
