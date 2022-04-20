@@ -1,6 +1,6 @@
 source "https://rubygems.org"
     # gem "jekyll", "~> 4.2.2"
-    bundle exec jekyll serve
+    
     gem "jekyll-text-theme"
     gem "github-pages", group: :jekyll_plugins
 group :jekyll_plugins do
