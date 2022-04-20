@@ -10,7 +10,7 @@ article_header:
     src: https://holon-image.oss-cn-beijing.aliyuncs.com/20220420034340l3koG2.jpeg
 ---
 <!-- {% last_modified_at %} -->
-now: {{ "now" | date: '%Y-%m-%d %H:%M' }}
+<!-- now: { { "now" | date: '%Y-%m-%d %H:%M' }} -->
 
 最后编辑于：{{ page.last_modified_at }}
 
