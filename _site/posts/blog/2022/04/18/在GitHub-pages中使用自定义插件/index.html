@@ -553,7 +553,7 @@ b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
       <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 04月18日</span>
             </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="在GitHub pages中使用自定义插件">0</span> 阅读</li></ul><!-- 展示更新时间 -->
     <!-- <div style="text-align: right;" class="menu"> --><span class="right-col">更新于
-      <time itemprop="dateModified" datetime="2022-04-20T21:16:37+08:00">2022-04-20 21:16:37</time>
+      <time itemprop="dateModified" datetime="2022-04-20T21:23:42+08:00">2022-04-20 21:23:42</time>
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} -->
       
       <!-- 由 now 生成的时间 { { "now" | date: "%Y-%m-%d %H:%M" }} 输出的日期是最后一次生成当前页面的时间，并不是页面呈现给用户的时间。 -->
@@ -643,20 +643,35 @@ git push origin
   <li>
     <p>在终端任意位置输入</p>
 
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blog <span class="s2">"本次博客更新内容"</span>
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blog <span class="s2">"本次博客更新摘要"</span>
 </code></pre></div>    </div>
 
     <p>即可推送到远程仓库。</p>
+
+    <p>如果你不想看到长篇的终端输出内容，可以输入</p>
+
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">nohup </span>blog <span class="s2">"本次博客更新摘要"</span> &amp;
+</code></pre></div>    </div>
   </li>
   <li>
     <p>成功。</p>
   </li>
+</ol>
+
+<h3 id="方法2-结合-jgp-插件">方法2: 结合 jgp 插件</h3>
+
+<ol>
   <li>
-    <p>尝试过本地编译完毕推送到 github:main 分支，然后通过 GitHub Action 自动拉取到 pages 分支。结果依然是扰乱了 git-log。</p>
+    <p>在本地编译静态文件。有一个很好用的 gem 插件 <a href="https://www.yegor256.com/2014/06/24/jekyll-github-deploy.html">Deploy Jekyll to GitHub Pages</a>。</p>
+
+    <p>它会从运行插件所在的目录推断远程仓库地址，然后从选择的分支拉取文件到本地，然后本地编译，最后再推送到 pages 分支。可以用 <code class="language-plaintext highlighter-rouge">jgd -h</code> 查看帮助。</p>
+  </li>
+  <li>
+    <p>这种方法也能实现自定义插件。但是看的出来，需要先把本地修改的文件推送到远程再使用这个插件拉取，十分的费力，不建议使用。</p>
   </li>
 </ol>
 
-<p>在本地编译静态文件。有一个很好用的 gem 插件</p>
+<h3 id="等待文章开头提到的-githubaction优化支持-git-log">等待文章开头提到的 GitHubAction优化支持 git-log</h3>
 </div><div class="d-print-none"><footer class="article__footer">
   <!-- 原 更新时间 位置 --><!-- start custom article footer snippet -->
 

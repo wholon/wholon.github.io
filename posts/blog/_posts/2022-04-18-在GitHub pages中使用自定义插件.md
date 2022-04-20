@@ -76,10 +76,16 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
 4. 在终端任意位置输入
 
    ```shell
-   blog "本次博客更新内容"
+   blog "本次博客更新摘要"
    ```
 
    即可推送到远程仓库。
+
+   如果你不想看到长篇的终端输出内容，可以输入
+
+   ```shell
+   nohup blog "本次博客更新摘要" &
+   ```
 
 5. 成功。
 
