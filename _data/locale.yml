@@ -38,7 +38,7 @@ zh-Hans: &ZH_HANS
   SEARCH                  : "搜索"
   CANCEL                  : "取消"
   VIEWS                   : "阅读"
-  LAST_UPDATED            : "更新于"
+  LAST_UPDATED            : "最后编辑于"
   PREVIOUS                : "上篇"
   NEXT                    : "下篇"
   ARTICLE_DATE_FORMAT     : "%Y年 %m月%d日"
