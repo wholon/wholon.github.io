@@ -34,4 +34,4 @@ jobs:
           bundler_ver: '>=0'         # Default is latest bundler version
           cname: ''                  # Default is to not use a cname
           actor: ''                  # Default is the GITHUB_ACTOR
-          pre_build_commands: ''     # Installing additional dependencies (Arch Linux)
+          pre_build_commands: 'JEKYLL_ENV=production bundle exec jekyll build --config ./_config.yml'     # Installing additional dependencies (Arch Linux)
