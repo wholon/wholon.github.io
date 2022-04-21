@@ -18,4 +18,4 @@ git add . && git commit -m "$1" && git push origin
 
 # 推送编译好的博客
 cd _site && echo "[主页](https://holon.wang)" > README.md
-git add . && git commit -m "$1" && git push origin
+git add . && git commit -m "部署博客" && git push origin
