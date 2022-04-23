@@ -5,18 +5,24 @@ SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 cd $SHELL_FOLDER
 
 # 切换到 main
-git checkout main &
+git checkout main 
 
 # 推送源代码
 # 变量1是传送的参数，也就是本次 git 的摘要
-git add . && git commit -m "部署博客" && git push origin &
+git add .  
+git commit -m "部署博客"  
+git push origin --force
 
 # 删除 _site网站下所有内容
 # 从远程 clone gh-pages分支
-rm -rf _site && git clone -b gh-pages https://github.com/wholon/wholon.github.io.git _site &
+rm -rf _site  
+git clone -b gh-pages https://github.com/wholon/wholon.github.io.git _site 
 # 以生产模式 build 网站
-JEKYLL_ENV=production bundle exec jekyll build &
+JEKYLL_ENV=production bundle exec jekyll build 
 
 # 推送编译好的博客
-cd _site && echo "[主页](https://holon.wang)" > README.md &
-git add . && git commit -m "部署博客" && git push origin &
+cd _site  
+echo "[主页](https://holon.wang)" > README.md 
+git add .  
+git commit -m "部署博客"  
+git push origin 
