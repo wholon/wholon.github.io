@@ -221,6 +221,7 @@ exclude:
   - /vendor
   - autoGit.sh
   - /.idea
+  - .gitignore
 
 defaults:
   - scope:
