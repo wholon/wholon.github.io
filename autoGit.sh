@@ -25,4 +25,4 @@ cd _site
 echo "[主页](https://holon.wang)" > README.md 
 git add .  
 git commit -m "部署博客"  
-git push origin 
+git push origin --force
