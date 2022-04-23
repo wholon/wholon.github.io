@@ -15,7 +15,8 @@ git push origin --force
 
 # 删除 _site网站下所有内容
 # 从远程 clone gh-pages分支
-rm -rf _site/*
+rm -rf _site
+mkdir _site
 git clone -b gh-pages https://github.com/wholon/wholon.github.io.git _site
 # 以生产模式 build 网站
 JEKYLL_ENV=production bundle exec jekyll build
