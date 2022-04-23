@@ -9,7 +9,12 @@ git checkout main
 
 # 推送源代码
 # 变量1是传送的参数，也就是本次 git 的摘要
-git add . && git commit -m "$1" && git push origin
+function lazyGit() {
+    git add . 
+    git commit -m "$1" 
+    git push origin
+}
+lazyGit
 
 # 删除 _site网站下所有内容
 # 从远程 clone gh-pages分支
