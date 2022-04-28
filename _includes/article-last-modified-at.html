@@ -1,0 +1,9 @@
+{% if page.layout != "home" %}
+<div class="article__info clearfix">
+  {%- if page.last_modified_at > include.article.date -%}
+  <li class="right-col menu">
+    <time itemprop="dateModified" datetime="{{ page.last_modified_at | date_to_xmlschema }}">更新于{{ page.last_modified_at | date: '%Y年%m月%d日 %H:%M:%S' }}</time>
+  </li>
+  {%- endif -%}
+</div>
+{% endif %}

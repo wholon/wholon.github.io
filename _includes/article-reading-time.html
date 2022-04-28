@@ -1,0 +1,15 @@
+{% if page.layout != "home" %}
+<div class="article__info clearfix">
+  <li class="right-col menu">
+    <span>
+      {% capture words %}
+      {{ content | number_of_words | minus: 180 }}
+      {% endcapture %}
+      {% unless words contains '-' %}
+      {{ words | plus: 180 | divided_by: 180 | append: ' 分' | prepend: '预计阅读时间 '}}
+      {% endunless %}
+    </span>
+  </li>
+</div>
+{% endif %}
+

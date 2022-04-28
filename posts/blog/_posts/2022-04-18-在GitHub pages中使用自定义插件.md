@@ -138,4 +138,8 @@ git push origin
 
 > GitHub pages需要部署在 gh-pages分支。
 
+### 方法5: 使用非插件形式
+
+[Jekyll-without-plugins](https://jekyllcodex.org/without-plugins/)
+
 ### 等待文章开头提到的 GitHubAction优化支持 git-log
