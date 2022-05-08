@@ -13,12 +13,12 @@ header:
       # @end locale config
     url: /posts/cs/
 
-  - titles:
-      # @start locale config
-      en      :   AI
-      zh      :   人工智能
-      # @end locale config
-    url: /posts/ai/
+  # - titles:
+  #     # @start locale config
+  #     en      :   AI
+  #     zh      :   人工智能
+  #     # @end locale config
+  #   url: /posts/ai/
 
   - titles:
       # @start locale config
