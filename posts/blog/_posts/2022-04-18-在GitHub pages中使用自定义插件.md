@@ -12,6 +12,8 @@ Stack Overflow问题 [Jekyll: How to use custom plugins with GitHub pages?](http
 
 由于是在服务器端新建的环境，所以 git-log 也就失去了效用从而不在支持 jekyll-last-modified-at 插件。
 
+> [jekyll-deploy-action](https://github.com/jeffreytse/jekyll-deploy-action) 已经支持从 git-log 中读取信息。
+
 ## 解决方法
 
 ### 方法1: 结合GitHub Action 
@@ -141,5 +143,3 @@ git push origin
 ### 方法5: 使用非插件形式
 
 [Jekyll-without-plugins](https://jekyllcodex.org/without-plugins/)
-
-### 等待文章开头提到的 GitHubAction优化支持 git-log
