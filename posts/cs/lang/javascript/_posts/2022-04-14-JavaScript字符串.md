@@ -147,7 +147,7 @@ long.lastIndexOf(short,4);//返回1
 long.lastIndexOf(mix);//返回-1  
 ```
 
-### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 
@@ -189,7 +189,7 @@ console.log(str.charAt(0));//输出a
 console.log(str.charAt(str.length-1));//输出g  
 ```
 
-### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 
@@ -256,7 +256,7 @@ console.log(myStr.substr(3,2));//输出34
 console.log(myStr.substr(-2));//输出89  
 ```
 
-### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 
@@ -302,7 +302,7 @@ console.log(str);//输出asdf
 console.log(strin);//输出ASDF  
 ```
 
-### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 
@@ -353,7 +353,7 @@ var arr2 = str.split("0",2);//返回["123","456"];
 
 后面的学习中我们将看到，`a`也可以是一个正则表达式，表示以该正则表达式匹配到的字符串为分隔符。
 
-### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 

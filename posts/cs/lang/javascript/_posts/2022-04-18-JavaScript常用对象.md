@@ -83,6 +83,77 @@ Math.min(1,2,34,100);//1
 Math.min(-1,-2,-34,-100);//-100  
 ```
 
+### 随机数
+
+随机数非常适合用来创建随机行为。
+
+在 JavaScript 中，可以用 `Math.random()` 生成一个在`0`（包括 0）到 `1`（不包括 1）之间的随机小数。 因此 `Math.random()` 可能返回 `0`，但绝不会返回 `1`。
+
+**提示：**[使用赋值运算符存储值](https://chinese.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/storing-values-with-the-assignment-operator)这一节讲过，所有函数调用将在 `return`执行之前结束，因此我们可以 `return`（返回）`Math.random()` 函数的值。
+
+------
+
+更改 `randomFraction`，使其返回一个随机数而不是 `0`。
+
+```js
+function randomFraction() {
+  return Math.random();
+}
+```
+
+### 随机整数
+
+生成随机小数很棒，但随机数更有用的地方在于生成随机整数。
+
+1. 用 `Math.random()` 生成一个随机小数。
+2. 把这个随机小数乘以 `20`。
+3. 用 `Math.floor()` 向下取整，获得它最近的整数。
+
+记住 `Math.random()` 永远不会返回 `1`。同时因为我们是在向下取整，所以最终我们获得的结果不可能有 `20`。 这确保了我们获得了一个在 `0`到 `19` 之间的整数。
+
+把操作连缀起来，代码类似于下面：
+
+```js
+Math.floor(Math.random() * 20);
+```
+
+我们先调用 `Math.random()`，把它的结果乘以 20，然后把上一步的结果传给 `Math.floor()`，最终通过向下取整获得最近的整数。
+
+------
+
+使用这个方法生成并返回 `0` 和 `9` 之间的随机整数。
+
+```js
+function randomWholeNum() {
+  // 只修改这一行下面的代码
+  return Math.floor(Math.random() * 10);
+}
+```
+
+### 范围随机数
+
+我们之前生成的随机数是在 0 到某个数之间，现在我们要生成的随机数是在两个指定的数之间。
+
+我们需要定义一个最小值 `min` 和一个最大值 `max`。
+
+下面是我们将要使用的方法， 仔细看看并尝试理解这行代码到底在干嘛：
+
+```js
+Math.floor(Math.random() * (max - min + 1)) + min
+```
+
+------
+
+创建一个函数 `randomRange`，参数为 `myMin` 和 `myMax`，返回一个在 `myMin`（包括 myMin）和 `myMax`（包括 myMax）之间的随机整数。
+
+```js
+function randomRange(myMin, myMax) {
+  // 只修改这一行下面的代码
+  return Math.floor(Math.random() * (myMax - myMin + 1) + myMin);
+  // 只修改这一行上面的代码
+}
+```
+
 ### 其余方法
 
 `Math`还有很多的方法，如下面的表格所示：
@@ -101,7 +172,7 @@ Math.min(-1,-2,-34,-100);//-100
 | Math.atan(x)    | x的反正切(-PI/2到PI/2之间)           |
 | Math.atan2(y,x) | x轴到点(x,y)的角度 (-PI/2到PI/2之间) |
 
-### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 
@@ -227,7 +298,7 @@ console.log(date.getDate());//输出31
 console.log(new Date().toString());//输出Sat Apr 07 2018 20:40:14 GMT+0800 (中国标准时间)  
 ```
 
-### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 
@@ -305,7 +376,7 @@ function mySqrt(a) {
 
 `new Error()`是一个`Error`对象，括号内的参数是`err.message`属性的值。比如`a`是`-2`，抛出第一个自定义异常，并在`catch`块中输出异常的信息，函数最后返回`error`。
 
-### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 

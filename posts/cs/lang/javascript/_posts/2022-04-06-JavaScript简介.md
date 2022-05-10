@@ -4,6 +4,12 @@ JavaScript 诞生于1995年。在那个时代用户提交一个表单需要获�
 
 1997年，以 JavaScript1.1 为蓝本的建议被提交给了欧洲计算机制造商协会（ECMA，European Computer Manufactures Association），该协会指定39号技术委员会负责将其进行标准化，TC39 经过数月的努力完成了 ECMA-262——定义了一种名为 ECMAScript 的新脚本语言的标准。
 
+> ECMAScript（ES）是 JavaScript 的标准。因为所有主流浏览器都遵循此规范，所以 ECMAScript 和 JavaScript 是可以互换的。
+>
+> 截至目前你所学到的 JavaScript 大多是在 2009 年定稿的 ES5（ECMAScript5）。你仍然可以使用 ES5 编写程序。JavaScript 在不断迭代，每年都会发布新功能。
+>
+> 2015 年发布的 ES6 为该语言添加了许多强大的新功能。包括箭头函数、解构、类、promise 和模块。
+
 现在开发人员常说的 JavaScript 包含三个部分：ECMAScript、浏览器对象模型 (BOM) 和文档对象模型 (DOM)。
 
 ## JavaScript 注释

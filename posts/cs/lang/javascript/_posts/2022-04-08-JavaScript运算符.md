@@ -225,6 +225,58 @@ var result1 = a>b?a:b;//result1赋值为a和b中大的那一个
 var result2 = (a==5)?(a+1):(a-1);//a为5，返回a+1，否则返回a-1
 ```
 
+> **使用多个三元运算符**
+>
+> 你也可以将多个运算符串联在一起以检查多种条件。
+>
+> 下面的函数使用 `if`，`else if` 和 `else` 语句来检查多个条件：
+>
+> ```js
+> function findGreaterOrEqual(a, b) {
+>   if (a === b) {
+>     return "a and b are equal";
+>   }
+>   else if (a > b) {
+>     return "a is greater";
+>   }
+>   else {
+>     return "b is greater";
+>   }
+> }
+> ```
+>
+> 以上函数可以使用多个三元运算符重写：
+>
+> ```js
+> function findGreaterOrEqual(a, b) {
+>   return (a === b) ? "a and b are equal" 
+>     : (a > b) ? "a is greater" 
+>     : "b is greater";
+> }
+> ```
+>
+> 如上文所示，对多个三元运算符进行每个条件都是单独一行的格式化被认为是最佳做法。 使用多个三元运算符而没有适当的缩进可能会使您的代码难以理解。 例如：
+>
+> ```js
+> function findGreaterOrEqual(a, b) {
+>   return (a === b) ? "a and b are equal" : (a > b) ? "a is greater" : "b is greater";
+> }
+> ```
+>
+> ------
+>
+> 在 `checkSign` 函数中使用多个三元运算符来检查数字是正数 ("positive")、负数 ("negative") 或零 ("zero")，使用 `findGreaterOrEqual` 里面的建议缩进格式。 函数应返回 `positive`、`negative` 或 `zero`。
+>
+> ```js
+> function checkSign(num) {
+>   return (num == 0) ? "zero"
+>     : (num > 0) ? "positive"
+>     : "negative";
+> }
+> 
+> checkSign(10);
+> ```
+
 ### 赋值运算符
 
 赋值运算符就是`=`号，其实这个在前面出现过很多次了。赋值运算符的左边是一个变量或者对象的属性，右边是这个变量的值，意思是设置左边变量的值为右边的具体值。
