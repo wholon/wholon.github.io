@@ -141,6 +141,43 @@ let camper = "David";
 
 所以不像 `var`，当你使用 `let` 时，同名的变量只能声明一次。
 
+> 在 JavaScript 中，作用域涉及到变量的作用范围。 在函数外定义的变量具有 全局 作用域。 这意味着，具有全局作用域的变量可以在代码的任何地方被调用。
+>
+> 未使用 `let` 或 `const` 关键字声明的变量会在 `global` 范围内自动创建。 当在代码其他地方无意间定义了一个变量，刚好变量名与全局变量相同，这时会产生意想不到的后果。**你应该总是用 `let` 或 `const` 声明你的变量。**
+
+----
+
+* 使用 `let` 或 `const`，在任何函数之外声明一个名为 `myGlobal` 的全局变量。 并给它一个初始值 `10`。
+
+* 在函数 `fun1` 中，***不要*** 使用 `let` 或 `const` 关键字，将 `5` 分配给 `oopsGlobal` 。
+
+```js
+// 在这行下面声明 myGlobal 变量
+let myGlobal = 10;
+
+function fun1() {
+  // 给 oopsGlobal 赋值 5
+  oopsGlobal = 5;
+}
+
+// 只修改这一行上面的代码
+
+function fun2() {
+  var output = "";
+  if (typeof myGlobal != "undefined") {
+    output += "myGlobal: " + myGlobal;
+  }
+  if (typeof oopsGlobal != "undefined") {
+    output += " oopsGlobal: " + oopsGlobal;
+  }
+  console.log(output);
+}
+
+// 打印输出
+myGlobal: 10 oopsGlobal: 5
+myGlobal: 10 oopsGlobal: 5
+```
+
 ## 使用 const 关键字声明只读变量
 
 关键字 `let` 并不是声明变量的唯一新方法。 在 ES6 中，你还可以使用 `const` 关键字声明变量。

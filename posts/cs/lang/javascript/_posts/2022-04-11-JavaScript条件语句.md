@@ -112,7 +112,7 @@ function abs(a) {
 
 建议：`if`语句执行部分加`{}`，防止出现 `if-else`不匹配问题。
 
-#### 编程要求
+----
 
 补全代码片段中`Begin`至`End`中间的代码，具体要求如下：
 
@@ -149,15 +149,9 @@ function mainJs(a) {
 var string = "1"; 
 var number1 = 1; 
 var number2 = 1; 
-console.log(string === number1); 
-console.log(number1 === number2);  
+console.log(string === number1);  // false
+console.log(number1 === number2);  // true
 ```
-
-输出结果：
-
-`false`
-
-`true`
 
 对于`JavaScript`中的对象类型，严格相等要求双方的引用相同，即必须是同一个对象。如果不是同一个对象，即使双方的属性、值都相同，也被认为不等，比如下面的例子：
 
@@ -171,15 +165,9 @@ var class2 = {
     name:"class" 
 } 
 var class3 = class1; 
-console.log(class2 === class1); 
-console.log(class3 === class1);  
+console.log(class2 === class1); // false
+console.log(class3 === class1);  // true
 ```
-
-输出结果：
-
-`false`
-
-`true`
 
 虽然`class1`和`class2`的属性名、属性值都相等，但是不满足严格相等，因为它们是不同的对象，指向内存的不同地方。而`class3`和`class1`严格相等，因为它们指向内存的同一个地方。
 
@@ -279,7 +267,7 @@ console.log(calGrage(100));//输出4
 
 当`grade`为`10`的时候，没有`break`，会往下一直执行；执行到`grade`为`9`的时候，有`break`，会终止`switch`语句块，此时 `gpa`被赋值`4`，所以`90`到`100`分的返回值都是`4`。
 
-#### 编程要求
+----
 
 北美五大湖的名称和面积如下：
 

@@ -1,5 +1,112 @@
 # JavaScript字符串
 
+## 查找字符串的长度
+
+你可以通过在字符串变量或字符串后面写上 `.length` 来获得 `String`的长度。
+
+```js
+console.log("Alan Peter".length);
+```
+
+值 `10` 将显示在控制台中。 请注意，“Alan” 和 “Peter” 之间的空格字符也被计算在内。
+
+例如，如果我们创建了一个变量 `const firstName = "Ada"`，我们可以通过使用 `firstName.length` 找出字符串 `Ada` 的长度属性。
+
+------
+
+使用 `.length` 属性将 `lastNameLength` 设置为 `lastName` 中的字符数。
+
+```js
+// 设置
+let lastNameLength = 0;
+const lastName = "Lovelace";
+
+// 只修改这一行下面的代码
+lastNameLength = lastName.length;
+```
+
+## 了解字符串的不变性
+
+在 JavaScript 中，字符串（`String`）的值是不可变的（immutable），这意味着一旦字符串被创建就不能被改变。
+
+例如，下面的代码：
+
+```js
+let myStr = "Bob";
+myStr[0] = "J";
+```
+
+是不会把变量 `myStr` 的值改变成 `Job` 的，因为变量 `myStr` 是不可变的。 注意，这*并不*意味着 `myStr` 永远不能被改变，只是字符串字面量 string literal 的各个字符不能被改变。 改变 `myStr` 的唯一方法是重新给它赋一个值，例如：
+
+```js
+let myStr = "Bob";
+myStr = "Job";
+```
+
+## 方括号查找字符串中的字符
+
+方括号表示法（Bracket notation）是一种在字符串中的特定 index（索引）处获取字符的方法。
+
+大多数现代编程语言，如 JavaScript，不同于人类从 1 开始计数。 它们是从 0 开始计数。 这被称为基于零（Zero-based）的索引。
+
+### 查找第一个字符
+
+例如，单词 `Charles` 的索引 0 的字符是 `C`。 所以如果 `const firstName = "Charles"`，你可以通过 `firstName[0]` 得到字符串第一个字母的值。
+
+示例：
+
+```js
+const firstName = "Charles";
+const firstLetter = firstName[0];
+```
+
+`firstLetter` 值为字符串 `C` 。
+
+### 查找其他位置的字符
+
+你也可以使用方括号（ bracket notation）来获得一个字符串中的其他位置的字符。
+
+请记住，程序是从 `0` 开始计数，所以获取第一个字符实际上是第零个字符串。
+
+例如：
+
+```js
+const firstName = "Ada";
+const secondLetterOfFirstName = firstName[1];
+```
+
+`secondLetterOfFirstName` 值应该为字符串 `d`。
+
+### 查找最后一个字符
+
+要获取字符串的最后一个字符，可以用字符串的长度减 1 的索引值。
+
+例如，如果 `const firstName = "Ada"`，则可以使用 `firstName[firstName.length - 1]` 获取字符串最后一个字母的值。
+
+示例：
+
+```js
+const firstName = "Ada";
+const lastLetter = firstName[firstName.length - 1];
+```
+
+`lastLetter` 值为字符串 `a`。
+
+### 查找倒数第 N 个字符
+
+我们既可以获取字符串的最后一个字符，也可以用获取字符串的倒数第 N 个字符。
+
+例如，你可以使用 `firstName[firstName.length - 3]` 获取 `const firstName = "Augusta"` 字符串的倒数第三个字母的值
+
+例如：
+
+```js
+const firstName = "Augusta";
+const thirdToLastLetter = firstName[firstName.length - 3];
+```
+
+`thirdToLastLetter` 的值应该为字符串 `s`。
+
 ## 查找字符串的位置
 
 ### indexOf()
