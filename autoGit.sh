@@ -4,7 +4,7 @@
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 cd $SHELL_FOLDER
 
-将输出定位到nohup.out
+# 将输出定位到nohup.out
 nohup git checkout main &&
 git add . &&
 git commit -m "$1" &&
