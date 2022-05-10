@@ -122,6 +122,8 @@ console.log(a);
 
 如上面所示，尝试输出变量 myVar，结果会输出 undefined，因为这个变量只申明，没有赋值。而尝试输出变量`a`会产生错误，因为这个变量没有定义，是一个空的对象引用。
 
+> 记住 [`undefined` 是一个关键字](https://chinese.freecodecamp.org/news/how-to-install-arch-linux/#how-to-install-arch-linux)，而不是一个字符串。
+
 ### 对象类型
 
 JavaScript 是面向对象的语言，严格的来说，在 JavaScript 中，一切都可称为对象。但是我们这里介绍的对象仅指键值对的集合，可以类比于 C 中的结构体或者 Java 中的对象。

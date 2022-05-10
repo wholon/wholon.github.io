@@ -146,7 +146,7 @@ hisStore.name = "STO Express";//覆盖了原来的name属性
 
 这种方法的好处是，创建一个新的对象时，可以更改部分属性的值。
 
-## 练习1
+----
 
 - 使用对象字面量方法创建名为`student`的对象，有两个属性`name`和`gender`，他们的值分别是`mainJs()`函数的参数`a`和参数`b`；
 - 使用已给的构造函数`Car(plate,owner)`创建一个对象`myCar`，它的两个属性的值分别是参数`c`和参数`d`；
@@ -182,6 +182,8 @@ function mainJs(a,b,c,d,e) {
 
 在`Java`中，当实体类建立以后，类的属性只能获取与修改，不能增加与删除。但是因为`JavaScript`是动态类型的语言，`JavaScript`中对象的属性具有增删改查所有的操作。
 
+> 然而，如果你的对象有非字符串属性的话，JavaScript 会自动将它们转为字符串。
+
 ### 属性的获取
 
 #### 方式一
@@ -194,6 +196,8 @@ console.log(student.name);//输出Alice
 ```
 
 这种情况下属性名必须是静态的字符串，即不能是通过计算或者字符串的拼接形成的字符串。
+
+> 如果我们已经提前知道要访问的属性名，使用点号表示法是最方便的。
 
 #### 方式二
 
@@ -230,6 +234,21 @@ student.age = 20;//修改属性，覆盖了原来的值21
 student.gender = "female";//新增属性gender  
 ```
 
+> 在你创建了 JavaScript 对象后，你可以随时更新它的属性，就像更新任何其他变量那样。 你可以使用点或中括号操作符来更新。
+>
+> 举个例子，让我们看看 `ourDog`：
+>
+> ```js
+> const ourDog = {
+>   "name": "Camper",
+>   "legs": 4,
+>   "tails": 1,
+>   "friends": ["everything!"]
+> };
+> ```
+>
+> 既然他是一个特别愉快的狗，让我们将他的名字更改为字符串 `Happy Camper`。 这有两种方式来更新对象的 name 属性： `ourDog.name = "Happy Camper";` 或 `ourDog["name"] = "Happy Camper";`。更新后，`ourDog.name` 的值就不再是 `Camper`，而是 `Happy Camper`。
+
 ### 删除属性
 
 `JavaScript`中的属性还可以删除，这在其他的面向对象语言如`Java`或者`C++`中是无法想象的，删除通过`delete`运算符实现。删除成功返回布尔型`true`，删除失败也是返回`true`，所以在删除之前需要判断一个属性是否存在，这个内容将在下一关讲解。
@@ -245,7 +264,7 @@ console.log(Store.name);//已删除，返回undefined
 delete Store.prototype;//删除失败，非自有属性  
 ```
 
-## 练习2
+----
 
 - 如果调用函数`reviseAttribute（reviser,date,attvalue）`并传入值 `Alice,1,1000`那么对应`store`的`day1`属性的值就修改为`1000`,`accountant`属性的值修改为`Alice`；
 
@@ -419,7 +438,7 @@ var person = {
 | Object.getOwnPropertyNames() | 否             | 是           |
 | Object.keys()                | 是             | 是           |
 
-## 练习3
+----
 
 - 有两个可选的对象`orange`和`car`，判断给定的属性名`a`属于哪一个对象；
 - 返回该对象的所有自有属性名组成的字符串，例如：如果判断为`car`，则返回`brandpricemodel`；
@@ -455,3 +474,33 @@ function mainJs(a){
 }
 ```
 
+## 使用对象进行查找
+
+对象和字典一样，可以用来存储键/值对。 如果数据是扁平的，你可以用对象来查找你想要的值，而不是链式使用 `switch` 或 `if/else` 语句。 当你知道你的输入数据在某个范围时，这种查找方式极为有效。
+
+这是简单的反向字母表：
+
+```js
+const alpha = {
+  1:"Z",
+  2:"Y",
+  3:"X",
+  4:"W",
+  ...
+  24:"C",
+  25:"B",
+  26:"A"
+};
+
+alpha[2];
+alpha[24];
+
+const value = 2;
+alpha[value];
+```
+
+`alpha[2]` 是字符串 `Y`，`alpha[24]` 是字符串 `C`，`alpha[value]` 是字符串 `Y`。
+
+------
+
+把 switch 语句转化为对象 `lookup` 调用。 使用它来查找 `val` 属性的值，并赋值给 `result` 变量。
