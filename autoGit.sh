@@ -4,6 +4,9 @@
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 cd $SHELL_FOLDER
 
+# 清空 nohup.out
+cat /dev/null > nohup.out
+
 # 将输出定位到nohup.out
 nohup git checkout main && nohup git add . && nohup git commit -m "$1" && nohup git push origin --force
 
