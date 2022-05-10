@@ -344,6 +344,22 @@ console.log(school.hasOwnProperty("hasOwnProperty"));//false
 
 因为`hasOwnProperty`方法继承自`object`对象，不是自有方法，所以返回`false`。
 
+----
+
+* 修改函数 `checkObj` 检查 `obj` 是否有 `checkProp` 属性。 如果属性存在，返回属性对应的值。 如果不存在，返回`"Not Found"`。
+
+```js
+function checkObj(obj, checkProp) {
+  // 只修改这一行下面的代码
+  if (obj.hasOwnProperty(checkProp)) {
+    return obj[checkProp];
+  } else {
+    return "Not Found";
+  }
+  // 只修改这一行上面的代码
+}
+```
+
 ### 属性的枚举
 
 定义：属性的枚举指按顺序逐个的列出属性的名字。如下面的例子：
@@ -504,3 +520,47 @@ alpha[value];
 ------
 
 把 switch 语句转化为对象 `lookup` 调用。 使用它来查找 `val` 属性的值，并赋值给 `result` 变量。
+
+```js
+// 设置
+function phoneticLookup(val) {
+  let result = "";
+
+  // 只修改这一行下面的代码
+// switch(val) {
+//     case "alpha":
+//         result = "Adams";
+//         break;
+//     case "bravo":
+//         result = "Boston";
+//         break;
+//     case "charlie":
+//         result = "Chicago";
+//         break;
+//     case "delta":
+//         result = "Denver";
+//         break;
+//     case "echo":
+//         result = "Easy";
+//         break;
+//     case "foxtrot":
+//         result = "Frank";
+// }
+
+  const lookup = {
+    "alpha": "Adams",
+    "bravo": "Boston",
+    "charlie": "Chicago",
+    "delta": "Denver",
+    "echo": "Easy",
+    "foxtrot": "Frank"
+  }
+  
+  result = lookup[val];
+  // 只修改这一行上面的代码
+  return result;
+}
+
+phoneticLookup("charlie");
+```
+
