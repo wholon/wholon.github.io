@@ -5,12 +5,12 @@ SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 cd $SHELL_FOLDER
 
 # 切换到 main
-nohup git checkout main  && nohup git add .  && nohup git commit -m "$1"  && nohup git push origin --force 
+git checkout main
 # 推送源代码
 # 变量1是传送的参数，也就是本次 git 的摘要
-# git add .
-# git commit -m "$1"
-# git push origin --force
+git add .
+git commit -m "$1"
+git push origin --force
 
 # 以下是本地部署的部分
 # 删除 _site网站下所有内容
