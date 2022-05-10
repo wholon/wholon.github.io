@@ -60,7 +60,7 @@ var funct = function getMax(a,b) {
 和前一关不同的是，只能在**函数定义语句之后**调用该函数，且调用的时候只能用**变量名**`funct`，不能用函数名`getMax`，如：
 
 ```js
-var funct = function getMax(a,b) {  
+const funct = function getMax(a,b) {  
     return a>b?a:b; 
 }; 
 console.log(funct(1,2));//输出2  
@@ -68,9 +68,11 @@ console.log(funct(1,2));//输出2
 
 - 匿名函数；
   所谓匿名函数就是关键字`function`之后直接是参数列表：
+  
+  > 在 JavaScript 里，我们会经常遇到不需要给函数命名的情况，尤其是在需要将一个函数作为参数传给另外一个函数的时候。 这时，我们会创建匿名函数。 因为这些函数不会在其他地方复用，所以我们不需要给它们命名。
 
 ```js
-var funct = function(a,b) {   
+const funct = function(a,b) {   
     return a>b?a:b; 
 };  
 ```
@@ -83,6 +85,68 @@ var funct = function(a,b) {
 }; 
 console.log(funct(1,2));//输出2  
 ```
+
+> ES6 提供了其他写匿名函数的方式的语法糖。 你可以使用**箭头函数**：
+>
+> ```js
+> const myFunc = () => {
+>   const myVar = "value";
+>   return myVar;
+> }
+> ```
+>
+> 当不需要函数体，只返回一个值的时候，箭头函数允许你省略 `return`关键字和外面的大括号。 这样就可以将一个简单的函数简化成一个单行语句。
+>
+> ```js
+> const myFunc = () => "value";
+> ```
+>
+> 这段代码默认会返回字符串 `value`。
+>
+> ----
+>
+> 使用箭头函数的语法重写赋给 `magic` 变量的函数，使其返回一个新的 Date() `new Date()`。 同时不要用 `var` 关键字来定义任何变量。
+>
+> ```js
+> const magic = () => new Date();
+> ```
+>
+> **编写带参数的箭头函数**
+>
+> 和一般的函数一样，你也可以给箭头函数传递参数。
+>
+> ```js
+> const doubler = (item) => item * 2;
+> doubler(4);
+> ```
+>
+> `doubler(4)` 将返回 `8`。
+>
+> 如果箭头函数只有一个参数，则可以省略参数外面的括号。
+>
+> ```js
+> const doubler = item => item * 2;
+> ```
+>
+> 可以给箭头函数传递多个参数。
+>
+> ```js
+> const multiplier = (item, multi) => item * multi;
+> multiplier(4, 2);
+> ```
+>
+> `multiplier(4, 2)` 将返回 `8`。
+>
+> ------
+>
+> 使用箭头函数的语法重写 `myConcat` 函数，将 `arr2` 的内容添加到 `arr1`。
+>
+> ```js
+> const myConcat = (arr1, arr2) => arr1.concat(arr2);
+> console.log(myConcat([1, 2], [3, 4, 5]));
+> ```
+>
+> 
 
 ----
 
@@ -284,6 +348,33 @@ function mainJs(a,b,c,d) {
 
 ```
 
+## 设置函数的默认参数
+
+ES6 里允许给函数传入默认参数，来构建更加灵活的函数。
+
+请看以下代码：
+
+```js
+const greeting = (name = "Anonymous") => "Hello " + name;
+
+console.log(greeting("John"));
+console.log(greeting());
+```
+
+控制台将显示字符串 `Hello John` 和 `Hello Anonymous`。
+
+默认参数会在参数没有被指定（值为 undefined）的时候起作用。 在上面的例子中，参数 `name` 会在没有得到新的值的时候，默认使用值 `Anonymous`。 你还可以给多个参数赋予默认值。
+
+------
+
+给函数 `increment` 传入默认参数，使得在 `value` 没有被赋值的时候，默认给 `number` 加上 1。
+
+```js
+// 只修改这一行下面的代码
+const increment = (number, value = 1) => number + value;
+// 只修改这一行上面的代码
+```
+
 ## 实参对象
 
 `JavaScript`一切都是对象，实参也是一个**对象**，有一个专门的名字`arguments`，这个对象可以看成一个数组（类数组，不是真的数组），实参从左到右分别是`arguments[0]、arguments[1]...`，`arguments.length`表示实参的个数。
@@ -341,6 +432,39 @@ function mainJs(a) {
         case 5:return getMax();
         default:break;
     }
+}
+```
+
+## 将 rest 操作符与函数参数一起使用
+
+ES6 推出了用于函数参数的 rest 操作符帮助我们创建更加灵活的函数。 rest 操作符可以用于创建有一个变量来接受多个参数的函数。 这些参数被储存在一个可以在函数内部读取的数组中。
+
+请看以下代码：
+
+```js
+function howMany(...args) {
+  return "You have passed " + args.length + " arguments.";
+}
+console.log(howMany(0, 1, 2));
+console.log(howMany("string", null, [1, 2, 3], { }));
+```
+
+控制台将显示字符串 `You have passed 3 arguments.` 和 `You have passed 4 arguments.`。
+
+使用 rest 参数，就不需要查看 `args` 数组，并且允许我们在参数数组上使用 `map()`、`filter()` 和 `reduce()`。
+
+------
+
+修改 `sum` 函数，使用 rest 参数，使 `sum` 函数可以接收任意数量的参数，并返回它们的总和。
+
+```js
+const sum = (x, y, z) => {
+  const args = [x, y, z];
+  return args.reduce((a, b) => a + b, 0);
+}
+
+const sum = (...args) => {
+  return args.reduce((a, b) => a + b, 0);
 }
 ```
 

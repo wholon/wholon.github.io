@@ -39,6 +39,47 @@ var song = {
 
 键值对中的键指的是属性的名字，若其中含有空格，名字需要用双引号包含在内。值指的是属性的值，可以是基本类型：如字符串，数字，布尔型，也可以是一个对象。键值对之间用逗号隔开，最后一个键值对后面没有逗号，所有的键值对在一个大括号中。
 
+#### 使用简单字段编写简洁的对象字面量声明
+
+ES6 添加了一些很棒的功能，用于更方便地定义对象。
+
+请看以下代码：
+
+```js
+const getMousePosition = (x, y) => ({
+  x: x,
+  y: y
+});
+```
+
+`getMousePosition` 简单的函数，返回拥有两个属性的对象。 ES6 提供了一个语法糖，消除了类似 `x: x` 这种冗余的写法。 你可以只写一次 `x`，解释器会自动将其转换成 `x: x`（或效果相同的内容）。 下面是使用这种语法重写的同样的函数：
+
+```js
+const getMousePosition = (x, y) => ({ x, y });
+```
+
+------
+
+请使用简单属性对象的语法来创建并返回一个具有 `name`、`age` 和 `gender` 属性的对象。
+
+```js
+const createPerson = (name, age, gender) => {
+  // 只修改这一行下面的代码
+  return {
+    name: name,
+    age: age,
+    gender: gender
+  };
+  // 只修改这一行上面的代码
+};
+
+const createPerson = (name, age, gender) => ({
+  // 只修改这一行下面的代码
+  name, age, gender
+  // 只修改这一行上面的代码
+});
+```
+
 ### 通过关键字new创建对象
 
 通过`new`关键字创建对象也是一个常用的方法。如下：
@@ -562,5 +603,269 @@ function phoneticLookup(val) {
 }
 
 phoneticLookup("charlie");
+```
+
+## 防止对象改变
+
+通过 [这篇文章]({% post_url 2022-04-06-JavaScript变量 %}#改变一个用-const-声明的数组) 可以看出，`const` 声明并不会真的保护数据不被改变。 为了确保数据不被改变，JavaScript 提供了一个函数 `Object.freeze`。
+
+任何更改对象的尝试都将被拒绝，如果脚本在严格模式下运行，将抛出错误。
+
+```js
+let obj = {
+  name:"FreeCodeCamp",
+  review:"Awesome"
+};
+Object.freeze(obj);
+obj.review = "bad";
+obj.newProp = "Test";
+console.log(obj); 
+```
+
+`obj.review` 和 `obj.newProp` 赋值将导致错误，因为我们的编辑器默认在严格模式下运行，控制台将显示值 `{ name: "FreeCodeCamp", review: "Awesome" }`。
+
+------
+
+在这个挑战中，你将使用 `Object.freeze` 来防止数学常量被改变。 你需要冻结 `MATH_CONSTANTS` 对象，使得没有人可以改变 `PI` 的值，或增加或删除属性。
+
+```js
+function freezeObj() {
+  const MATH_CONSTANTS = {
+    PI: 3.14
+  };
+  // 只修改这一行下面的代码
+  Object.freeze(MATH_CONSTANTS);
+  // 只修改这一行上面的代码
+  try {
+    MATH_CONSTANTS.PI = 99;
+  } catch(ex) {
+    console.log(ex);
+  }
+  return MATH_CONSTANTS.PI;
+}
+const PI = freezeObj();
+```
+
+## 解构赋值
+
+### 使用解构赋值来获取对象的值
+
+解构赋值是 ES6 引入的新语法，用来从数组和对象中提取值，并优雅地对变量进行赋值。
+
+有如下 ES5 代码：
+
+```js
+const user = { name: 'John Doe', age: 34 };
+
+const name = user.name;
+const age = user.age;
+```
+
+`name` 的值应该是字符串 `John Doe`， `age` 的值应该是数字 `34`。
+
+下面是使用 ES6 解构赋值语句，实现相同效果：
+
+```js
+const { name, age } = user;
+```
+
+同样，`name` 的值应该是字符串 `John Doe`， `age` 的值应该是数字 `34`。
+
+在这里，自动创建 `name` 和 `age` 变量，并将 `user` 对象相应属性的值赋值给它们。 这个方法简洁多了。
+
+你可以从对象中提取尽可能多或很少的值。
+
+------
+
+把两个赋值语句替换成效果相同的解构赋值语句。 `today` 和 `tomorrow`的值应该还是 `HIGH_TEMPERATURES` 对象中 `today` 和 `tomorrow` 属性的值。
+
+```js
+const HIGH_TEMPERATURES = {
+  yesterday: 75,
+  today: 77,
+  tomorrow: 80
+};
+
+// 只修改这一行下面的代码
+const today = HIGH_TEMPERATURES.today;
+const tomorrow = HIGH_TEMPERATURES.tomorrow;
+// 只修改这一行上面的代码
+const {today, tomorrow} = HIGH_TEMPERATURES;
+```
+
+### 使用解构赋值从对象中分配变量
+
+可以给解构的值赋予一个新的变量名， 通过在赋值的时候将新的变量名放在冒号后面来实现。
+
+还是以上个例子的对象来举例：
+
+```js
+const user = { name: 'John Doe', age: 34 };
+```
+
+这是指定新的变量名的例子：
+
+```js
+const { name: userName, age: userAge } = user;
+```
+
+你可以这么理解这段代码：获取 `user.name` 的值，将它赋给一个新的变量 `userName`，等等。 `userName` 的值将是字符串 `John Doe`，`userAge` 的值将是数字 `34`。
+
+------
+
+使用解构赋值语句替换两个赋值语句。 将 `HIGH_TEMPERATURES` 的 `today` 和 `tomorrow` 的值赋值给 `highToday` 和 `highTomorrow`。
+
+```js
+const HIGH_TEMPERATURES = {
+  yesterday: 75,
+  today: 77,
+  tomorrow: 80
+};
+
+// 只修改这一行下面的代码
+
+const highToday = HIGH_TEMPERATURES.today;
+const highTomorrow = HIGH_TEMPERATURES.tomorrow; 
+
+// 只修改这一行上面的代码
+const {today: highToday, tomorrow: highTomorrow} = HIGH_TEMPERATURES;
+```
+
+### 使用解构赋值从嵌套对象中分配变量
+
+你可以使用前两节课程中相同的原则来解构嵌套对象中的值。
+
+使用与前面的例子中类似的对象：
+
+```js
+const user = {
+  johnDoe: { 
+    age: 34,
+    email: 'johnDoe@freeCodeCamp.com'
+  }
+};
+```
+
+这是解构对象的属性值赋值给具有相同名字的变量：
+
+```js
+const { johnDoe: { age, email }} = user;
+```
+
+这是将对象的属性值赋值给具有不同名字的变量：
+
+```js
+const { johnDoe: { age: userAge, email: userEmail }} = user;
+```
+
+------
+
+将两个赋值语句替换成等价的解构赋值。 `lowToday` 和 `highToday` 应该为 `LOCAL_FORECAST` 中 `today.low` 和 `today.high` 的值。
+
+```js
+const LOCAL_FORECAST = {
+  yesterday: { low: 61, high: 75 },
+  today: { low: 64, high: 77 },
+  tomorrow: { low: 68, high: 80 }
+};
+
+// 只修改这一行下面的代码
+
+const lowToday = LOCAL_FORECAST.today.low;
+const highToday = LOCAL_FORECAST.today.high;
+
+// 只修改这一行上面的代码
+const {today: {low: lowToday, high: highToday}} = LOCAL_FORECAST;
+```
+
+### 使用解构赋值将对象作为函数的参数传递
+
+在某些情况下，你可以在函数的参数里直接解构对象。
+
+请看以下代码：
+
+```js
+const profileUpdate = (profileData) => {
+  const { name, age, nationality, location } = profileData;
+
+}
+```
+
+上面的操作解构了传给函数的对象。 这样的操作也可以直接在参数里完成：
+
+```js
+const profileUpdate = ({ name, age, nationality, location }) => {
+
+}
+```
+
+当 `profileData` 被传递到上面的函数时，从函数参数中解构出值以在函数内使用。
+
+------
+
+对 `half` 的参数进行解构赋值，仅将 `max` 与 `min` 的值传进函数。
+
+```js
+const stats = {
+  max: 56.78,
+  standard_deviation: 4.34,
+  median: 34.54,
+  mode: 23.87,
+  min: -0.75,
+  average: 35.85
+};
+
+// 只修改这一行下面的代码
+const half = (stats) => (stats.max + stats.min) / 2.0; 
+// 只修改这一行上面的代码
+const half = ({max, min}) => (max + min) / 2.0; 
+
+```
+
+## 用 ES6 编写简洁的函数声明
+
+在 ES5 中，当我们需要在对象中定义一个函数的时候，必须像这样使用 `function` 关键字：
+
+```js
+const person = {
+  name: "Taylor",
+  sayHello: function() {
+    return `Hello! My name is ${this.name}.`;
+  }
+};
+```
+
+用 ES6 的语法在对象中定义函数的时候，可以删除 `function` 关键词和冒号。 请看以下例子：
+
+```js
+const person = {
+  name: "Taylor",
+  sayHello() {
+    return `Hello! My name is ${this.name}.`;
+  }
+};
+```
+
+------
+
+使用以上这种简短的语法，重构在 `bicycle` 对象中的 `setGear` 函数。
+
+```js
+// 只修改这一行下面的代码
+const bicycle = {
+  gear: 2,
+  setGear: function(newGear) {
+    this.gear = newGear;
+  }
+};
+// 只修改这一行上面的代码
+const bicycle = {
+  gear: 2,
+  setGear(newGear) {
+    this.gear = newGear;
+  }
+};
+bicycle.setGear(3);
+console.log(bicycle.gear);
 ```
 

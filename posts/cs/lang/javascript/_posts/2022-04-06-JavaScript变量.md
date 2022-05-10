@@ -2,11 +2,11 @@
 
 变量可以看成语言中用来标记和存储数据的一种记号。
 
-## JavaScript 中的变量
+## 变量简介
 
 不同于 C 或 Java，JavaScript 是一种动态类型的语言，即申明的时候不指定变量的数据类型，而在运行的时候根据变量的具体值动态的判断变量的数据类型。 JavaScript 的变量名以字母或者`$`或者`_`开头；变量名只能含有字母、数字、下划线和美元符号；大小写敏感；不能使用保留的关键字，如 html、var、function 等，这一条一定要记住，使用关键字造成的错误往往很难排除。
 
-## JavaScript 中的变量的申明、初始化和赋值
+## 变量的申明、初始化和赋值
 
 - 变量的申明 在 JavaScript 中，申明变量以关键字 var 开头，空一格后再接变量的名字；当然，可以一次申明多个变量，这时 var 只需要出现一次，多个变量名之间用英文的逗号隔开即可。如：
 	```js
@@ -48,7 +48,7 @@ var anotherVariableName;
 var thisVariableNameIsSoLong;
 ```
 
-## JavaScript 中的变量的作用域
+## 变量的作用域
 
 变量的作用范围，或者说作用域，是指变量保持有效的范围，JavaScript 中的变量广义上来说分为局部变量和全局变量。
 
@@ -178,6 +178,94 @@ myGlobal: 10 oopsGlobal: 5
 myGlobal: 10 oopsGlobal: 5
 ```
 
+### 比较 var 和 let 关键字的作用域
+
+如果你不熟悉 `let`，请查看 [探索var和let关键字之间的差异](#探索-var-和-let-关键字之间的差异)。
+
+使用 `var` 关键字声明变量时，它是全局声明的，如果在函数内部声明则是局部声明的。
+
+`let` 关键字的行为类似，但有一些额外的功能。 在代码块、语句或表达式中使用 `let` 关键字声明变量时，其作用域仅限于该代码块、语句或表达式。
+
+例如：
+
+```js
+var numArray = [];
+for (var i = 0; i < 3; i++) {
+  numArray.push(i);
+}
+console.log(numArray);
+console.log(i);
+```
+
+此处控制台将显示值 `[0, 1, 2]` 和 `3`。
+
+使用 `var` 关键字，`i` 是全局声明的。 所以当 `i++` 被执行时，它会更新全局变量。 此代码类似于以下内容：
+
+```js
+var numArray = [];
+var i;
+for (i = 0; i < 3; i++) {
+  numArray.push(i);
+}
+console.log(numArray);
+console.log(i);
+```
+
+此处控制台将显示值 `[0, 1, 2]` 和 `3`。
+
+如果你创建一个函数，将它存储起来，稍后在使用 `i` 变量的 `for` 循环中使用。这么做可能会出现问题。 这是因为存储的函数将始终引用更新后的全局 `i` 变量的值。
+
+```js
+var printNumTwo;
+for (var i = 0; i < 3; i++) {
+  if (i === 2) {
+    printNumTwo = function() {
+      return i;
+    };
+  }
+}
+console.log(printNumTwo());
+```
+
+此处控制台将显示值 `3`。
+
+可以看到，`printNumTwo()` 打印了 3 而不是 2。 这是因为赋值给 `i` 的值已经更新，`printNumTwo()` 返回全局的 `i`，而不是在 for 循环中创建函数时 `i` 的值。 `let` 关键字就不会出现这种现象：
+
+```js
+let printNumTwo;
+for (let i = 0; i < 3; i++) {
+  if (i === 2) {
+    printNumTwo = function() {
+      return i;
+    };
+  }
+}
+console.log(printNumTwo());
+console.log(i);
+```
+
+在这里控制台将显示值 `2` 和一个错误提示 `i is not defined`。
+
+`i` 未定义，因为它没有在全局范围内声明。 它只在 `for` 循环语句中被声明。 `printNumTwo()` 返回了正确的值，因为 `let` 关键字创建了三个具有唯一值（0、1 和 2）的不同 `i` 变量在循环语句中。
+
+------
+
+修改这段代码，使 `if` 语句中声明的 `i` 变量与在函数的第一行声明的 `i`变量是彼此独立的。 请注意不要在你的代码的任何地方使用 `var` 关键字。
+
+这个练习旨在表明使用 `var` 与 `let` 关键字声明变量时作用域之间的区别。 当编写类似这个练习中的函数的时候，通常来说最好使用不同的变量名，以避免混淆。
+
+```js
+function checkScope() {
+  let i = 'function scope';
+  if (true) {
+    let i = 'block scope';
+    console.log('Block scope i is: ', i);
+  }
+  console.log('Function scope i is: ', i);
+  return i;
+}
+```
+
 ## 使用 const 关键字声明只读变量
 
 关键字 `let` 并不是声明变量的唯一新方法。 在 ES6 中，你还可以使用 `const` 关键字声明变量。
@@ -205,3 +293,45 @@ let fact = "is cool!"; // 修改这一行
 fact = "is awesome!";
 console.log(FCC, fact); // 修改这一行
 ```
+
+### 改变一个用 const 声明的数组
+
+如果你不熟悉 `const`，请查看[使用const关键字声明只读变量](#使用-const-关键字声明只读变量)。
+
+`const` 声明在现代 JavaScript 中有很多用例。
+
+默认情况下，一些开发人员更喜欢使用 `const` 分配所有变量，除非他们知道需要重新分配值。 只有在这种情况下，他们才使用 `let`。
+
+但是，重要的是要了解使用 `const` 分配给变量的对象（包括数组和函数）仍然是可变的。 使用 `const` 声明只能防止变量标识符的重新分配。
+
+```js
+const s = [5, 6, 7];
+s = [1, 2, 3];
+s[2] = 45;
+console.log(s);
+```
+
+`s = [1, 2, 3]` 将导致错误。 `console.log` 将显示值 `[5, 6, 45]`。
+
+如你所见，你可以改变对象 `[5, 6, 7]` 本身，变量 `s` 仍将指向更改后的数组 `[5, 6, 45]`。 像所有数组一样，`s` 中的数组元素是可变的，但是因为使用了 `const`，所以不能使用变量标识符 `s` 来指向一个使用赋值运算符的不同数组。
+
+------
+
+数组声明为 `const s = [5, 7, 2]`。 使用对各元素赋值的方法将数组改成 `[2, 5, 7]`。
+
+```js
+const s = [5, 7, 2];
+function editInPlace() {
+  // 只修改这一行下面的代码
+  s[0] = 2;
+  s[1] = 5;
+  s[2] = 7;
+  // 使用 s = [2, 5, 7] 将无效
+  // 只修改这一行上面的代码
+  // 或者可以下面这样
+  let last = s.pop();
+  s.unshift(last);
+}
+editInPlace();
+```
+
