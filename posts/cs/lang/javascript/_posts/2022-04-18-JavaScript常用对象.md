@@ -402,3 +402,134 @@ function mainJs(a) {
 }
 ```
 
+## JavaScript Promise
+
+### 创建一个 JavaScript Promise
+
+Promise 是异步编程的一种解决方案 - 它在未来的某时会生成一个值。 任务完成，分执行成功和执行失败两种情况。 `Promise` 是构造器函数，需要通过 `new` 关键字来创建。 构造器参数是一个函数，该函数有两个参数 - `resolve` 和 `reject`。 通过它们来判断 promise 的执行结果。 用法如下：
+
+```js
+const myPromise = new Promise((resolve, reject) => {
+
+});
+```
+
+------
+
+创建一个名为 `makeServerRequest` 的 promise。 给构造器函数传入 `resolve` 和 `reject` 两个参数。
+
+```js
+const makeServerRequest = new Promise((resolve, reject) => {});
+```
+
+### 通过 resolve 和 reject 完成 Promise
+
+Promise 有三个状态：`pending`、`fulfilled` 和 `rejected`。 上一个挑战里创建的 promise 一直阻塞在 `pending` 状态里，因为没有调用 promise 的完成方法。 Promise 提供的 `resolve` 和 `reject` 参数就是用来结束 promise 的。 Promise 成功时调用 `resolve`，promise 执行失败时调用 `reject`， 如下文所述，这些方法需要有一个参数。
+
+> pending: 待决的，即将发生的
+>
+> fulfilled: 实现，满足，符合，执行
+>
+> rejected: 驳回，拒绝
+
+```js
+const myPromise = new Promise((resolve, reject) => {
+  if(condition here) {
+    resolve("Promise was fulfilled");
+  } else {
+    reject("Promise was rejected");
+  }
+});
+```
+
+上面的示例使用字符串作为这些函数的参数，但参数实际上可以是任何格式。 通常，它可能是一个包含数据的对象，你可以将它放在网站或其他地方。
+
+------
+
+使 promise 可以处理成功和失败情况。 如果 `responseFromServer` 是 `true`，调用 `resolve` 方法使 promise 成功。 给 `resolve` 传递值为 `We got the data` 的字符串。 如果 `responseFromServer` 是 `false`， 使用 `reject` 方法并传入值为 `Data not received` 的字符串。
+
+```js
+const makeServerRequest = new Promise((resolve, reject) => {
+  // responseFromServer 表示从服务器获得一个响应
+  let responseFromServer;
+
+  if(responseFromServer) {
+    // 修改这一行
+    resolve("We got the data");
+  } else {  
+    // 修改这一行
+    reject("Data not received");
+  }
+});
+```
+
+### 用 then 处理 Promise 完成的情况
+
+当程序需要花费未知的时间才能完成时（比如一些异步操作），一般是服务器请求，promise 很有用。 服务器请求会花费一些时间，当结束时，需要根据服务器的响应执行一些操作。 这可以用 `then` 方法来实现， 当 promise 完成 `resolve` 时会触发 `then` 方法。 例子如下：
+
+```js
+myPromise.then(result => {
+
+});
+```
+
+`result` 即传入 `resolve` 方法的参数。
+
+------
+
+给 promise 添加 `then` 方法。 用 `result` 做为回调函数的参数并将 `result` 打印在控制台。
+
+```js
+const makeServerRequest = new Promise((resolve, reject) => {
+  // responseFromServer 设置为 true，表示从服务器获得有效响应
+  let responseFromServer = true;
+
+  if(responseFromServer) {
+    resolve("We got the data");
+  } else {  
+    reject("Data not received");
+  }
+});
+
+makeServerRequest.then(result => {
+  console.log(result);
+})
+```
+
+### 使用 catch 处理 Promise 失败的情况
+
+当 promise 失败时会调用 `catch` 方法。 当 promise 的 `reject` 方法执行时会直接调用。 用法如下：
+
+```js
+myPromise.catch(error => {
+
+});
+```
+
+`error` 是传入 `reject` 方法的参数。
+
+------
+
+给 promise 添加 `catch` 方法。 用 `error` 作为回调函数的参数，并把 `error` 打印到控制台。
+
+```js
+const makeServerRequest = new Promise((resolve, reject) => {
+  // responseFromServer 设置为 false，表示从服务器获得无效响应
+  let responseFromServer = false;
+
+  if(responseFromServer) {
+    resolve("We got the data");
+  } else {  
+    reject("Data not received");
+  }
+});
+
+makeServerRequest.then(result => {
+  console.log(result);
+});
+
+makeServerRequest.catch(error => {
+  console.log(error);
+})
+```
+

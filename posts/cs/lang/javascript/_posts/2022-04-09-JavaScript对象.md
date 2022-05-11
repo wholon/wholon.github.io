@@ -869,3 +869,129 @@ bicycle.setGear(3);
 console.log(bicycle.gear);
 ```
 
+## **使用 class 语法定义构造函数**
+
+ES6 提供了一个新的创建对象的语法，使用关键字 class。
+
+值得注意的是，`class` 只是一个语法糖，它并不像 Java、Python 或者 Ruby 这一类的语言一样，严格履行了面向对象的开发规范。
+
+在 ES5 里面，我们通常会定义一个构造函数 `constructor`，然后使用 `new` 关键字来实例化一个对象：
+
+```js
+var SpaceShuttle = function(targetPlanet){
+  this.targetPlanet = targetPlanet;
+}
+var zeus = new SpaceShuttle('Jupiter');
+```
+
+`class` 语法只是简单地替换了构造函数 `constructor` 的写法：
+
+```js
+class SpaceShuttle {
+  constructor(targetPlanet) {
+    this.targetPlanet = targetPlanet;
+  }
+}
+const zeus = new SpaceShuttle('Jupiter');
+```
+
+应该注意 `class` 关键字声明了一个新的函数，里面添加了一个构造函数。 当用 `new` 创建一个新的对象时，构造函数会被调用。
+
+**注意：**首字母大写驼峰命名法 UpperCamelCase 是 ES6 class 命名的惯例，就像上面的 `SpaceShuttle`。
+
+`constructor` 方法是一个特殊方法，用于创建和初始化 class 创建的对象。
+
+------
+
+使用 `class` 关键词，写一个 `constructor` 来创建 `Vegetable` class。
+
+`Vegetable` 这个 class 可以创建 vegetable 对象，这个对象拥有一个在 `constructor` 中赋值的 `name` 属性。
+
+```js
+// 只修改这一行下面的代码
+class Vegetable {
+  constructor(targetVegetable) {
+    this.name = targetVegetable;
+  }
+}
+// 只修改这一行上面的代码
+
+const carrot = new Vegetable('carrot');
+console.log(carrot.name); // 应该显示 'carrot'
+```
+
+## **使用 getter 和 setter 来控制对象的访问**
+
+你可以从对象中获得一个值，也可以给对象的属性赋值。
+
+这些操作通常被称为 getters 以及 setters。
+
+Getter 函数的作用是可以让对象返回一个私有变量，而不需要直接去访问私有变量。
+
+Setter 函数的作用是可以基于传进的参数来修改对象中私有变量。 这些修改可以是计算，或者是直接替换之前的值。
+
+```js
+class Book {
+  constructor(author) {
+    this._author = author;
+  }
+  // getter
+  get writer() {
+    return this._author;
+  }
+  // setter
+  set writer(updatedAuthor) {
+    this._author = updatedAuthor;
+  }
+}
+const novel = new Book('anonymous');
+console.log(novel.writer);
+novel.writer = 'newAuthor';
+console.log(novel.writer);
+```
+
+控制台将显示字符串 `anonymous` 和 `newAuthor`。
+
+请注意用于调用 getter 和 setter 的语法。 它们甚至看起来不像是函数。 getter 和 setter 非常重要，因为它们隐藏了内部的实现细节。
+
+**注意：** 通常会在私有变量前添加下划线（`_`）。 然而，这种做法本身并不是将变量变成私有的。
+
+------
+
+使用 `class` 关键字创建一个 `Thermostat` class。 `constructor` 接收一个华氏温度。
+
+在 class 中，创建一个 `getter` 来获取摄氏温度和一个 `setter` 来设置温度值。
+
+记得在 `C = 5/9 * (F - 32)` 和 `F = C * 9.0 / 5 + 32` 中，`F` 是华氏温度值，`C` 是摄氏温度值。
+
+**注意：** 完成这个挑战后，应该在 class 中使用一个温度标准，要么是华氏温度，要么是摄氏温度。
+
+这就是 getter 和 setter 的功能。 你正在为别的用户创建一个 API，不论你使用哪一个，用户都将获得正确的结果。
+
+或者说，你从用户需求中抽象出了实现细节。
+
+```js
+// 只修改这一行下面的代码
+class Thermostat {
+  constructor(temperature) {
+    this._temperature = 5 / 9 * (temperature - 32);
+  }
+
+  // getter
+  get temperature() {
+    return this._temperature;
+  }
+
+  // setter
+  set temperature(updatedTemperature) {
+    this._temperature = updatedTemperature;
+  }
+}
+// 只修改这一行上面的代码
+
+const thermos = new Thermostat(76); // 设置为华氏刻度
+let temp = thermos.temperature; // 24.44 摄氏度
+thermos.temperature = 26;
+temp = thermos.temperature; // 26 摄氏度
+```
+
