@@ -5,7 +5,7 @@ on:
     branches:
       - main  # Here source code branch is `master`, it could be other branch
   schedule:
-    - cron:  '5 0 * * *' # 每天 12:05 分自动编译 
+    - cron:  '5 0 * * *' # 每天 00:05 分自动编译 
 
 jobs:
   build_and_deploy:
