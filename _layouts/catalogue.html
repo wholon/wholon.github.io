@@ -1,5 +1,5 @@
 ---
-layout: articles
+layout: article
 sidebar:
   nav: cs
 ---
@@ -16,7 +16,8 @@ sidebar:
     <header><h1>{{ _article_title }}</h1></header>
   {% endif %}
 {% endfor %}
-
+<!-- 文章内容 -->
+{{ content }}
 <!-- 获取边栏标题 -->
 {% for _side_bar in site.data.navigation[_side_cat] %}
 <!-- 一级标题 -->
@@ -47,3 +48,7 @@ sidebar:
   <br>
   {% endfor %}
 </ul>
+
+<script>
+  {%- include scripts/article.js -%}
+</script>
