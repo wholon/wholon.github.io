@@ -8,7 +8,7 @@ cd $SHELL_FOLDER
 cat /dev/null > nohup.out
 
 # 将输出定位到nohup.out
-nohup nohup git add . && nohup git commit -m "$1" && nohup git push origin --force
+nohup git add . && nohup git commit -m "$1" && nohup git push origin --force
 
 # 切换到 main
 # git checkout main
