@@ -1,4 +1,4 @@
-# 使用递归创建一个倒计时
+# JavaScript-使用递归创建一个倒计时
 
 在上一个[挑战](https://chinese.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/replace-loops-using-recursion)，学习了怎样用递归来代替 `for` 循环。 现在来学习一个更复杂的函数，函数返回一个从 `1` 到传递给函数的指定数字的连续数字数组。
 
