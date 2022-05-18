@@ -797,6 +797,8 @@ nonMutatingPush(first, second);
 
 `reduce()`（即`Array.prototype.reduce()`），是 JavaScript 所有数组操作中最常用的方法。 几乎可以用`reduce`方法解决所有数组处理问题。
 
+> reduce: 改变...的状态
+
 `reduce`方法是处理数组更通用的方式，而且`filter`和`map`方法都可以当作是`reduce`的特殊实现。 `reduce`方法遍历数组中的每个项目并返回单个值（即字符串、数字、对象、数组）。 这是通过在每次迭代中调用一个回调函数来实现的。
 
 回调函数接受四个参数。 第一个参数称为叠加器，它是上一次迭代中回调函数的返回值，第二个参数是当前正在处理的数组元素，第三个参数是该参数的索引，第四个参数是在其上调用 `reduce` 方法的数组。
@@ -839,3 +841,448 @@ console.log(usersObj);
 ------
 
 `watchList` 是包含一些电影信息的对象。 使用 `reduce` 查找由 `Christopher Nolan` 导演的电影的 IMDB 评级平均值。 回想一下之前的挑战，如何 `filter` 数据，以及使用 `map` 来获取你想要的数据。 您可能需要创建其他变量，并从 `getRating` 函数返回平均评分。 请注意，评级在对象中是字符串，需要将其转换为数字再用于数学运算。
+
+```js
+// 全局变量
+const watchList = [
+  {
+    "Title": "Inception",
+    "Year": "2010",
+    "Rated": "PG-13",
+    "Released": "16 Jul 2010",
+    "Runtime": "148 min",
+    "Genre": "Action, Adventure, Crime",
+    "Director": "Christopher Nolan",
+    "Writer": "Christopher Nolan",
+    "Actors": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy",
+    "Plot": "A thief, who steals corporate secrets through use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.",
+    "Language": "English, Japanese, French",
+    "Country": "USA, UK",
+    "Awards": "Won 4 Oscars. Another 143 wins & 198 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+    "Metascore": "74",
+    "imdbRating": "8.8",
+    "imdbVotes": "1,446,708",
+    "imdbID": "tt1375666",
+    "Type": "movie",
+    "Response": "True"
+  },
+  {
+    "Title": "Interstellar",
+    "Year": "2014",
+    "Rated": "PG-13",
+    "Released": "07 Nov 2014",
+    "Runtime": "169 min",
+    "Genre": "Adventure, Drama, Sci-Fi",
+    "Director": "Christopher Nolan",
+    "Writer": "Jonathan Nolan, Christopher Nolan",
+    "Actors": "Ellen Burstyn, Matthew McConaughey, Mackenzie Foy, John Lithgow",
+    "Plot": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+    "Language": "English",
+    "Country": "USA, UK",
+    "Awards": "Won 1 Oscar. Another 39 wins & 132 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjIxNTU4MzY4MF5BMl5BanBnXkFtZTgwMzM4ODI3MjE@._V1_SX300.jpg",
+    "Metascore": "74",
+    "imdbRating": "8.6",
+    "imdbVotes": "910,366",
+    "imdbID": "tt0816692",
+    "Type": "movie",
+    "Response": "True"
+  },
+  {
+    "Title": "The Dark Knight",
+    "Year": "2008",
+    "Rated": "PG-13",
+    "Released": "18 Jul 2008",
+    "Runtime": "152 min",
+    "Genre": "Action, Adventure, Crime",
+    "Director": "Christopher Nolan",
+    "Writer": "Jonathan Nolan (screenplay), Christopher Nolan (screenplay), Christopher Nolan (story), David S. Goyer (story), Bob Kane (characters)",
+    "Actors": "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine",
+    "Plot": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, the caped crusader must come to terms with one of the greatest psychological tests of his ability to fight injustice.",
+    "Language": "English, Mandarin",
+    "Country": "USA, UK",
+    "Awards": "Won 2 Oscars. Another 146 wins & 142 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg",
+    "Metascore": "82",
+    "imdbRating": "9.0",
+    "imdbVotes": "1,652,832",
+    "imdbID": "tt0468569",
+    "Type": "movie",
+    "Response": "True"
+  },
+  {
+    "Title": "Batman Begins",
+    "Year": "2005",
+    "Rated": "PG-13",
+    "Released": "15 Jun 2005",
+    "Runtime": "140 min",
+    "Genre": "Action, Adventure",
+    "Director": "Christopher Nolan",
+    "Writer": "Bob Kane (characters), David S. Goyer (story), Christopher Nolan (screenplay), David S. Goyer (screenplay)",
+    "Actors": "Christian Bale, Michael Caine, Liam Neeson, Katie Holmes",
+    "Plot": "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.",
+    "Language": "English, Urdu, Mandarin",
+    "Country": "USA, UK",
+    "Awards": "Nominated for 1 Oscar. Another 15 wins & 66 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg",
+    "Metascore": "70",
+    "imdbRating": "8.3",
+    "imdbVotes": "972,584",
+    "imdbID": "tt0372784",
+    "Type": "movie",
+    "Response": "True"
+  },
+  {
+    "Title": "Avatar",
+    "Year": "2009",
+    "Rated": "PG-13",
+    "Released": "18 Dec 2009",
+    "Runtime": "162 min",
+    "Genre": "Action, Adventure, Fantasy",
+    "Director": "James Cameron",
+    "Writer": "James Cameron",
+    "Actors": "Sam Worthington, Zoe Saldana, Sigourney Weaver, Stephen Lang",
+    "Plot": "A paraplegic marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
+    "Language": "English, Spanish",
+    "Country": "USA, UK",
+    "Awards": "Won 3 Oscars. Another 80 wins & 121 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1_SX300.jpg",
+    "Metascore": "83",
+    "imdbRating": "7.9",
+    "imdbVotes": "876,575",
+    "imdbID": "tt0499549",
+    "Type": "movie",
+    "Response": "True"
+  }
+];
+
+function getRating(watchList) {
+  // 只修改这一行下面的代码
+  const averageRating = watchList
+  .filter(film => film.Director === "Christopher Nolan")
+  .map(film => Number(film.imdbRating))
+  .reduce((sum, rating) => sum + rating) / watchList.filter(film => film.Director === "Christopher Nolan").length;
+
+
+  // 只修改这一行上面的代码
+  return averageRating;
+}
+
+console.log(getRating(watchList));
+```
+
+## 使用高阶函数 map、filter 或者 reduce 来解决复杂问题
+
+已经接触了高阶函数如 `map()`、 `filter()` 和 `reduce()`的使用，是时候用它们来完成一些复杂的挑战了。
+
+------
+
+使用 `map()`、`filter()` 和 `reduce()` 的任何组合完成 `squareList` 函数的代码。 传递一个包含实数的数组给函数时，函数应返回一个新的数组，*只*包含正整数（小数不是整数）的平方值， 例如 `[-3, 4.8, 5, 3, -3.2]` 这样一个包含实数的数组。
+
+**注意：** 函数不应该包含任何形式的 `for` 或者 `while` 循环或者 `forEach()` 函数。
+
+```js
+const squareList = arr => {
+  // 只修改这一行下面的代码
+  return arr
+    .filter(num => num > 0 && num % parseInt(num) === 0)
+    .map(num => Math.pow(num, 2));
+  // 只修改这一行上面的代码
+};
+
+const squaredIntegers = squareList([-3, 4.8, 5, 3, -3.2]);
+console.log(squaredIntegers);
+```
+
+## 使用 sort 方法按字母顺序给数组排序
+
+`sort` 方法可以根据回调函数对数组元素进行排序。
+
+举个例子：
+
+```js
+function ascendingOrder(arr) {
+  return arr.sort(function(a, b) {
+    return a - b;
+  });
+}
+
+ascendingOrder([1, 5, 2, 3, 4]);
+```
+
+这将返回值 `[1, 2, 3, 4, 5]`。
+
+```js
+function reverseAlpha(arr) {
+  return arr.sort(function(a, b) {
+    return a === b ? 0 : a < b ? 1 : -1;
+  });
+}
+
+reverseAlpha(['l', 'h', 'z', 'b', 's']);
+```
+
+这将返回值 `['z', 's', 'l', 'h', 'b']`。
+
+JavaScript 的默认排序方法是 Unicode 值顺序排序，有时可能会得到意想不到的结果。 因此，建议提供一个回调函数来指定如何对数组项目排序。 这个回调函数通常叫做 `compareFunction`，它根据 `compareFunction` 的返回值决定数组元素的排序方式： 如果两个元素 `a` 和 `b`，`compareFunction(a,b)` 返回一个比 0 小的值，那么 `a` 会在 `b` 的前面。 如果两个元素 `a` 和 `b`，`compareFunction(a,b)` 返回一个比 0 大的值，那么 `b` 会在 `a` 的前面。 如果两个元素 `a` 和 `b`，`compareFunction(a,b)` 返回等于 0 的值，那么 `a` 和 `b` 的位置保持不变。
+
+------
+
+在 `alphabeticalOrder` 函数中使用 `sort` 方法对 `arr` 中的元素按照字母顺序排列。 该函数应返回一个排序的数组。
+
+```js
+function alphabeticalOrder(arr) {
+  // 只修改这一行下面的代码
+  return arr.sort(function(a, b) {
+    return a === b ? 0 : a < b? -1 : 1;
+  });
+  // 只修改这一行上面的代码
+}
+
+alphabeticalOrder(["a", "d", "c", "a", "z", "g"]);
+```
+
+## 在不更改原始数组的前提下返回排序后的数组
+
+`sort` 方法会产生改变原始数组中元素顺序的副作用。 换句话说，它会改变数组的位置。 避免这种情况的一种方法是先将空数组连接到正在排序的数组上（记住 `slice` 和 `concat` 返回一个新数组），再用`sort`方法。
+
+------
+
+在 `nonMutatingSort` 函数中使用 `sort` 方法对数组中的元素按升序进行排列。 函数不能改变 `globalArray` 变量，应返回一个新数组。
+
+```js
+const globalArray = [5, 6, 3, 2, 9];
+
+function nonMutatingSort(arr) {
+  // 只修改这一行下面的代码
+  return arr.slice().sort(function(a, b) {
+    return a === b ? 0 : a < b ? -1 : 1;
+  })
+
+  // 只修改这一行上面的代码
+}
+
+nonMutatingSort(globalArray);
+```
+
+## 使用 split 方法将字符串拆分成数组
+
+`split` 方法将一个字符串分割成一个字符串数组。 它需要一个参数作为分隔符，它可以是用于拆分字符串或正则表达式的一个字符。 举个例子，如果分隔符是空格，你会得到一个单词数组；如果分隔符是空字符串，你会得到一个由字符串中每个字符组成的数组。
+
+下面是两个用空格分隔一个字符串的例子，另一个是用数字的正则表达式分隔：
+
+```js
+const str = "Hello World";
+const bySpace = str.split(" ");
+
+const otherString = "How9are7you2today";
+const byDigits = otherString.split(/\d/);
+```
+
+`bySpace` 将有值 `["Hello", "World"]`，`byDigits` 将有值 `["How", "are", "you", "today"]`。
+
+因为字符串是不可变的，`split` 方法操作它们更方便。
+
+------
+
+在 `splitify` 函数中用 `split` 方法将 `str` 分割成单词数组。 这个方法应该返回一个数组。 单词不一定都是用空格分隔，所以数组中不应包含标点符号。
+
+```js
+function splitify(str) {
+  // 只修改这一行下面的代码
+  return str.split(/\W/);
+
+  // 只修改这一行上面的代码
+}
+
+splitify("Hello World,I-am code");
+```
+
+## 使用 join 方法将数组组合成字符串
+
+`join` 方法用来把数组中的所有元素放入一个字符串。 并通过指定的分隔符参数进行分隔。
+
+举个例子：
+
+```js
+const arr = ["Hello", "World"];
+const str = arr.join(" ");
+```
+
+`str` 的值应该是字符串 `Hello World`。
+
+------
+
+在函数 `sentensify` 内用 `join` 方法（及其他方法）用字符串 `str` 中的单词造句，这个函数应返回一个字符串。 该函数应返回一个数组。 举个例子，`I-like-Star-Wars` 会被转换成 `I like Star Wars`。 在此挑战中请勿使用 `replace` 方法。
+
+```js
+function sentensify(str) {
+  // 只修改这一行下面的代码
+  return str.split(/\W/).join(" ");
+
+  // 只修改这一行上面的代码
+}
+
+sentensify("May-the-force-be-with-you");
+```
+
+## 应用函数式编程将字符串转换为URL片段
+
+最后几个挑战中涵盖了许多符合函数式编程原则并在处理数组和字符串中非常有用的方法。 我们还学习了强大的、可以将问题简化为更简单形式的 `reduce` 方法。 从计算平均值到排序，任何数组操作都可以用它来实现。 回想一下，`map` 和 `filter` 方法都是 `reduce` 的特殊实现。
+
+让我们把学到的知识结合起来解决一个实际问题。
+
+许多内容管理站点（CMS）为了让添加书签更简单，会将帖子的标题添加到 URL 上。 举个例子，如果你写了一篇标题为 `Stop Using Reduce`的帖子，URL很可能会包含标题字符串的某种形式 (如：`.../stop-using-reduce`)。 你可能已经在 freeCodeCamp 网站上注意到了这一点。
+
+------
+
+填写 `urlSlug` 函数，将字符串 `title` 转换成带有连字符号的 URL。 您可以使用本节中介绍的任何方法，但不要用 `replace` 方法。 以下是本次挑战的要求：
+
+输入包含空格和标题大小写单词的字符串
+
+输出字符串，单词之间的空格用连字符 (`-`) 替换
+
+输出应该是小写字母
+
+输出不应有任何空格
+
+```js
+// 只修改这一行下面的代码
+function urlSlug(title) {
+  // 其中，\s+ 表示空白字符至少出现一次
+  return title.toLowerCase().trim().split(/\s+/).join("-");
+}
+// 只修改这一行上面的代码
+urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone");
+```
+
+## 使用 every 方法检查数组中的每个元素是否符合条件
+
+`every` 方法用于检测数组中*所有*元素是否都符合指定条件。 如果所有元素满足条件，返回布尔值 `true`，反之返回 `false`。
+
+举个例子，下面的代码检测数组 `numbers` 的所有元素是否都小于 10：
+
+```js
+const numbers = [1, 5, 8, 0, 10, 11];
+
+numbers.every(function(currentValue) {
+  return currentValue < 10;
+});
+```
+
+`every` 方法在这里会返回 `false`。
+
+------
+
+在 `checkPositive` 函数中使用 `every` 方法检查 `arr` 中是否所有元素都是正数。 函数应返回一个布尔值。
+
+```js
+function checkPositive(arr) {
+  // 只修改这一行下面的代码
+
+  return arr.every(function(currentValue) {
+    return currentValue > 0;
+  });
+  // 只修改这一行上面的代码
+}
+
+checkPositive([1, 2, 3, -4, 5]);
+```
+
+## 使用 some 方法检查数组中是否有元素是否符合条件
+
+`some` 方法用于检测数组中*任何*元素是否满足指定条件。 如果有一个元素满足条件，返回布尔值 `true`，反之返回 `false`。
+
+举个例子，下面的代码检测数组`numbers`中是否有元素小于 10：
+
+```js
+const numbers = [10, 50, 8, 220, 110, 11];
+
+numbers.some(function(currentValue) {
+  return currentValue < 10;
+});
+```
+
+`some` 方法将返回 `true`。
+
+------
+
+在 `checkPositive` 函数值中使用 `some` 检查 `arr` 中是否有元素为正数。 函数应返回一个布尔值。
+
+```js
+function checkPositive(arr) {
+  // 只修改这一行下面的代码
+
+  return arr.some(function(currentValue) {
+    return currentValue > 0;
+  });
+  // 只修改这一行上面的代码
+}
+
+checkPositive([1, 2, 3, -4, 5]);
+```
+
+## 函数柯里化和局部调用
+
+arity（参数个数）是函数所需的形参的数量。 函数柯里化（Currying）意思是把接受多个 arity 的函数变换成接受单一 arity 的函数。
+
+换句话说，就是重构函数让它接收一个参数，然后返回接收下一个参数的函数，依此类推。
+
+举个例子：
+
+```js
+function unCurried(x, y) {
+  return x + y;
+}
+
+function curried(x) {
+  return function(y) {
+    return x + y;
+  }
+}
+
+const curried = x => y => x + y
+
+curried(1)(2)
+```
+
+`curried(1)(2)` 会返回 `3`。
+
+柯里化在不能一次为函数提供所有参数情况下很有用。 因为它可以将每个函数的调用保存到一个变量中，该变量将保存返回的函数引用，该引用在下一个参数可用时接受该参数。 下面是使用柯里化函数的例子：
+
+```js
+const funcForY = curried(1);
+console.log(funcForY(2)); // 3
+```
+
+类似地，局部调用（ partial application）的意思是一次对一个函数应用几个参数，然后返回另一个应用更多参数的函数。 这是一个示例：
+
+```js
+function impartial(x, y, z) {
+  return x + y + z;
+}
+
+const partialFn = impartial.bind(this, 1, 2);
+partialFn(10); // 13
+```
+
+------
+
+填写 `add` 函数主体部分，用柯里化添加参数 `x`，`y` 和 `z`.
+
+```js
+function add(x) {
+  // 只修改这一行下面的代码
+  return function(y) {
+    return function (z) {
+      return x + y + z;
+    }
+  }
+
+  // 只修改这一行上面的代码
+}
+
+add(10)(20)(30);
+```
+
