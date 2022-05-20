@@ -125,3 +125,38 @@ Bootstrap 的列宽取决于用户的屏幕宽度。 比如，手机有着窄屏
 将 `Like`，`Info` 和 `Delete` 三个按钮并排放入一个 `<div class="row">` 元素中，然后每个按钮都各用一个 `<div class="col-xs-4">` 元素包裹起来。
 
 当 `div` 元素设置了 `row` class 之后，那几个按钮便会嵌入其中了。
+
+![Kapture 2022-05-19 at 00.03.20](https://holon-image.oss-cn-beijing.aliyuncs.com/202205190003463CrwKi.gif)
+
+## 用 Bootstrap 来取代我们之前的自定义样式
+
+现在可以清理一下之前代码，用 Bootstrap 的内置样式来替换之前定义的样式，这样 Cat Photo App 看起来更简洁些。
+
+别担心——以后会有大把时间来自定义 CSS 样式的。
+
+删除 `style` 元素里的 `.red-text`，`p`，和 `.smaller-image`CSS 定义，使 `style` 元素只留下 `h2` 和 `thick-green-border`。
+
+删除包含死链接的 `p` 元素。 然后将 `h2` 的 `red-text` class 替换为 Bootstrap 的 `text-primary` class。
+
+最后，从第一个 `img` 元素中删除 `smaller-image` class，并将其替换为 `img-responsive` class。
+
+## 使用 span 创建行内元素
+
+可以使用 span 标签来创建行内元素。 还记得怎么使用 `btn-block` class 来创建填满整行的按钮吗？
+
+普通按钮
+
+块级按钮
+
+上面的例子就是 "inline" （行内）元素和 "block" （块级）元素的区别。
+
+通过使用行内元素 `span`，可以把不同的元素放在同一行，甚至能为一行的不同部分指定不同样式。
+
+使用一个 `span` 元素，将文本 `love` 嵌入现在包含文本 `Things cats love` 的 `p` 元素中。 然后给 `span` 元素设置 class `text-danger`，使文本变成红色。
+
+对含有文本 `Top 3 things cats hate` 的 `p` 元素这样处理：
+
+```html
+<p>Top 3 things cats <span class="text-danger">hate:</span></p>
+```
+
