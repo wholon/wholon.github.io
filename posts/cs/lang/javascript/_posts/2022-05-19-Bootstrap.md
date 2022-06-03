@@ -144,9 +144,7 @@ Bootstrap 的列宽取决于用户的屏幕宽度。 比如，手机有着窄屏
 
 可以使用 span 标签来创建行内元素。 还记得怎么使用 `btn-block` class 来创建填满整行的按钮吗？
 
-普通按钮
-
-块级按钮
+![image-20220603232811517](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603232811QdxCWO.png)
 
 上面的例子就是 "inline" （行内）元素和 "block" （块级）元素的区别。
 
@@ -160,3 +158,116 @@ Bootstrap 的列宽取决于用户的屏幕宽度。 比如，手机有着窄屏
 <p>Top 3 things cats <span class="text-danger">hate:</span></p>
 ```
 
+## 创建自定义标题
+
+为 Cat Photo App 做一个导航，把标题和惬意的猫咪图片放在同一行。
+
+记住，由于 Bootstrap 使用了响应式栅格系统，可以很方便的把元素放到一行以及指定元素的相对宽度。 大部分的 Bootstrap 的 class 都能用在 `div` 元素上。
+
+把第一张图片和 `h2` 元素用一个简单的 `<div class="row">` 元素包裹起来。 再用 `<div class="col-xs-8">` 包裹 `h2` 元素，用 `<div class="col-xs-4">` 包裹我们的图片，这样它们就能位于同一行了。
+
+注意现在图片是否与文字大小一致呢？
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220603233701734](https://holon-image.oss-cn-beijing.aliyuncs.com/2022060323370204HapW.png) | ![image-20220603233628442](https://holon-image.oss-cn-beijing.aliyuncs.com/2022060323362914LTQH.png) |
+
+## 在按钮中添加字体图标
+
+Font Awesome 是一个非常便利的图标库。 我们可以通过 webfont 或矢量图的方式来使用这些图标。 这些图标就和字体一样， 不仅能通过像素单位指定它们的大小，它们也同样会继承父级 HTML 元素的字号。
+
+可以将 Font Awesome 图标库添加至任何一个 web app 中，方法很简单，只需要在 HTML head 标签中添加以下代码即可：
+
+```html
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+```
+
+在这个挑战中，我们已经为你在页面上添加好了 Font Awesome 图标库。
+
+`i` 元素原本是用来表示斜体文字内容的；不过现在，用它来表示图标也很常见。 只需要为 `i` 元素添加相应的 class 就可以让它展示图标，比如：
+
+```html
+<i class="fas fa-info-circle"></i>
+```
+
+同时，我们也可以使用 `span` 元素来展示图标。
+
+------
+
+请使用 Font Awesome 来为我们的点赞按钮添加一个 `thumbs-up` 图标，只需添加一个 class 包含 `fas` 和 `fa-thumbs-up` 的 `i` 元素即可。 同时，请记得保留图标之后的文字内容 `Like`。
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220603233900372](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603233900TAyr5s.png) | ![image-20220603233959064](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603233959akOYzf.png) |
+
+## 将字体图标添加到所有的按钮上
+
+Font Awesome 是一个非常便利的图标库。 这些图标可以是网络字体，也可以是一张矢量图。 这些图标就和字体一样， 不仅能通过像素单位指定它们的大小，它们也同样会继承父级 HTML 元素的字号。
+
+------
+
+为 info 按钮添加 Font Awesome `info-circle` 图标，delete 按钮添加 `trash` 图标。
+
+**注意：** 下述要求中的 `i` 元素也可以用 `span` 元素代替。
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220603234121925](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603234122Kus4jq.png) | ![image-20220603234227369](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603234227BcpPba.png) |
+
+## 响应式风格的单选按钮
+
+Bootstrap 的 `col-xs-*` class 也可以用在 `form` 元素上！ 这样就可以在不关心屏幕大小的情况下，将单选按钮均匀的平铺在页面上。
+
+将所有单选按钮放入 `<div class="row">` 元素中。 再用 `<div class="col-xs-6">` 元素包裹每一个单选按钮。
+
+**注意：** 提醒一句，单选按钮是 type 为 `radio`的 `input` 元素。
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220603234513291](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603234513XyKsqR.png) | ![image-20220603234751945](https://holon-image.oss-cn-beijing.aliyuncs.com/202206032347524GtqrQ.png) |
+
+## 响应式风格的复选框
+
+Bootstrap 的 `col-xs-*` 可应用于所有的 `form` 元素上，包括复选框！ 这样就可以不必关注屏幕大小，均匀地把复选框放在页面上了。
+
+------
+
+将所有三个复选框都放置于一个 `<div class="row">` 元素中。 然后分别把每个复选框都放置于一个 `<div class="col-xs-4">` 元素中。
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220603234858001](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603234858Jqge2G.png) | ![image-20220603235048373](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603235048OG48dA.png) |
+
+## 给表单输入框添加样式
+
+可以在 submit `button` 元素内加上 `<i class="fa fa-paper-plane"></i>`，来添加 Font Awesome 的 `fa-paper-plane` 图标。
+
+为表单的文本输入框（text input）设置 `form-control` class。 为表单的提交（submit）按钮设置 `btn btn-primary` class， 并为它加上 Font Awesome 的 `fa-paper-plane` 图标。
+
+所有文本输入类的元素如 `<input>`，`<textarea>` 和 `<select>`只要设置 `.form-control` class 就会占满100%的宽度。
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220603235302602](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603235302OD9Kbo.png) | ![image-20220603235439518](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603235439J3vGqx.png) |
+
+## 使用 Bootstrap 响应式排列表单元素
+
+现在把表单里的 `input` 元素和 submit `button` （提交按钮）放在同一行。 跟着之前的做法来就行：准备好一个具有 `row` class 的 `div` 元素还有几个具有 `col-xs-*` class 的 `div` 元素。
+
+先把表单的 text `input` （文本输入框）和 submit `button` （提交按钮）放进具有 `row` class 的 `div` 中。 再用 `col-xs-7` class 的 div 包裹表单的 text `input` （文本输入框）， `col-xs-5`class 的 `div` 包裹表单的 submit `button` （提交按钮）。
+
+这是我们到目前为止 Cat Photo App 的最后一个挑战了。 祝你编码愉快。
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220603235541631](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603235541nrrz5W.png) | ![image-20220603235659956](https://holon-image.oss-cn-beijing.aliyuncs.com/202206032357001PiQXm.png) |
+
+## 创建一个 Bootstrap 标题
+
+现在，来运用 HTML、CSS 和 Bootstrap 从头开始做点东西。
+
+接下来将会搭建一个 jQuery playground，以便在后续的 jQuery 课程中使用它。
+
+首先，创建一个包含 `jQuery Playground` 文本内容的 `h3` 元素。
+
+通过给 `h3` 元素设置 Bootstrap 的 `text-primary` class 属性来为其上色，然后添加 Bootstrap 的 `text-center` class 属性使其文本居中显示。
