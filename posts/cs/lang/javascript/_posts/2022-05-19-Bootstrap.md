@@ -262,6 +262,8 @@ Bootstrap 的 `col-xs-*` 可应用于所有的 `form` 元素上，包括复选�
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | ![image-20220603235541631](https://holon-image.oss-cn-beijing.aliyuncs.com/20220603235541nrrz5W.png) | ![image-20220603235659956](https://holon-image.oss-cn-beijing.aliyuncs.com/202206032357001PiQXm.png) |
 
+# 使用Bootstrp创建一个 jQuery Playground
+
 ## 创建一个 Bootstrap 标题
 
 现在，来运用 HTML、CSS 和 Bootstrap 从头开始做点东西。
@@ -271,3 +273,328 @@ Bootstrap 的 `col-xs-*` 可应用于所有的 `form` 元素上，包括复选�
 首先，创建一个包含 `jQuery Playground` 文本内容的 `h3` 元素。
 
 通过给 `h3` 元素设置 Bootstrap 的 `text-primary` class 属性来为其上色，然后添加 Bootstrap 的 `text-center` class 属性使其文本居中显示。
+
+```html
+<h3 class="text-primary text-center">jQuery Playground</h3>
+```
+
+## 将页面放在 container-fluid div 中
+
+现在确保页面所有内容都可以响应移动端。
+
+将的 `h3` 元素内嵌进一个具有 `container-fluid` class 的`div` 元素中。
+
+```html
+<div class="container-fluid">
+<h3 class="text-primary text-center">jQuery Playground</h3>
+</div>
+```
+
+## 创建一个 Bootstrap Row
+
+这次为内联元素创建一个 Bootstrap 栅格系统的 Row（行）。
+
+在 `h3` 标签下方创建一个 class 属性为 `row` 的 `div` 元素。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    </div>
+</div>
+```
+
+## 分割 Bootstrap Row
+
+现在已经有了一个 Bootstrap Row，把它分成两列。
+
+在行内创建两个 class 属性为 `col-xs-6` 的 `div` 元素。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      </div>
+      <div class="col-xs-6">
+        </div>
+
+  </div>
+</div>
+```
+
+## 创建 Bootstrap Wells
+
+Bootstrap 有一个叫作 `well` 的 class，作用是使界面更具层次感。
+
+在每一个 class 属性为 `col-xs-6` 的 `div` 元素中都嵌入一个带有 `well` class 的 `div` 元素。
+
+```html
+<div class="container-fluid">
+    <h3 class="text-primary text-center">jQuery Playground</h3>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="well">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="well">
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+
+
+## 在 Bootstrap Wells 中添加元素
+
+现在的每一行的列都已经有了 `div` 元素。 这已经足够了， 现在让我们添加 `button` 元素吧。
+
+每一个 class 属性为 `well` 的 `div` 元素内都应该放三个 `button`元素。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="well">
+        <button></button>
+        <button></button>
+        <button></button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="well">
+        <button></button>
+        <button></button>
+        <button></button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## 给 Bootstrap 按钮添加默认样式
+
+Bootstrap 还有另外一种按钮 class 属性叫做 `btn-default`。
+
+为所有的 `button` 元素增加两个 class： `btn` 和 `btn-default`。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="well">
+        <button class="btn btn-default"></button>
+        <button class="btn btn-default"></button>
+        <button class="btn btn-default"></button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="well">
+        <button class="btn btn-default"></button>
+        <button class="btn btn-default"></button>
+        <button class="btn btn-default"></button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## 用 jQuery 选择器给目标元素的添加 class
+
+并不是所有 class 属性都需要有对应的 CSS 样式。 有时候我们设置 class 只是为了更方便地在 jQuery 中选中这些元素。
+
+为每一个 `button` 元素添加 `target` class。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="well">
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="well">
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## 给 Bootstrap 元素添加 id 属性
+
+回忆一下，除了可以给元素添加 class 属性，我们还可以给元素设置 `id` 属性。
+
+每个元素的 id 都必须是唯一的，并且在一个页面中只能使用一次。
+
+让我们为每个 class 为 `well` 的 `div` 元素添加一个唯一的 id。
+
+记住，可以这样给一个元素设置 id：
+
+```html
+<div class="well" id="center-well">
+```
+
+给左边的块设置 id 为 `left-well`。 给右边的块设置 id 为 `right-well`。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="well" id="left-well">
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="well" id="right-well">
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## 给 Bootstrap Wells 设置标签
+
+为了让页面逻辑更清晰，每个 wells 都标上它们的 id 吧。
+
+在 left-well 的上一层，class 属性为 `col-xs-6` 的 `div` 元素里面，增加一个文本为 `#left-well` 的 `h4` 元素。
+
+在 right-well 的上一层，class 属性为 `col-xs-6` 的 `div` 元素里面，增加一个文本为 `#right-well` 的 `h4` 元素。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+        <button class="btn btn-default target"></button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## 给每个元素一个唯一的 id
+
+也可以通过 jQuery 根据每个按钮唯一的 id 来定位出它们。
+
+给每一个按钮设置唯一的 id，以 `target1` 开始，`target6` 结束。
+
+确保 `target1` 到 `target3` 在 `#left-well` 之中，`target4` 到 `target6` 在 `#right-well` 之中。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1"></button>
+        <button class="btn btn-default target" id="target2"></button>
+        <button class="btn btn-default target" id="target3"></button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4"></button>
+        <button class="btn btn-default target" id="target5"></button>
+        <button class="btn btn-default target" id="target6"></button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## 给 Bootstrap 按钮设置标签
+
+正如标注了每个 wells 一样，同样可以标注每一个按钮。
+
+为每个 `button` 元素设置与其 id 选择器对应的文本。
+
+```html
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## 使用注释来说明代码
+
+使用 jQuery 时，修改 HTML 元素时并不需要直接修改 HTML 代码。
+
+必须确保让每个人都知道不应该直接修改此页面上的这些代码。
+
+记住，可以在 `<!--` 为开始，`-->` 为结束的地方进行评论注释。
+
+请你在 HTML 顶部加如下一段注释： `Code below this line should not be changed` 。
+
+```html
+<!-- Code below this line should not be change -->
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+

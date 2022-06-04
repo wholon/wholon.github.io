@@ -20,14 +20,17 @@ $("p").text();
 $("p").html();  
 ```
 
-效果图如下：
-
    ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/img/2022041500024281edf7.png)  
 
 可以看出：
 
 - `text()`是获取所选元素的文本内容，`html` 标签的内容已经转化；
+
+  > 函数 `.text()`，可以在不添加标签的前提下改变标签内的文本。 换句话说，这个函数不会评估传递给它的任何 HTML 标记，而是将其视为要替换现有内容的文本。
+
 - `html()`是获取所选元素的内容，包括 `html` 标签。
+
+  >  `.html()` 函数，能用其在标签里添加 HTML 标签和文本， 函数提供的内容将完全替换之前标签的内容。
 
 基本的`html`结构如下：  
 
@@ -68,9 +71,7 @@ console.log($(".box").attr("data-count"));
 
    ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/img/20220415000242b22de8.png)  
 
-### 编程要求
-
-根据提示，在`Begin`至`End`之间填充代码，获取元素的内容和属性值。要求如下：
+----
 
 - 点击【获取文本内容】按钮，直接弹出类名为`box`的元素的文本内容；
 - 点击【获取内容】按钮，直接弹出类名为`box`的元素的内容；
@@ -80,8 +81,6 @@ console.log($(".box").attr("data-count"));
 
 - 获取元素统一用**类名**获取；
 - 统一用双引号`""`表示字符串。
-
-效果如下：  
 
    ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204150002423eebe9.gif)  
 
@@ -128,7 +127,6 @@ console.log($(".box").attr("data-count"));
     </div>
      
    <script>
-
     $(function(){        
         //------------ Begin -----------
         $(".btn1").click(function(){
@@ -163,8 +161,6 @@ console.log($(".box").attr("data-count"));
 <input class="third" type="text"/>  
 ```
 
-效果如下：
-
    ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204150051105d8586.png)  
 
 如何设置上面标签的内容呢？在第一节的基础上，我们深入学习一下前面的几种方法。代码如下：
@@ -175,11 +171,7 @@ $(".second").html("<h3>我是第二个</h3>");
 $(".third").val("我是第三个");  
 ```
 
-效果图如下：
-
    ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/img/20220415005110afe18a.png)  
-
-可以看出：
 
 - 这三个方法在使用上基本是一样的；
 - 以`text()`为例，`text()`表示获取内容，`text(content)`表示设置内容。
@@ -193,6 +185,14 @@ $(".third").val("我是第三个");
 ```
 
 如何设置该`div`的各种属性呢？这里用`attr(att, newValue)`，代码如下：
+
+> 还可以使用 `.prop()` 调整标签的属性。
+>
+> 下面是禁用所有的按钮的代码：
+>
+> ```js
+> $("button").prop("disabled", true);
+> ```
 
 ```js
 $("div").attr("class","alterClass"); 
@@ -218,9 +218,7 @@ $("div").attr({
 
 设置多种属性是用对象的方式来实现的。
 
-### 编程要求
-
-根据提示，在`Begin`至`End`之间填充代码，设置元素的内容和属性值。要求如下：
+----
 
 - 点击【填充文本内容】按钮，给类名为`first`的元素填充**文本内容**`我是第一行`；
 - 点击【填充内容】按钮，给类名为`second`的元素填充**内容**`<span>我是第二行</span>`；
@@ -230,8 +228,6 @@ $("div").attr({
 
 - 获取元素统一用**类名**获取；
 - 统一用双引号`""`表示字符串。
-
-效果如下：
 
    ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204150051107b05aa.gif)  
 
@@ -274,11 +270,8 @@ $("div").attr({
            <p class="second"></p>
            输入框:<input class="getVal" type="text" value="Hello Educoder"/>
        </div>
-
     </div>
-     
    <script>
-
     $(function(){        
         //------------ Begin -----------
         $(".btn1").click(function(){
@@ -293,8 +286,6 @@ $("div").attr({
             var typeAttr = $(".getVal").attr("type", "password");
             $(".getVal").val(typeAttr);
         })
-        
-        
         //------------ End --------------
     })
 
@@ -351,9 +342,7 @@ $(".btn2").click(function(){
 
 注意：要和 `append()`，`prepend()`区分开来。
 
-### 编程要求
-
-根据提示，在`Begin`至`End`之间补充代码，实现添加元素的功能。要求如下：
+----
 
 - 在表格的下面添加按钮【添加内容】，把内容`<button class="btn">添加内容</button>`赋值给变量`addBtn`，添加变量即可；
 - 用`append()`给表格底部添加内容；
@@ -363,8 +352,6 @@ $(".btn2").click(function(){
 
 - 获取元素统一用**类名**获取；
 - 统一用双引号`""`表示字符串，注意单引号和双引号的嵌套，类名用双引号。
-
-效果如下：
 
    ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/img/202204150058455aa1fe.gif)  
 
@@ -493,9 +480,7 @@ $(".btn").click(function(){
 
 可以看出：`empty()`是只删除被选元素的子元素。
 
-### 编程要求
-
-根据提示，在`Begin`至`End`之间补充代码，实现删除元素的功能。要求如下：
+----
 
 - 点击【删除最后一行】，删除表格的最后一行；
 - 点击【删除最后一个住址】，删除表格的最后一个住址；
@@ -505,8 +490,6 @@ $(".btn").click(function(){
 
 - 获取元素统一用**类名**获取；
 - 统一用双引号`""`表示字符串。
-
-效果如下：  
 
    ![img](https://holon-image.oss-cn-beijing.aliyuncs.com/20220415011016SS96bI.gif)  
 
@@ -581,4 +564,34 @@ $(".btn").click(function(){
 </html>
 
 ```
+
+## jQuery移动元素
+
+jQuery 有一个 `appendTo()` 方法，可以选取 HTML 标签并将其添加到另一个标签里面。例如，如果要把 `target4` 从 `right well` 移到 `left well`，可以设置如下：
+
+```js
+$("#target4").appendTo("#left-well");
+```
+
+把 `target2` 元素从 `left-well` 移动到 `right-well`。
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220604141704832](https://holon-image.oss-cn-beijing.aliyuncs.com/20220604141705kxdiNs.png) | ![image-20220604141644099](https://holon-image.oss-cn-beijing.aliyuncs.com/20220604141644vZlpWK.png) |
+
+## jQuery克隆元素
+
+除了移动标签，也可以把元素从一个地方复制到另一地方。jQuery 有一个 `clone()` 方法，可以复制标签。例如，如果想把 `target2` 从 `left-well` 复制到 `right-well`，可以设置如下：
+
+```js
+$("#target2").clone().appendTo("#right-well");
+```
+
+是否注意到这两个 jQuery 函数连在一起了？ 这被称为*链式调用（function chaining）*，是一种用 jQuery 实现效果的简便方法。
+
+克隆 `target5` 元素，并将其附加到 `left-well` 。
+
+| Before                                                       | After                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20220604141901112](https://holon-image.oss-cn-beijing.aliyuncs.com/202206041419018f1hYQ.png) | ![image-20220604142015835](https://holon-image.oss-cn-beijing.aliyuncs.com/20220604142016wXu1gA.png) |
 
