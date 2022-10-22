@@ -27,20 +27,6 @@ CREATE TABLE MY_HR_Talent_Pool_Application
 )
 GO
 
--- 更新时间触发器 --
-CREATE TRIGGER trigger_update_time
-    ON MY_HR_Talent_Pool_Application
-    AFTER UPDATE
-    AS
-BEGIN
-    UPDATE MY_HR_Talent_Pool_Application
-    SET
-        update_time = GETDATE()
-    WHERE
-        id IN (SELECT DISTINCT id FROM inserted)
-END
-GO
-
 -- 通用字段备注
 EXEC sp_addextendedproperty 'MS_Description', '主键', 'SCHEMA', 'dbo', 'TABLE', 'MY_HR_Talent_Pool_Application',
      'COLUMN', 'id'
@@ -81,5 +67,23 @@ GO
 EXEC sp_addextendedproperty 'MS_Description', '是否删除 【0】否 【1】是', 'SCHEMA', 'dbo', 'TABLE',
      'MY_HR_Talent_Pool_Application', 'COLUMN', 'is_deleted'
 GO
+
+-- 更新时间触发器 --
+-- 触发器名称在数据库层级，同一个库下不能重复
+-- SQL Server 的触发器在 Data Grip 的生成的 DDL(Data Definition Language) 语句中是没有体现的，不方便，建议不要了
+CREATE TRIGGER 表名_trigger_update_time
+    ON MY_HR_Talent_Pool_Application
+    AFTER UPDATE
+    AS
+BEGIN
+    UPDATE MY_HR_Talent_Pool_Application
+    SET
+        update_time = GETDATE()
+    WHERE
+        id IN (SELECT DISTINCT id FROM inserted)
+END
+GO
+
+
 ```
 
