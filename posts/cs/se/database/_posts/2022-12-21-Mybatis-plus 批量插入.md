@@ -13,6 +13,8 @@ with (fieldterminator=',', rowterminator='\n',FIRE_TRIGGERS)**
 
 但需要使用csv，致使我们无法使用框架提供的轮子，建议使用MySQL。
 
+> SQL server同时提供了bulkInsert API，但是由于不支持时间类型，所以使用起来很鸡肋。https://learn.microsoft.com/zh-cn/sql/connect/jdbc/use-bulk-copy-api-batch-insert-operation?view=sql-server-ver16
+
 另外，使用MySQL的时候注意如果使用foreach的方式，在数据量庞大时由于数据映射会耗费较长时间，所以需要谨慎使用。[MyBatis批量插入几千条数据慎用foreach_淡然坊-CSDN博客_mybatis批量更新几千条数据](https://blog.csdn.net/huanghanqian/article/details/83177178?utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control)
 
 
