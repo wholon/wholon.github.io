@@ -1,0 +1,2274 @@
+<!DOCTYPE html><html lang="zh">
+  <head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Linux 命令详解手册 - Holon's Blog</title>
+
+<meta name="description" content="[TOC]前言生活中我们经常遇到一些字母的简写，作为一个中国人，如果对简写死记硬背会感觉很枯燥，而且容易忘，如果能够知道这个简写从哪里来，差不多就把简写记住了（除了一些很不合适的简写）。比如本文用MarkDown编写，生成目录的语法是@[TOC]，如果只是记忆TOC会感觉很难，容易忘，但是如果知道@[TOC]来源...">
+<link rel="canonical" href="https://wholon.github.io/posts/cs/os/linux/2022/06/22/Linux%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3%E6%89%8B%E5%86%8C/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
+
+<meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/browserconfig.xml">
+
+<meta name="theme-color" content="#ffffff">
+<!-- <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/browserconfig.xml">
+<meta name="theme-color" content="#ffffff"> -->
+<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.1/css/all.css" ><!-- start custom head snippets -->
+
+<!-- end custom head snippets -->
+<script>(function() {
+  window.isArray = function(val) {
+    return Object.prototype.toString.call(val) === '[object Array]';
+  };
+  window.isString = function(val) {
+    return typeof val === 'string';
+  };
+
+  window.hasEvent = function(event) {
+    return 'on'.concat(event) in window.document;
+  };
+
+  window.isOverallScroller = function(node) {
+    return node === document.documentElement || node === document.body || node === window;
+  };
+
+  window.isFormElement = function(node) {
+    var tagName = node.tagName;
+    return tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
+  };
+
+  window.pageLoad = (function () {
+    var loaded = false, cbs = [];
+    window.addEventListener('load', function () {
+      var i;
+      loaded = true;
+      if (cbs.length > 0) {
+        for (i = 0; i < cbs.length; i++) {
+          cbs[i]();
+        }
+      }
+    });
+    return {
+      then: function(cb) {
+        cb && (loaded ? cb() : (cbs.push(cb)));
+      }
+    };
+  })();
+})();
+(function() {
+  window.throttle = function(func, wait) {
+    var args, result, thisArg, timeoutId, lastCalled = 0;
+
+    function trailingCall() {
+      lastCalled = new Date;
+      timeoutId = null;
+      result = func.apply(thisArg, args);
+    }
+    return function() {
+      var now = new Date,
+        remaining = wait - (now - lastCalled);
+
+      args = arguments;
+      thisArg = this;
+
+      if (remaining <= 0) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+        lastCalled = now;
+        result = func.apply(thisArg, args);
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(trailingCall, remaining);
+      }
+      return result;
+    };
+  };
+})();
+(function() {
+  var Set = (function() {
+    var add = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (data[i] === item) {
+          return;
+        }
+      }
+      this.size ++;
+      data.push(item);
+      return data;
+    };
+
+    var Set = function(data) {
+      this.size = 0;
+      this._data = [];
+      var i;
+      if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+          add.call(this, data[i]);
+        }
+      }
+    };
+    Set.prototype.add = add;
+    Set.prototype.get = function(index) { return this._data[index]; };
+    Set.prototype.has = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (this.get(i) === item) {
+          return true;
+        }
+      }
+      return false;
+    };
+    Set.prototype.is = function(map) {
+      if (map._data.length !== this._data.length) { return false; }
+      var i, j, flag, tData = this._data, mData = map._data;
+      for (i = 0; i < tData.length; i++) {
+        for (flag = false, j = 0; j < mData.length; j++) {
+          if (tData[i] === mData[j]) {
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) { return false; }
+      }
+      return true;
+    };
+    Set.prototype.values = function() {
+      return this._data;
+    };
+    return Set;
+  })();
+
+  window.Lazyload = (function(doc) {
+    var queue = {js: [], css: []}, sources = {js: {}, css: {}}, context = this;
+    var createNode = function(name, attrs) {
+      var node = doc.createElement(name), attr;
+      for (attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) {
+          node.setAttribute(attr, attrs[attr]);
+        }
+      }
+      return node;
+    };
+    var end = function(type, url) {
+      var s, q, qi, cbs, i, j, cur, val, flag;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        s[url] = true;
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (cur.urls.has(url)) {
+            qi = cur, val = qi.urls.values();
+            qi && (cbs = qi.callbacks);
+            for (flag = true, j = 0; j < val.length; j++) {
+              cur = val[j];
+              if (!s[cur]) {
+                flag = false;
+              }
+            }
+            if (flag && cbs && cbs.length > 0) {
+              for (j = 0; j < cbs.length; j++) {
+                cbs[j].call(context);
+              }
+              qi.load = true;
+            }
+          }
+        }
+      }
+    };
+    var load = function(type, urls, callback) {
+      var s, q, qi, node, i, cur,
+        _urls = typeof urls === 'string' ? new Set([urls]) : new Set(urls), val, url;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (_urls.is(cur.urls)) {
+            qi = cur;
+            break;
+          }
+        }
+        val = _urls.values();
+        if (qi) {
+          callback && (qi.load || qi.callbacks.push(callback));
+          callback && (qi.load && callback());
+        } else {
+          q.push({
+            urls: _urls,
+            callbacks: callback ? [callback] : [],
+            load: false
+          });
+          for (i = 0; i < val.length; i++) {
+            node = null, url = val[i];
+            if (s[url] === undefined) {
+              (type === 'js' ) && (node = createNode('script', { src: url }));
+              (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
+              if (node) {
+                node.onload = (function(type, url) {
+                  return function() {
+                    end(type, url);
+                  };
+                })(type, url);
+                (doc.head || doc.body).appendChild(node);
+                s[url] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+    return {
+      js: function(url, callback) {
+        load('js', url, callback);
+      },
+      css: function(url, callback) {
+        load('css', url, callback);
+      }
+    };
+  })(this.document);
+})();
+</script><script>
+  (function() {
+    var TEXT_VARIABLES = {
+      version: '2.2.6',
+      sources: {
+        font_awesome: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.1/css/all.css',
+        jquery: 'https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js',
+        leancloud_js_sdk: 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js',
+        chart: 'https://cdn.bootcdn.net/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js',
+        gitalk: {
+          js: 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.2.2/gitalk.min.js',
+          css: 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.2.2/gitalk.min.css'
+        },
+        valine: 'https://cdn.bootcdn.net/ajax/libs/valine/1.4.18/Valine.min.js',
+        mathjax: 'https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML',
+        mermaid: 'https://cdn.bootcdn.net/ajax/libs/mermaid/9.0.0/mermaid.js'
+      },
+      site: {
+        toc: {
+          selectors: 'h1,h2,h3,h4,h5,h6'
+        }
+      },
+      paths: {
+        search_js: '/assets/search.js'
+      }
+    };
+    window.TEXT_VARIABLES = TEXT_VARIABLES;
+  })();
+</script>
+</head>
+  <body>
+    <div class="root" data-is-touch="false">
+      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport has-aside cell cell--auto">
+
+          <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
+      <div class="header__title">
+        <div class="header__brand"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240px" height="240px" viewBox="0 0 240 240" enable-background="new 0 0 240 240" xml:space="preserve">  <image id="image0" width="240" height="240" x="0" y="0"
+    href="data:image/png;base64,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
+zbrW+o4N2YZlI7JZZXPW5r2tnW2a7TzbBtvndoZ2XLtiu1q7e/Y0+yD7ifbV9tcciA4shzyHdQ6X
+HVFHL0eRY5XjJSfUydtJ7LTOqW0YYZjvMMmw6mE3nanObOci51rnhy4GLjEuJS4NLq+GWw/PGL50
++NnhX129XPNdt7jeddN1i3IrcWtye+Pu6M53r3K/5kHzCPeY6dHo8drTyVPoud7zlhfDa6TXPK9m
+ry/ePt4y7zrvTh9rn0yftT43WXqseNZC1jlfgm+I70zfw74f/bz9Cv32+f3p7+yf57/D//kIuxHC
+EVtGPA6wDOAFbApoD2QGZgZuDGwPsgjiBVUHPQq2ChYEbw1+xnZg57J3sl+FuIbIQg6EvOf4caZz
+jodioRGhZaGtYbphKWFrwh6EW4bnhNeGd0d4RUyNOB5JiIyOXBp5k2vK5XNruN1RPlHTo05FU6OT
+otdEP4pxjJHFNI1ER0aNXD7yXqxNrCS2IQ7EceOWx92Pt4ufGH8ogZgQn1CV8DTRLXFa4tkkRtL4
+pB1J75JDkhcn302xT1GkNKfSU8ek1qS+TwtNW5bWPmr4qOmjLqYbp4vTGzNIGakZWzN6RoeNXjm6
+Y4zXmNIxN8bajZ089vw443H5446Mp4/njd+fSchMy9yR+ZkXx6vm9WRxs9ZmdfM5/FX8l4JgwQpB
+pzBAuEz4LDsge1n285yAnOU5naIgUYWoS8wRrxG/zo3M3ZD7Pi8ub1teX35a/u4CjYLMgoMSXUme
+5NQEswmTJ7RJnaSl0vaJfhNXTuyWRcu2yhH5WHljoR78qG9R2Ct+UjwsCiyqKvowKXXS/sk6kyWT
+W6Y4Tlkw5VlxePEvU/Gp/KnN0yymzZ72cDp7+qYZyIysGc0zrWbOndkxK2LW9tmU2XmzfytxLVlW
+8tectDlNc03nzpr7+KeIn2pLtUplpTfn+c/bMB+fL57fusBjweoFX8sEZRfKXcsryj8v5C+88LPb
+z5U/9y3KXtS62Hvx+iXEJZIlN5YGLd2+TGdZ8bLHy0cur1/BXFG24q+V41eer/Cs2LCKskqxqr0y
+prJxtfXqJas/rxGtuV4VUrV7rcnaBWvfrxOsu7I+eH3dBtMN5Rs+bRRvvLUpYlN9tW11xWbi5qLN
+T7ekbjn7C+uXmq3GW8u3ftkm2da+PXH7qRqfmpodJjsW16K1itrOnWN2Xt4Vuquxzrlu026D3eV7
+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
+b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
+</svg>
+<a title="Think Different" href="/">Holon's Blog</a></div>
+<!--        <p>Think Different</p>--><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
+        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item navigation__item--active"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+      </nav></div>
+  </header>
+</div><div class="page__content"><div class="main"><div class="grid grid--reverse">
+                            <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root">
+    <!-- 固定于 TOC 顶部的文章标题 -->
+    <a href="#" name="点击返回顶部">Linux 命令详解手册</a>
+</div>
+</aside></div>
+
+                            <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
+
+<!-- end custom main top snippet -->
+<article itemscope
+                                       itemtype="http://schema.org/Article"><div class="article__header"><header><h1>Linux 命令详解手册</h1></header></div><meta itemprop="headline" content="Linux 命令详解手册"><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+      
+
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/os/">操作系统</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/os/linux/">Linux</a>
+      </li>
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 06月22日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="Linux 命令详解手册">0</span> 阅读</li></ul></div>
+    <!-- 展示更新时间 -->
+    
+<div class="article__info clearfix"><li class="right-col menu">
+    <time itemprop="dateModified" datetime="2023-12-15T08:24:22+08:00">更新于2023年12月15日 08:24:22</time>
+  </li></div>
+
+
+    
+<div class="article__info clearfix">
+  <li class="right-col menu">
+    <span>
+      
+      
+      预计阅读时间 29 分
+      
+    </span>
+  </li>
+</div>
+
+
+
+<!-- /展示更新时间 --><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-06-22T00:00:00+08:00"><div
+                                      class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+
+<!-- end custom article top snippet -->
+<div class="article__content" itemprop="articleBody"><p>[TOC]</p>
+
+<h1 id="前言">前言</h1>
+
+<p>生活中我们经常遇到一些字母的简写，作为一个中国人，如果对简写死记硬背会感觉很枯燥，而且容易忘，如果能够知道这个简写从哪里来，差不多就把简写记住了（除了一些很不合适的简写）。比如本文用<code class="language-plaintext highlighter-rouge">MarkDown</code>编写，生成目录的语法是<code class="language-plaintext highlighter-rouge">@[TOC]</code>，如果只是记忆TOC会感觉很难，容易忘，但是如果知道<code class="language-plaintext highlighter-rouge">@[TOC]</code>来源于<strong>T</strong>able <strong>O</strong>f <strong>C</strong>ontents, 就没那么容易忘了，基本英文就是它的实际意思。</p>
+
+<p>对这些最常见的就是一些Linux命令和文件了，如果知道它英文的来源，基本就知道命令或者文件是做什么用的了，本问记录了一些本人在学习Linux过程中遇到的命令和文件的英文来源，并尽量做了核实，希望对你有所帮助。</p>
+
+<p>文章比较长，请善用网页的查找功能。<kbd>Command/Control</kbd>+<kbd>F</kbd></p>
+
+<p>查询某个命令或者文件缩写常用的Google模版
+what is the <code class="language-plaintext highlighter-rouge">要查询的命令</code> command in Linux?
+<code class="language-plaintext highlighter-rouge">要查询的命令</code> abbreviation in Linux/Unix?</p>
+
+<p>查询某个命令常用的参数
+命令行输入：<code class="language-plaintext highlighter-rouge">要查询的命令 --help</code></p>
+
+<p>Linux 命令中 <code class="language-plaintext highlighter-rouge">-</code>一般跟缩写参数，<code class="language-plaintext highlighter-rouge">--</code>一般跟全称参数</p>
+<h1 id="linux资源">Linux资源</h1>
+<ul>
+  <li>视频
+    <ul>
+      <li>2021韩顺平一周学会Linux <a href="https://www.bilibili.com/video/BV1Sv411r7vd">https://www.bilibili.com/video/BV1Sv411r7vd</a></li>
+    </ul>
+  </li>
+  <li>书籍
+    <ul>
+      <li>《鸟哥的Linux私房菜–基础篇》<a href="http://cn.linux.vbird.org/linux_basic/linux_basic.php">http://cn.linux.vbird.org/linux_basic/linux_basic.php</a></li>
+    </ul>
+  </li>
+  <li>文档
+    <ul>
+      <li>Linux工具快速教程 <a href="https://linuxtools-rst.readthedocs.io">https://linuxtools-rst.readthedocs.io</a></li>
+      <li>对于Linux文件系统最权威的解释 <a href="http://refspecs.linuxfoundation.org/fhs.shtml">Filesystem Hierarchy Standard</a></li>
+    </ul>
+  </li>
+  <li>实战
+    <ul>
+      <li>🌟蓝桥云课Linux基础入门 <a href="https://www.lanqiao.cn/courses/1">https://www.lanqiao.cn/courses/1</a></li>
+      <li>腾讯云动手实验室 <a href="https://cloud.tencent.com/developer/labs">https://cloud.tencent.com/developer/labs</a></li>
+      <li>阿里云体验实验室 <a href="https://developer.aliyun.com/adc/labs/">https://developer.aliyun.com/adc/labs/</a></li>
+      <li>阿里云知行实验室 <a href="https://start.aliyun.com/">https://start.aliyun.com/</a></li>
+      <li>阿里云沙箱实验室 <a href="https://lab.huaweicloud.com/">https://lab.huaweicloud.com/</a></li>
+      <li>🌟🌟头歌实践课程：<a href="https://www.educoder.net/paths/43">Linux从入门到精通</a></li>
+    </ul>
+  </li>
+  <li>社区
+    <ul>
+      <li>Linux中国 <a href="https://linux.cn/">https://linux.cn/</a></li>
+    </ul>
+  </li>
+  <li>工具
+    <ul>
+      <li>🌟Linux命令搜索 <a href="https://wangchujiang.com/linux-command">https://wangchujiang.com/linux-command</a></li>
+      <li>🌟🌟🌟Linux命令大全（手册）<a href="https://www.linuxcool.com/">https://www.linuxcool.com/</a></li>
+      <li>Linux命令示例（英文）<a href="http://linux-commands-examples.com/">http://linux-commands-examples.com/</a></li>
+      <li>宝塔Linux面板（简单好用的服务器运维面板）<a href="https://www.bt.cn/">https://www.bt.cn/</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="linux命令">Linux命令</h1>
+<h2 id="关机重启注销">关机/重启/注销</h2>
+
+<h3 id="shutdown">shutdown</h3>
+
+<p>shutdown 命令用来系统关机命令。shutdown 指令可以关闭所有程序，并依用户的需要，进行重新开机或关机的动作。可以定时关机。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">shutdown -h now</code> 即刻关机</li>
+  <li><code class="language-plaintext highlighter-rouge">shutdown -h 10</code> 10分钟后关机</li>
+  <li><code class="language-plaintext highlighter-rouge">shutdown -h 11:00</code> 11：00关机</li>
+  <li><code class="language-plaintext highlighter-rouge">shutdown -h +10</code> 预定时间关机（10分钟后）</li>
+  <li><code class="language-plaintext highlighter-rouge">shutdown -c</code> 取消指定时间关机</li>
+  <li><code class="language-plaintext highlighter-rouge">shutdown -r now</code> 重启</li>
+  <li><code class="language-plaintext highlighter-rouge">shutdown -r 10</code> 10分钟之后重启</li>
+  <li><code class="language-plaintext highlighter-rouge">shutdown -r 11:00</code> 定时重启</li>
+</ul>
+
+<h3 id="reboot">reboot</h3>
+
+<p>重启。Linux reboot命令用于用来重新启动计算机，和Windows系统中的restart一样。但是机器重启必须要root用户才有权限。</p>
+
+<h3 id="init">init</h3>
+
+<p><strong>init</strong>iate，init 命令是Linux下的进程初始化工具，init进程是所有Linux进程的父进程，它的进程号为1。init命令是Linux操作系统中不可缺少的程序之一，init进程是Linux内核引导运行的，是系统中的第一个进程。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">init 6</code> 重启</li>
+  <li><code class="language-plaintext highlighter-rouge">init 0</code> ⽴刻关机</li>
+</ul>
+
+<h3 id="telinit">telinit</h3>
+
+<p><strong>tel</strong>l <strong>init</strong>iate，使用telinit命令可以更改Linux系统的运行级别。运行级别可以是0~6之间的一个数字，其中0是关闭系统，1是进入单用户模式，2~5是多用户运行级别，6是重新启动系统。s或S表示单用户模式。telinit is a smaller tool that informs init when it needs to switch runlevels. So you can use <code class="language-plaintext highlighter-rouge">telinit</code> to <code class="language-plaintext highlighter-rouge">tell init</code> that it needs to switch runlevel.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">telinit 0</code> 关机
+    <h3 id="poweroff">poweroff</h3>
+  </li>
+</ul>
+
+<p>power off，poweroff命令用来关闭计算机操作系统并且切断系统电源。如果确认系统中已经没有用户存在且所有数据都已保存，需要立即关闭系统，可以使用poweroff命令。</p>
+<h3 id="halt">halt</h3>
+
+<p>halt，停止。halt命令用来关闭正在运行的Linux操作系统，如果是线上跑了业务的服务器，执行此命令需谨慎。halt命令会先检测系统的runlevel，若runlevel为0或6，则关闭系统，否则即调用shutdown来关闭系统。</p>
+<h3 id="sync">sync</h3>
+
+<p>data <strong>sync</strong>hronization，同步。Data synchronization, keeping multiple copies of a dataset in coherence with one another. Linux/Unix系统中，在文件或数据处理过程中一般先放到内存缓冲区中，等到适当的时候再写入磁盘，以提高系统的运行效率。sync 命令则可用来强制将内存缓冲区中的数据立即写入磁盘中。用户通常不需执行 sync 命令，系统会自动执行 update 或 bdflush 操作，将缓冲区的数据写 入磁盘。只有在 update 或 bdflush 无法执行或用户需要非正常关机时，才需手动执行sync命令。</p>
+<h3 id="logout">logout</h3>
+
+<p>logout，退出。logout指令让用户退出系统，其功能和login指令相互对应。退出登陆shell。</p>
+
+<h2 id="系统信息和性能查看">系统信息和性能查看</h2>
+
+<h3 id="uname">uname</h3>
+
+<p><strong>u</strong>nix <strong>name</strong>，uname命令的英文全称即“Unix name”。用于显示系统相关信息，比如主机名、内核版本号、硬件架构等。如果未指定任何选项，其效果相当于执行“uname -s”命令，即显示系统内核的名字。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">uname -a</code> 查看内核/OS/CPU信息</li>
+  <li><code class="language-plaintext highlighter-rouge">uname -r</code> 查看内核版本</li>
+  <li><code class="language-plaintext highlighter-rouge">uname -m</code> 查看处理器架构</li>
+</ul>
+
+<h3 id="arch">arch</h3>
+
+<p>archive，查看处理器架构。arch 命令主要用于显示当前主机的硬件结构类型，arch命令输出的结果有：i386、i486、mips、alpha等。此命令的适用范围：RedHat、RHEL、Ubuntu、CentOS、SUSE、openSUSE、Fedora。</p>
+
+<h3 id="hostname">hostname</h3>
+
+<p>hostname，主机名。hostname命令用于显示和设置系统的主机名称。环境变量HOSTNAME也保存了当前的主机名。在使用hostname命令设置主机名后，系统并不会永久保存新的主机名，重新启动机器之后还是原来的主机名。如果需要永久修改主机名，需要同时修改/etc/hosts和/etc/sysconfig/network的相关内容。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">hostname -b newhostname</code> 修改启动时的主机名</li>
+</ul>
+
+<h3 id="who">who</h3>
+
+<p>who，谁。who命令用来打印当前登录用户信息，包含了系统的启动时间 、 活动进程 、 使用者 ID、使用终端等信息，是系统管理员了解系统运行状态的常用命令。who命令的输出信息默认来自文件“/var/log/utmp”和“/var/log/wtmp”。</p>
+
+<h3 id="who-am-i">who am i</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>who am i ，我是谁。显示登录时的用户名。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="whoami">whoami</h3>
+
+<p>whoami，whoami命令是打印与当前有效用户ID关联的用户名；这个工具可以用来获取本地系统上当前用户(访问令牌)的用户名和组信息，以及相应的安全标识符(SID)、声明、本地系统上当前用户的权限、登录标识符(登录 ID)。whoami 命令显示自身的用户名称，本指令相当于执行”id -un”指令。</p>
+
+<h3 id="uptime">uptime</h3>
+
+<p>（计算机等的）正常运行时间 。uptime命令可以显示系统已经运行了多长时间，信息显示依次为：现在时间、系统已经运行了多长时间、目前有多少登录用户、系统在过去的1分钟、5分钟和15分钟内的平均负载。 uptime命令用法十分简单，直接输入uptime即可查看系统负载情况。</p>
+
+<h3 id="env">env</h3>
+
+<p>environment，环境。查看系统的环境变量。env命令用于显示系统中已存在的环境变量，以及在定义的环境中执行指令。该命令只使用”-“作为参数选项时，隐藏了选项”-i”的功能。若没有设置任何选项和参数时，则直接显示当前的环境变量。如果使用env命令在新环境中执行指令时，会因为没有定义环境变量”PATH”而提示错误信息”such file or directory”。此时，用户可以重新定义一个新的”PATH”或者使用绝对路径。</p>
+
+<h3 id="lsusb">lsusb</h3>
+
+<p><strong>l</strong>i<strong>s</strong>t Universal Serial Bus or <strong>USB</strong>，lsusb命令用于显示本机的USB设备列表，以及USB设备的详细信息。lsusb命令显示的USB设备信息来自“/proc/bus/usb”目录下的对应文件。需要安装。</p>
+
+<h3 id="lspci">lspci</h3>
+
+<p><strong>l</strong>i<strong>s</strong>t <strong>pci</strong> ，lspci命令用于显示当前主机的所有PCI总线信息，以及所有已连接的PCI设备信息。 现在主流设备如网卡储存等都采用PCI总线。mac中没有。</p>
+
+<h3 id="lsmod">lsmod</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>list module，lsmod命令用于显示已经加载到内核中的模块的状态信息。执行lsmod命令后会列出所有已载入系统的模块。linux操作系统的核心具有模块化的特性，因此在编译核心时，务须把全部的功能都放入核心。可以将这些功能编译成独立的模块，待需要时再分别载入。lsmod命令支持内核版本为2.5.48以上的linux系统，比此版本老的内核使用命令lsmod.old。mac中没有。</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>free</td>
+      <td>free</td>
+      <td>free 命令能够显示系统中物理上的空闲和已用内存，还有交换内存，同时，也能显示被内核使用的缓冲和缓存。这些信息是通过解析文件 /proc/meminfo 而收集到的。不带任何选项运行 free 命令会显示系统内存，包括空闲、已用、交换、缓冲、缓存和交换的内存总数。* <code class="language-plaintext highlighter-rouge">free -m</code> 查看内存⽤量和交换区⽤量</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>date</td>
+      <td>date</td>
+      <td>显示系统⽇期时间。date命令可以用来显示或设定系统的日期与时间，在显示方面，使用者可以设定欲显示的格式，格式设定为一个加号后接数个标记 。若是不以加号作为开头，则表示要设定时间，而时间格式MMDDhhmm[[CC]YY][.ss]，其中 MM 为月份，DD 为日，hh 为小时，mm 为分钟，CC 为年份前两位数字，YY 为年份后两位数字，ss 为秒数。</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>cal</td>
+      <td>calendar</td>
+      <td>cal命令的名字来自英语单词“Calendar”。改命令用来显示当前日历，或者指定日期的公历（公历是现在国际通用的历法，又称格列历，通称阳历。）如只有一个参数，则表示年份(1-9999)，如有两个参数，则表示月份和年份 。* <code class="language-plaintext highlighter-rouge">cal 2021</code> 显示2021日历表</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>top</td>
+      <td>table of processes</td>
+      <td>进程表（未得到验证，可能是个巧合）。top命令是Linux下常用的性能分析工具，能够<strong>实时</strong>显示系统中各个进程的资源占用状况，常用于服务端性能分析。在top命令中按f按可以查看显示的列信息，按对应字母来开启/关闭列，大写字母表示开启，小写字母表示关闭。带*号的是默认列。<a href="https://stackoverflow.com/questions/26004507/what-do-top-cpu-abbreviations-mean/26004656">Top显示结果的其它参数含义</a></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>vmstat</td>
+      <td>Virtual Memory Statistics</td>
+      <td>vmstat命令的含义为显示虚拟内存状态（“Virtual Memory Statistics”），但是它可以报告关于进程、内存、I/O等系统整体运行状态。* <code class="language-plaintext highlighter-rouge">vmstat 1 20</code>: 每1秒采⼀次系统状态，采20次。</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>iostat</td>
+      <td>input/output statistics</td>
+      <td>查看io读写/cpu使⽤情况。iostat被用于监视系统输入输出设备和CPU的使用情况。它的特点是汇报磁盘活动统计情况，同时也会汇报出CPU使用情况。</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>sar</td>
+      <td>System Activity Report</td>
+      <td>as its name suggest sar command is used to collect,report &amp; save CPU, Memory, I/O usage in Unix like operating system（CentOS没有自带）。* <code class="language-plaintext highlighter-rouge">sar -u 1 10</code>: 查询cpu使⽤情况（1秒⼀次，共10次）。* <code class="language-plaintext highlighter-rouge">sar -d 1 10</code>:  查询磁盘性能。</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>cat etc/os-release</td>
+      <td> </td>
+      <td>查看当前系统版本</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="磁盘和分区">磁盘和分区</h2>
+<h3 id="三大基本的存储架构">三大基本的存储架构</h3>
+<p><strong>直接附加的存储DAS</strong>
+Linux 支持种类繁多的 DAS 界面，包括像并行高级技术附件的旧标准 — 电子集成驱动器 IDE/ATA — 并行 SCSI 和光纤通道以及新的存储界面，例如串行连接的 SCSI、串行 ATA 和外部 SATA 。您还将发现高级存储技术，例如 USB3（可扩展的主机控制器界面）和 Firewire 。</p>
+
+<p><strong>存储区域网络SAN</strong>
+SAN 提供块级存储合并，以便在一些服务器中共享它。存储对服务器显示为是本地的，其中端点存储设备可以为客户端设备实现附加服务（例如备份和复制）。
+SAN 的协议和界面是广泛和多样的。可以在 Linux 中发现典型的 SAN 协议，例如光纤通道以及其通过 IP 的扩展 (iFCP)。还存在更新的协议，例如 SAS、以太网光纤通道以及 iSCSI 。
+作为存储协议出现的以太网已经在 Linux 中完全实现，其说明了这些方法的力量和灵活性。
+Linux 完全支持 10 千兆位以太网，并允许构造高性能 SAN 。</p>
+
+<p><strong>网络附加存储NAS</strong>
+NAS 是通过网络的存储合并，以便不同类型客户端在文件级别进行访问。Linux 中完全支持的两种最流行协议是网络文件系统 NFS 和服务器消息块/通用互联网文件系统 SMB/CIFS 。
+虽然原始的 SMB 实现是专有的，但是它被逆向设计以便在 Linux 中受到支持。后来的 SMB 修订版被公开记录以便允许在 Linux 中进行更简单的开发。
+Linux 继续发展针对 NFS 的各种增强和扩展。NFS 现在是一个状态协议并包括对数据和元数据分离的优化以及数据访问并行。
+| 命令   | 英文单词                  | 中文释义                                                     |
+| :—– | :———————— | :———————————————————– |
+| fdisk  | fixed disk or format disk | fdisk命令的英文全称是“Partition table manipulator for Linux”，即作为磁盘的分区工具。进行硬盘分区从实质上说就是对硬盘的一种格式化， 用一个形象的比喻，分区就好比在一张白纸上画一个大方框，而格式化好比在方框里打上格子。* <code class="language-plaintext highlighter-rouge">fdisk -l</code> 查看所有磁盘分区 |
+| swapon | swap on                   | -s 查看所有交换分区。用于激活Linux系统中交换空间，Linux系统的内存管理必须使用交换区来建立虚拟内存。swapon,  swapoff  -  enable/disable  devices  and files for paging and swapping。* <code class="language-plaintext highlighter-rouge">swapon -s</code> 查看所有交换分区 |
+| df     | Disk Free                 | 功能是用于显示系统上<code class="language-plaintext highlighter-rouge">可使用的磁盘空间</code>。默认显示单位为KB。* 建议使用<code class="language-plaintext highlighter-rouge">df -h</code>(<code class="language-plaintext highlighter-rouge">human</code>)的参数组合，根据磁盘容量自动变换合适的单位，更利于阅读。日常普遍用该命令可以查看磁盘被占用了多少空间、还剩多少空间等信息。* <code class="language-plaintext highlighter-rouge">df -hl</code> 同上 |
+| du     | disk usage                | du命令的英文全称是“Disk Usage”，即用于查看磁盘占用空间的意思。但是与df命令不同的是du命令是对文件和目录磁盘使用的空间的查看，而不是某个分区。* <code class="language-plaintext highlighter-rouge">du -sh /dir</code> 查看指定某个⽬录的⼤⼩。* <code class="language-plaintext highlighter-rouge">du -sk * | sort -rn</code> 从⾼到低依次显示⽂件和⽬录⼤⼩ |
+| mount  | mount                     | 有<code class="language-plaintext highlighter-rouge">添加</code>之意，mount命令用于加载文件系统到指定的加载点。此命令的最常用于挂载cdrom，使我们可以访问cdrom中的数据，因为你将光盘插入cdrom中，Linux并不会自动挂载，必须使用Linux mount命令来手动完成挂载。* <code class="language-plaintext highlighter-rouge">mount /dev/hda2 /mnt/hda2</code>: 挂载hda2盘。* <code class="language-plaintext highlighter-rouge">mount -t ntfs /dev/sdc1 /mnt/usbhd1</code>: 指定⽂件系统类型挂载（如ntfs）。* <code class="language-plaintext highlighter-rouge">mount -o loop xxx.iso /mnt/cdrom</code>: 挂载iso⽂件。* <code class="language-plaintext highlighter-rouge">mount /dev/sda1 /mnt/usbdisk</code>:  挂载usb盘/闪存设备。 |
+| umount | <strong>u</strong>n<strong>mount</strong>           | 译为<code class="language-plaintext highlighter-rouge">不挂载</code>。所以它的的作用是卸载已安装的文件系统、目录或文件。使用umount命令可以卸载文件系统。利用设备名或挂载点都能umount文件系统，不过最好还是通过挂载点卸载，以免使用绑定挂载（一个设备，多个挂载点）时产生混乱。* <code class="language-plaintext highlighter-rouge">umount -v /dev/sda1</code>:  通过设备名卸载。* <code class="language-plaintext highlighter-rouge">umount -v /mnt/mymnt</code>:  通过挂载点卸载。 |
+| fuser  | file user                 | fuser命令作用是报告进程使用的文件和网络套接字。fuser命令可以显示出当前哪个程序在使用磁盘上的某个文件、挂载点、甚至网络端口，并给出程序进程的详细信息。 它还显示使用指定文件或者文件系统的进程ID。* <code class="language-plaintext highlighter-rouge">fuser -km /mnt/hda1</code>: 强制卸载(慎⽤)。 |</p>
+
+<h2 id="用户和用户组">用户和用户组</h2>
+<p>Linux用户通常分为两类:</p>
+<ul>
+  <li>管理员用户(root)；</li>
+  <li>普通用户(类似Windows上的普通用户)。</li>
+</ul>
+
+<p>Linux登录系统后，默认当前所在目录为用户主目录，类似Windows登录系统后，默认的所在目录为桌面。</p>
+<ul>
+  <li>管理员(root)登录系统后默认目录为/root；</li>
+  <li>普通用户登录系统后默认目录为/home/username， username为用户名。 例如：笔者用普通用户holon登录系统后，那么当前所在目录为。/home/holon。</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">命令</th>
+      <th style="text-align: left">英文单词</th>
+      <th style="text-align: left">中文释义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">useradd</td>
+      <td style="text-align: left">user add</td>
+      <td style="text-align: left">添加用户。 useradd命令用来创建新的用户或更改用户的信息。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。* <code class="language-plaintext highlighter-rouge">useradd holon</code>: 创建holon⽤户。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">userdel</td>
+      <td style="text-align: left">user delete</td>
+      <td style="text-align: left">删除用户。userdel命令用于删除指定的用户及与该用户相关的文件，英文全称即“user delete”。其实userdel命令实际上是修改了系统的用户账号文件 /etc/passwd、/etc/shadow以及/etc/group文件。这与Linux系统”一切操作皆文件”的思想正好吻合。值得注意的是，但是如果有该要删除用户相关的进程正在运行，userdel命令通常不会删除一个用户账号。如果确实必须要删除，可以先终止用户进程，然后再执行userdel命令进行删除。但是userdel命令也提供了一个面对该种情况的参数，即”-f”选项。* <code class="language-plaintext highlighter-rouge">userdel -r holon</code>: 删除⽤户holon，并删除holon主目录及其中的任何文件。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">usermod</td>
+      <td style="text-align: left">user modify</td>
+      <td style="text-align: left">修改用户。usermod命令用于修改用户账号 。usermod可用来修改用户账号的各项设定，修改系统账号文件来反映通过命令行指定的变化。* <code class="language-plaintext highlighter-rouge">usermod -g group_name user_name</code>: 修改⽤户的组。* <code class="language-plaintext highlighter-rouge">usermod -aG group_name user_name</code>: 将⽤户添加到组。* <code class="language-plaintext highlighter-rouge">usermod -s /bin/ksh -d /home/holon –g dev holon</code>: 修改⽤户holon的登录Shell、主⽬录以及⽤户组。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">groups</td>
+      <td style="text-align: left">groups</td>
+      <td style="text-align: left">使用 groups命令在标准输入输出上输出指定用户所在组的组成员，每个用户属于/etc/passwd中指定的一个组和在/etc/group中指定的其他组。* <code class="language-plaintext highlighter-rouge">groups test</code>: 查看test⽤户所在的组。* <code class="language-plaintext highlighter-rouge">cut -d: -f1 /etc/group</code> 查看系统所有组。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">groupadd</td>
+      <td style="text-align: left">group add</td>
+      <td style="text-align: left">添加用户组。groupadd命令用于创建一个新的工作组，新工作组的信息将被添加到系统文件中。* <code class="language-plaintext highlighter-rouge">groupadd group_name</code>: 创建⽤户组。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">groupdel</td>
+      <td style="text-align: left">group delete</td>
+      <td style="text-align: left">删除用户组。groupdel命令用于删除指定的工作组，本命令要修改的系统文件包括/ect/group和/ect/gshadow。userdel修改系统账户文件，删除与 GROUP 相关的所有项目。给出的组名必须存在。若该群组中仍包括某些用户，则必须先删除这些用户后，方能删除群组。* <code class="language-plaintext highlighter-rouge">groupdel group_name</code>:  删除⽤户组。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">groupmod</td>
+      <td style="text-align: left">group modify</td>
+      <td style="text-align: left">groupmod命令用于更改群组的识别码或名称时。不过大家还是要注意，用户名不要随意修改，组名和 GID 也不要随意修改，因为非常容易导致管理员逻辑混乱。如果非要修改用户名或组名，则建议大家先删除旧的，再建立新的。* <code class="language-plaintext highlighter-rouge">groupmod -n new_name old_name</code>: 重命名⽤户组。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">su</td>
+      <td style="text-align: left">swith user</td>
+      <td style="text-align: left">su命令用于切换当前用户身份到指定用户或者以指定用户的身份执行命令或程序。普通用户切换到root用户，可以使用<code class="language-plaintext highlighter-rouge">su --</code> 或<code class="language-plaintext highlighter-rouge">su root</code>,但是必须输入root密码才能完成切换。root用户切换到普通用户，可以使用* <code class="language-plaintext highlighter-rouge">su username</code>,不需要输入任何密码即可完成切换。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">passwd</td>
+      <td style="text-align: left">password</td>
+      <td style="text-align: left">passwd命令用于设置用户的认证信息，包括用户密码、账户锁定、密码失效等。直接运行passwd命令修改当前的用户密码，对其他用户的密码操作需要管理员权限。* <code class="language-plaintext highlighter-rouge">passwd holon</code>: 修改用户holon的密码。* <code class="language-plaintext highlighter-rouge">cut -d: -f1 /etc/passwd</code>: 查看系统所有⽤户。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">w</td>
+      <td style="text-align: left">who</td>
+      <td style="text-align: left">On Unix-like operating systems, the w command is a quick way to see who is logged on and what they are doing. w命令用于显示已经登陆系统的用户列表，并显示用户正在执行的指令。执行这个命令可得知目前登入系统的用户有那些人，以及他们正在执行的程序。单独执行w命令会显示所有的用户，您也可指定用户名称，仅显示某位用户的相关信息。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">id</td>
+      <td style="text-align: left">id命令可以显示真实有效的用户ID(UID)和组ID(GID)。UID 是对一个用户的单一身份标识。组ID（GID）则对应多个UID。id命令已经默认预装在大多数Linux系统中。要使用它，只需要在你的控制台输入id。不带选项输入id会显示如下。结果会使用活跃用户。当我们想知道某个用户的UID和GID时id命令是非常有用的。一些程序可能需要UID/GID来运行。id使我们更加容易地找出用户的UID以GID而不必在/etc/group文件中搜寻。如往常一样，你可以在控制台输入man id进入id的手册页来获取更多的详情。* <code class="language-plaintext highlighter-rouge">id holon</code>: 查看指定⽤户holon信息。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">finger</td>
+      <td style="text-align: left">finger</td>
+      <td style="text-align: left">finger命令 用于查找并显示用户信息。包括本地与远端主机的用户皆可，帐号名称没有大小写的差别。单独执行finger指令，它会显示本地主机现在所有的用户的登陆信息，包括帐号名称，真实姓名，登入终端机，闲置时间，登入时间以及地址和电话。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">last</td>
+      <td style="text-align: left">last</td>
+      <td style="text-align: left">查看⽤户登录⽇志。last命令的作用是显示近期用户或终端的登录情况，通过查看系统记录的日志文件内容，进而使管理员可以获知谁曾经或者企图连接系统。执行last命令时，它会读取/var/log目录下名称为wtmp的文件，并把该文件记录的登录系统或终端的用户名单全部显示出来。默认显示wtmp的记录，btmp能显示的更详细，可以显示远程登录，例如ssh登录。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">crontab</td>
+      <td style="text-align: left">cron table</td>
+      <td style="text-align: left">crontab是英文“cron table”的简写。<strong>cron: Acronym. Definition. CRON. Command Run On (UNIX scheduler)</strong>。该命令被用来提交和管理用户的需要周期性执行的任务，与windows下的计划任务类似，当安装完成操作系统后，默认会安装此服务工具，并且会自动启动crond进程，crond进程每分钟会定期检查是否有要执行的任务，如果有要执行的任务，则自动执行该任务。Linux下的任务调度分为两类，系统任务调度和用户任务调度。系统任务调度：系统周期性所要执行的工作，比如写缓存数据到硬盘、日志清理等。/etc/crontab文件是系统任务调度的配置文件。用户任务调度：用户定期要执行的工作，比如用户数据备份、定时邮件提醒等。用户可以使用 crontab 工具来定制自己的计划任务。所有用户定义的crontab 文件都被保存在 /var/spool/cron目录中。其文件名与用户名一致。* <code class="language-plaintext highlighter-rouge">crontab -l</code>:  查看当前⽤户的计划任务。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">chsh</td>
+      <td style="text-align: left">change shell</td>
+      <td style="text-align: left">修改用户shell。* <code class="language-plaintext highlighter-rouge">cat /etc/shells</code> 查看系统安装的 shell*  <code class="language-plaintext highlighter-rouge">chsh -l</code> 查看系统安装的shell*  <code class="language-plaintext highlighter-rouge">chsh -s /bin/zsh</code> 修改当前的 shell 为 zsh</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="络和进程管理">⽹络和进程管理</h2>
+<p>按照进程的功能和运行的程序分类，进程可划分为两大类：
+(1) 系统进程：可以执行内存资源分配和进程切换等管理工作；而且，该进程的运行不受用户的干预，即使是root用户也不能干预系统进程的运行。 
+(2) 用户进程：通过执行用户程序、应用程序或内核之外的系统程序而产生的进程，此类进程可以在用户的控制下运行或关闭。</p>
+
+<p>针对用户进程，又可以分为交互进程、批处理进程和守护进程三类。 
+(1) 交互进程：由一个shell终端启动的进程，在执行过程中，需要与用户进行交互操作，可以运行于前台，也可以运行在后台。 
+(2) 批处理进程：该进程是一个进程集合，负责按顺序启动其他的进程。  <br />
+(3) 守护进程：守护进程是一直运行的一种进程，经常在linux系统启动时启动，在系统关闭时终止。它们独立于控制终端并且周期性的执行某种任务或等待处理某些发生的事件。例如httpd进程，一直处于运行状态，等待用户的访问。还有经常用的crond进程，这个进程类似与windows的计划任务，可以周期性的执行用户设定的某些任务。
+| 命令         | 英文单词                     | 中文释义                                                     |
+| :———– | :————————— | :———————————————————– |
+| ifconfig     | <strong>I</strong>nter<strong>f</strong>ace <strong>conf</strong>ig | ifconfig 查看⽹络接⼝属性。ifconfig命令的英文全称是“network interfaces configuring”，即用于配置和显示Linux内核中网络接口的网络参数。用ifconfig命令配置的网卡信息，在网卡重启后机器重启后，配置就不存在。要想将上述的配置信息永远的存的电脑里，那就要修改网卡的配置文件了。* <code class="language-plaintext highlighter-rouge">ifconfig eth0</code>: 查看⽹卡eth0的配置。* <code class="language-plaintext highlighter-rouge">ifconfig eth0 192.168.1.1 netmask 255.255.255.0</code>: 配置ip地址。 |
+| route        | route                        | 路由。 用来显示并设置linux内核中的网络路由表，route命令设置的路由主要是静态路由。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。在linux系统中设置路由通常是为了解决以下问题：该linux系统在一个局域网中，局域网中有一个网关，能够让主机访问Internet，那么就需要将这台机器的ip地址设置为linux机器的默认路由。要注意的是：直接在命令行下执行route命令来添加路由，不会永久保存。当网卡重启或者机器重启之后，该路由就失效了。可以在/etc/rc.local中添加route命令来保证该路由设置永久有效。* <code class="language-plaintext highlighter-rouge">route -n</code>:  查看路由表。* <code class="language-plaintext highlighter-rouge">route add -net 0/0 gw Gateway_IP</code>: 配置默认⽹关。* <code class="language-plaintext highlighter-rouge">route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.1.1</code>: 配置静态路由到达⽹络’192.168.0.0/16’。* <code class="language-plaintext highlighter-rouge">route del 0/0 gw Gateway_IP</code>:  删除静态路由。 |
+| netstat      | Network Statistics           | netstat 命令用于显示各种网络相关信息，如网络连接，路由表，接口状态 (Interface Statistics)，masquerade 连接，多播成员 (Multicast Memberships) 等等。从整体上看，netstat的输出结果可以分为两个部分：一个是Active Internet connections，称为有源TCP连接，其中”Recv-Q”和”Send-Q”指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到；另一个是Active UNIX domain sockets，称为有源Unix域套接口(和网络套接字一样，但是只能用于本机通信，性能可以提高一倍)。*  <code class="language-plaintext highlighter-rouge">netstat -lntp</code>: 查看所有监听端⼝。* <code class="language-plaintext highlighter-rouge">netstat -antp</code>: 查看已经建⽴的TCP连接。* <code class="language-plaintext highlighter-rouge">netstat -lutp</code>: 查看TCP/UDP的状态信息。 |
+| ifup         | interface up                 | 激活网络接口。ifup命令用于激活指定的网络接口。ifup命令会去读取/etc/sysconfig/network-scripts/目录下的相关网络接口的配置文件，并根据配置文件的内容来激活该网络接口。注意：网络接口名称必须是/etc/sysconfig/network-scripts/目录配置文件中设置的才可以。如果使用ifconfig命令改变了网络接口后，ifup命令就不会识别了。因为ifup命令会对比当前网络的参数与/etc/sysconfig/network-scripts/中配置文件的内容是否相符。* <code class="language-plaintext highlighter-rouge">ifup eth0</code>: 启⽤eth0⽹络设备。 |
+| ifdown       | interface down               | ifdown命令用于禁用指定的网络接口。该命令会去读取/etc/sysconfig/network-scripts/目录下的相关网络接口的配置文件，并根据配置文件的内容来关闭该网络接口。注意：网络接口名称必须是/etc/sysconfig/network-scripts/目录配置文件中设置的才可以。如果使用ifconfig命令改变了网络接口后，ifdown命令就不会识别了。因为ifdown命令会对比当前网络的参数与/etc/sysconfig/network-scripts/中配置文件的内容是否相符。* <code class="language-plaintext highlighter-rouge">ifdown eth0</code>: 禁⽤eth0⽹络设备。 |
+| iptables     | ip tables                    | iptables命令是linux系统中在用户空间中运行的运来配置内核防火墙的工具。它可以设置，维护和检查linux内核中的ipv4包过滤规则和管理网络地址转换（NAT）。ipatbles命令仅仅是用户空间的linux内核防火墙管理工具，真正的功能实现是由linux内核模块实现的。在配置服务器策略前必须加载相应的内核模块。在linux的2.6内核中仅支持ipatbles。ipatbles命令仅支持ipv4，如果使用的IP协议是ipv6则需要使用专门的管理工具ip6tables。 * <code class="language-plaintext highlighter-rouge">iptables -L</code>: 查看iptables规则。 |
+| dhclient     | DHCP client                  | dhclient命令的作用是：使用动态主机配置协议动态的配置网络接口的网络参数，也支持BOOTP协议。* <code class="language-plaintext highlighter-rouge">dhclient eth0</code>: 以dhcp模式启⽤eth0。 |
+| host         | host                         | host命令是一个用于执行DNS查找的简单实用程序。它通常用于将名称转换为IP地址，反之亦然。 如果没有给出参数或选项，host将打印其命令行参数和选项的简短摘要。* <code class="language-plaintext highlighter-rouge">host holonlinux.club</code>:  解析主机名。 |
+| nslookup     | name server lookup           | nslookup命令的英文全称为 “query Internet name server interactively ”。nslookup命令主要用来查询域名的DNS信息。在使用nslookup之前，先确保已经安装了它，nslookup属于bind-utils包下一个命令 。nslookup有两种工作模式：“交互模式”和“非交互模式”。在命令行中直接输入nslookup，无需输入任何参数即进入交互模式，由“&gt;”提示。* <code class="language-plaintext highlighter-rouge">nslookup holonlinux.club</code>: 查询DNS记录，查看域名解析是否正常。 |
+| ps           | process status               | 进程状态。ps命令是“process status”的缩写，ps命令用于显示当前系统的进程状态。可以搭配kill指令随时中断、删除不必要的程序。ps命令是最基本同时也是非常强大的进程查看命令，使用该命令可以确定有哪些进程正在运行和运行的状态、进程是否结束、进程有没有僵死、哪些进程占用了过多的资源等等，总之大部分信息都是可以通过执行该命令得到的。* <code class="language-plaintext highlighter-rouge">ps -ef</code>:  查看所有进程。* <code class="language-plaintext highlighter-rouge">ps -ef | grep tomcat</code>: 过滤出你需要的进程。<br />-e的出处：By default, ps selects all processes with the same <strong>effective</strong> user ID (<strong>euid=EUID</strong>) as the current user and associated with the same terminal as the invoker. |
+| kill         | kill                         | 杀死，linux系统中kill命令用来删除执行中的程序或工作。kill命令可将指定的信号发送给相应的进程或工作。 kill命令默认使用信号为15，用于结束进程或工作。如果进程或工作忽略此信号，则可以使用信号9，强制杀死进程或作业。* <code class="language-plaintext highlighter-rouge">kill -s name</code>:  kill指定名称的进程。* <code class="language-plaintext highlighter-rouge">kill -s pid</code>:  kill指定pid的进程。 |
+| firewall-cmd | -                            | 防火墙设置。* <code class="language-plaintext highlighter-rouge">firewall-cmd --list-all</code>：查看开放的端口号* <code class="language-plaintext highlighter-rouge">firewall-cmd --add-service=http -permanent</code> <code class="language-plaintext highlighter-rouge">firewall-cmd --add-port=80-8000/tcp --permanet</code>：开放80～8000端口* <code class="language-plaintext highlighter-rouge">firewall-cmd -reload</code>：重启防火墙 |</p>
+
+<h2 id="常见系统服务命令">常见系统服务命令</h2>
+<p>| 命令              | 英文单词                | 中文释义                                                     |
+| :—————- | :———————- | :———————————————————– |
+| chkconfig         | check config            | 这是Red Hat公司遵循GPL规则所开发的程序，它可查询操作系统在每一个执行等级中会执行哪些系统服务，其中包括各类常驻服务。* <code class="language-plaintext highlighter-rouge">chkconfig --list</code>:  列出系统服务。 |
+| service           | service                 | service命令是Redhat Linux兼容的发行版中用来控制系统服务的实用工具，它以启动、停止、重新启动和关闭系统服务，还可以显示所有系统服务的当前状态。* <code class="language-plaintext highlighter-rouge">service &lt;服务名&gt; status</code>:  查看某个服务。* <code class="language-plaintext highlighter-rouge">service &lt;服务名&gt; start</code>: 启动某个服务。* <code class="language-plaintext highlighter-rouge">service &lt;服务名&gt; stop</code>: 终⽌某个服务。* <code class="language-plaintext highlighter-rouge">service &lt;服务名&gt; restart</code>: 重启某个服务。 |
+| systemctl         | system control          | Control the systemd system and service manager。Centos7之后从init完全换成了systemd的启动方式，systemd 启动服务的机制主要是通过 systemctl 的这个系统服务管理指令来处理。systemctl在用法上也囊括 service / chkconfig / setup / init 的大部分功能。* <code class="language-plaintext highlighter-rouge">systemctl status &lt;服务名&gt;</code>:  查看某个服务。* <code class="language-plaintext highlighter-rouge">systemctl start &lt;服务名&gt;</code>:  启动某个服务。* <code class="language-plaintext highlighter-rouge">systemctl stop &lt;服务名&gt; </code>: 终⽌某个服务。* <code class="language-plaintext highlighter-rouge">systemctl restart &lt;服务名&gt;</code>:  重启某个服务。* <code class="language-plaintext highlighter-rouge">systemctl enable &lt;服务名&gt; </code>: 开启⾃启动。* <code class="language-plaintext highlighter-rouge">systemctl disable &lt;服务名&gt;</code>: 关闭⾃启动。 |
+| export            | export                  | export命令用于将shell变量<strong>输出</strong>为环境变量，或者将shell函数输出为环境变量。<br />一个变量创建时，它不会自动地为在它之后创建的shell进程所知。而命令export可以向后面的shell传递变量的值。当一个shell脚本调用并执 行时，它不会自动得到原为脚本（调用者）里定义的变量的访问权，除非这些变量已经被显式地设置为可用。export命令可以用于传递一个或多个变量的值到任何后继脚本。 |
+| ## 文件和目录操作 |                         |                                                              |
+| 命令              | 英文单词                | 中文释义                                                     |
+| :——           | :———-             | :———-                                                  |
+| cd                | change directory        | cd命令是”change directory”中单词的首字母缩写，其英文释义是改变目录，所以该命令的功能是从当前目录切换到指定目录。其中目录的路径可分为绝对路径和相对路径。若目录名称省略，则切换至使用者的用户目录(也就是刚登录时所在的目录)。另外，“~”也表示为用户目录的意思，“.”则是表示目前所在的目录，“..”则表示当前目录位置的上一级目录。* <code class="language-plaintext highlighter-rouge">cd &lt;⽬录名&gt;</code> 进⼊某个⽬录* <code class="language-plaintext highlighter-rouge">cd ..</code> 回上级⽬录* <code class="language-plaintext highlighter-rouge">cd ../..</code> 回上两级⽬录* <code class="language-plaintext highlighter-rouge">cd</code> 进个⼈主⽬录* <code class="language-plaintext highlighter-rouge">cd -</code> 回上⼀步所在⽬录* <code class="language-plaintext highlighter-rouge">cd !$</code> 把上个命令的参数作为cd参数使用 |
+| pwd               | print working directory | pwd命令是“print working directory”中每个单词的首字母缩写，其功能正如所示单词一样，为打印工作目录，即显示当前工作目录的绝对路径。在实际工作中，我们经常会在不同目录之间进行切换，为了防止“迷路”，我们可以使用pwd命令快速查看当前我们所在的目录路径。 |
+| ls                | list                    | ls 命令是Linux下最常用的指令之一。ls命令为英文单词 list 的缩写，正如英文单词 list 的意思，其功能是列出指定目录下的内容及其相关属性信息。默认状态下，ls命令会列出当前目录的内容。而带上参数后，我们可以用ls做更多的事情。作为最基础同时又是使用频率很高的命令，我们很有必要搞清楚ls命令的用法。* <code class="language-plaintext highlighter-rouge">ls</code> 查看⽂件⽬录列表* <code class="language-plaintext highlighter-rouge">ls -F</code> 查看⽬录中内容（显示是⽂件还是⽬录）* <code class="language-plaintext highlighter-rouge">ls -l</code> 查看⽂件和⽬录的详情列表* <code class="language-plaintext highlighter-rouge">ls -a</code> 查看隐藏⽂件* <code class="language-plaintext highlighter-rouge">ls -lh</code> 查看⽂件和⽬录的详情列表（增强⽂件⼤⼩易读性）* <code class="language-plaintext highlighter-rouge">ls -lSr</code> 查看⽂件和⽬录列表（以⽂件⼤⼩升序查看） |
+| tree              | tree                    | tree命令的全称即是“tree”，该命令作用是用于以树状图形式列出目录的内容。 执行tree命令，它会以树状图的方式列出指定目录下的所有文件，包括目录里的文件，显示出指定目录的文件目录结构。 |
+| mkdir             | make directory          | mkdir命令是“make directories”的缩写，用来创建目录。注意：默认状态下，如果要创建的目录已经存在，则提示已存在，而不会继续创建目录。 所以在创建目录时，应保证新建的目录与它所在目录下的文件没有重名。 mkdir命令还可以同时创建多个目录，是不是很强大呢？ * <code class="language-plaintext highlighter-rouge">mkdir &lt;⽬录名&gt;</code> 创建⽬录* <code class="language-plaintext highlighter-rouge">mkdir dir1 dir2</code> 同时创建两个⽬录* <code class="language-plaintext highlighter-rouge">mkdir -p /tmp/dir1/dir2</code>创建⽬录树 |
+| rm                | remove                  | rm是常用的命令，该命令的功能为删除一个目录中的一个或多个文件或目录，它也可以将某个目录及其下的所有文件及子目录均删除。对于链接文件，只是删除了链接，原有文件均保持不变。 rm也是一个危险的命令，使用的时候要特别当心，尤其对于新手，否则整个系统就会毁在这个命令（比如在/（根目录）下执行rm * -rf）。所以，我们在执行rm之前最好先确认一下在哪个目录，到底要删除什么东西，操作时保持高度清醒的头脑。* <code class="language-plaintext highlighter-rouge">rm -f file1</code> 删除’file1’⽂件* <code class="language-plaintext highlighter-rouge">rmdir dir1</code> 删除’dir1’⽬录* <code class="language-plaintext highlighter-rouge">rm -rf dir1</code> 删除’dir1’⽬录和其内容* <code class="language-plaintext highlighter-rouge">rm -rf dir1 dir2</code> 同时删除两个⽬录及其内容 |
+| mv                | move                    | mv命令是“move”单词的缩写，其功能大致和英文含义一样，可以移动文件或对其改名。这是一个使用频率超高的文件管理命令，我们需要特别留意它与复制的区别：mv与cp的结果不同。mv命令好像文件“搬家”，文件名称发生改变，但个数并未增加。而cp命令是对文件进行复制操作，文件个数是有增加的。* <code class="language-plaintext highlighter-rouge">mv old_dir new_dir</code> 重命名/移动⽬录 |
+| cp                | copy                    | cp命令可以理解为英文单词copy的缩写，其功能为复制文件或目录。cp命令可以将多个文件复制到一个具体的文件名或一个已经存在的目录下，也可以同时复制多个文件到一个指定的目录中。* <code class="language-plaintext highlighter-rouge">cp file1 file2</code> 复制⽂件* <code class="language-plaintext highlighter-rouge">cp dir/* .</code> 复制某⽬录下的所有⽂件⾄当前⽬录* <code class="language-plaintext highlighter-rouge">cp -a dir1 dir2</code> 复制⽬录* <code class="language-plaintext highlighter-rouge">cp -a /tmp/dir1 .</code> 复制⼀个⽬录⾄当前⽬录 |
+| ln                | link                    | ln命令是linux系统中一个非常重要命令，英文全称是“link”，即链接的意思，它的功能是为某一个文件在另外一个位置建立一个同步的链接。 一种是hard link，又称为硬链接；另一种是symbolic link，又称为符号链接。<br />通俗一点理解，可以把硬链接当成源文件的副本，他和源文件一样的大小，但是事实上却不占任何空间。符号链接可以理解为类似windows一样的快捷方式。<br />符号链接 ：<br />1. 符号链接以路径的形式存在，类似于Windows操作系统中的快捷方式。<br />2. 符号链接可以跨文件系统 ，硬链接不可以。<br />3. 符号链接可以对一个不存在的文件名进行链接，硬链接不可以。<br />4. 符号链接可以对目录进行链接，硬链接不可以。<br />硬链接：<br />1.硬链接以文件副本的形式存在，但不占用实际空间。<br />2. 硬链接不允许给目录创建硬链接。<br />3.硬链接只有在同一个文件系统中才能创建。<br />* <code class="language-plaintext highlighter-rouge">ln -s file1 link1</code> 创建指向⽂件/⽬录的软链接* <code class="language-plaintext highlighter-rouge">ln file1 lnk1</code> 创建指向⽂件/⽬录的物理链接 |
+| find              | find                    | 查找。find命令可以根据给定的路径和表达式查找的文件或目录。find参数选项很多，并且支持正则，功能强大。和管道结合使用可以实现复杂的功能，是系统管理者和普通用户必须掌握的命令。<br />find如不加任何参数，表示查找当前路径下的所有文件和目录，如果服务器负载比较高尽量不要在高峰期使用find命令，find命令模糊搜索还是比较消耗系统资源的。* <code class="language-plaintext highlighter-rouge">find / -name file1</code> 从跟⽬录开始搜索⽂件/⽬录* <code class="language-plaintext highlighter-rouge">find / -user user1</code> 搜索⽤户user1的⽂件/⽬录* <code class="language-plaintext highlighter-rouge">find /dir -name *.bin</code> 在⽬录/dir中搜带有.bin后缀的⽂件 |
+| locate            | locate                  | locate命令其实是find -name的另一种写法，但是要比后者快得多，原因在于它不搜索具体目录，而是搜索一个数据库/var/lib/locatedb，值得注意的是：版本不同，会有所不同。有的版本位置是 /var/lib/mlocate/mlocatedb ，还有的是/var/lib/slocate/slocate.db ，这个数据库中含有本地所有文件信息。<br />Linux系统自动创建这个数据库，并且每天自动更新一次，所以使用locate命令查不到最新变动过的文件。为了避免这种情况，可以在使用locate之前，先使用updatedb命令，手动更新数据库。* <code class="language-plaintext highlighter-rouge">locate &lt;关键词&gt;</code> 快速定位⽂件* <code class="language-plaintext highlighter-rouge">locate *.mp4</code> 寻找.mp4结尾的⽂件 |
+| whereis           | whereis                 | whereis命令用来定位命令的二进制程序、源代码文件和man手册页等相关文件的路径。<br />whereis命令查找速度非常快，因为它不是在磁盘中乱找，而是在一个数据库中查询; 数据库是linux系统自动创建的，包含有本地所有文件的信息，并且每天通过自动执行updatedb命令更新一次。正因为这样，whereis命令的搜索结果有时候会不准确，比如刚添加的文件可能搜不到， 原因就是该数据库文件没有被更新。* <code class="language-plaintext highlighter-rouge">whereis &lt;关键词&gt;</code> 显示某⼆进制⽂件/可执⾏⽂件的路径 |
+| which             | which                   | which命令的作用是在PATH变量指定的路径中，搜索某个系统命令的位置，并且返回第一个搜索结果。<br />运维人员在日常工作中经常使用which命令来检查某个系统命令是否存在，或者找出所执行命令所对应的具体位置。* <code class="language-plaintext highlighter-rouge">which &lt;关键词&gt;</code> 查找系统⽬录下某的⼆进制⽂件 |
+| chmod             | change mode             | In Unix-like operating systems, the chmod command is used to change the access mode of a file. The name is an abbreviation of change mode. chmod命令的英文原意是“change the permissions mode of a file”，我们简称为“change mode”，意为用来改变文件或目录权限的命令，但是只有文件的属主和超级用户root才能执行这个命令。有两种模式，一种是采用权限字母和操作符表达式；另一种是采用数字。* <code class="language-plaintext highlighter-rouge">chmod ugo+rwx dir1</code> 设置⽬录所有者(u)、群组(g)及其他⼈(o)的读（r）写(w)执⾏(x)权限* <code class="language-plaintext highlighter-rouge">chmod go-rwx dir1</code> 移除群组(g)与其他⼈(o)对⽬录的读写执⾏权限 |
+| chown             | change owner            | Linux/Unix 属于多用户多任务操作系统，所有的文件皆有拥有者。利用 chown 命令可以将指定文件的拥有者改为指定的用户或组，用户可以是用户名或者用户ID，组可以是组名或者组ID，文件是以空格分开的要改变权限的文件列表，支持通配符。 一般来说，这个指令仅限系统管理者(root)所使用，普通用户没有权限改变文件所属者及所属组。* <code class="language-plaintext highlighter-rouge">chown user1 file1</code> 改变⽂件的所有者属性* <code class="language-plaintext highlighter-rouge">chown -R user1 dir1</code>改变⽬录的所有者属性* <code class="language-plaintext highlighter-rouge">chown user1:group1 file1</code>改变⽂件的所有⼈和群组 |
+| chgrp             | change group            | chgrp是英语单词“change group”的缩写，命令的作用和其中文释义一样，为用于变更文件或目录的所属群组。* <code class="language-plaintext highlighter-rouge">chgrp group1 file1</code> 改变⽂件群组 |</p>
+
+<h2 id="文件查看和处理以及查找">文件查看和处理以及查找</h2>
+<p>| 命令           | 英文单词                                                     | 中文释义                                                     |
+| :————- | :———————————————————– | :———————————————————– |
+| touch          | 接触；触动；触摸                                             | It doesn’t stand for anything; it’s not an abbreviation or initialism. It’s a verb.When you <code class="language-plaintext highlighter-rouge">touch</code> a file, you’re <code class="language-plaintext highlighter-rouge">"putting fresh fingerprints on it", updating its last-modified date (or creating it if it did not yet exist)</code>.Sames like you touch it.<br />touch命令有两个功能：一是创建新的空文件，二是改变已有文件的时间戳属性。<br />touch命令会根据当前的系统时间更新指定文件的访问时间和修改时间。如果文件不存在，将会创建新的空文件，除非指定了”-c”或”-h”选项。<br />注意：在修改文件的时间属性的时候，用户必须是文件的属主，或拥有写文件的访问权限。 |
+| cat            | concatenate                                                  | The cat (short for “concatenate“) command is one of the most frequently used commands in Linux/Unix-like operating systems. cat command allows us to create single or multiple files, view content of a file, concatenate files and redirect output in terminal or files. Linux系统中有很多个用于查看文件内容的命令，每个命令又都有自己的特点，比如这个cat命令就是用于查看内容较少的纯文本文件的。cat这个命令也很好记，因为cat在英语中是“猫”的意思，小猫咪是不是给您一种娇小、可爱的感觉呢？<br />注意：当文件内容较大时，文本内容会在屏幕上快速闪动（滚屏），用户往往看不清所显示的具体内容。因此对于较长文件内容可以按Ctrl+S键，停止滚屏；以及Ctrl+Q键可以恢复滚屏；而按Ctrl+C（中断）键则可以终止该命令的执行。或者对于大文件，干脆用more命令吧！* <code class="language-plaintext highlighter-rouge">cat file1</code> 查看⽂件内容* <code class="language-plaintext highlighter-rouge">cat -n file1</code> 查看内容并标示⾏数* <code class="language-plaintext highlighter-rouge">cat xxx.txt</code> awk ‘NR%2==1’* <code class="language-plaintext highlighter-rouge">cat /proc/version</code> 查看linux版本信息* <code class="language-plaintext highlighter-rouge">cat /proc/cpuinfo</code> 查看CPU信息* <code class="language-plaintext highlighter-rouge">cat /proc/interrupts</code> 查看中断* <code class="language-plaintext highlighter-rouge">cat /proc/loadavg</code> 查看系统负载 |
+| tac            | concatenate                                                  | tac命令就是将文件反向输出，刚好和cat输出相反。 * <code class="language-plaintext highlighter-rouge">tac file1</code> 从最后⼀⾏开始反看⽂件内容 |
+| more           |                                                              | The more command is a command line utility for viewing the contents of a file or files once screen at a time. It supports navigating forwards and backwards through a file and is primarily used for viewing the contents of a file. * <code class="language-plaintext highlighter-rouge">more file1</code> 查看⼀个⻓⽂件的内容 |
+| less           | less is more                                                 | 浏览文字档案的内容，用less命令显示文件时，PageUp键向上翻页，PageDown键向下翻页，要退出less程序，应按Q键。<br />less的作用与more十分相似，不同点为less命令允许用户向前或向后浏览文件，而more命令只能向前浏览 。* <code class="language-plaintext highlighter-rouge">less file1</code> 类似more命令，但允许反向操作 |
+| head           | head                                                         | head is a program on Unix and Unix-like operating systems used to display the beginning of a text file or piped data. <br />head命令以行为单位，取文件的内容,后面不接参数时默认打印前10行。* <code class="language-plaintext highlighter-rouge">head -2 file1</code> 查看⽂件前两⾏ |
+| tail           | tail                                                         | The tail command is a command-line utility for outputting the last part of files given to it via standard input. It writes results to standard output. By default tail returns the last ten lines of each file that it is given. It may also be used to follow a file in real-time and watch as new lines are written to it. <br />tail用于显示<strong>文件尾部</strong>的内容，默认在屏幕上显示指定文件的末尾10行。如果给定的文件不止一个，则在显示的每个文件前面加一个文件名标题。如果没有指定文件或者文件名为“-”，则读取标准输入。* <code class="language-plaintext highlighter-rouge">tail -2 file1</code> 查看⽂件后两⾏* <code class="language-plaintext highlighter-rouge">tail -f /log/msg</code> 实时查看添加到⽂件中的内容 |
+| grep           | global search regular expression and print out the line      | 意思是全面搜索正则表达式，并将其打印出来。这个命令可以结合正则表达式使用，它也是linux使用最为广泛的命令。<br />grep命令的选项用于对搜索过程的补充，而其命令的模式十分灵活，可以是变量、字符串、正则表达式。需要注意的是：一当模式中包含了空格，务必要用双引号将其引起来。<br />linux系统支持三种形式的grep命令，大儿子就是grep，标准，模仿的代表。二儿子兴趣爱好多-egrep，简称扩展grep命令，其实和grep -E等价，支持基本和扩展的正则表达式。小儿子跑的最快-fgrep，简称快速grep命令，其实和grep -F等价，不支持正则表达式，按照字符串表面意思进行匹配。* <code class="language-plaintext highlighter-rouge">grep holon hello.txt</code> 在⽂件hello.txt中查找关键词holon* <code class="language-plaintext highlighter-rouge">grep ^holon hello.txt</code> 在⽂件hello.txt中查找以holon开头的内容* <code class="language-plaintext highlighter-rouge">grep [0-9] hello.txt</code> 选择hello.txt⽂件中所有包含数字的⾏* <code class="language-plaintext highlighter-rouge">grep MemTotal /proc/meminfo</code> 查看内存总量* <code class="language-plaintext highlighter-rouge">grep MemFree /proc/meminfo</code> 查看空闲内存量 |
+| sed            | stream editor                                                | a Unix utility that parses and transforms text, using a simple, compact programming language.<br /> Linux sed 命令是利用脚本来处理文本文件。sed 可依照脚本的指令来处理、编辑文本文件。sed 主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。* <code class="language-plaintext highlighter-rouge">sed 's/s1/s2/g' hello.txt</code> 将hello.txt⽂件中的s1替换成s2* <code class="language-plaintext highlighter-rouge">sed '/^$/d' hello.txt</code> 从hello.txt⽂件中删除所有空⽩⾏* <code class="language-plaintext highlighter-rouge">sed '/ *#/d; /^$/d' hello.txt</code> 从hello.txt⽂件中删除所有注释和空⽩⾏* <code class="language-plaintext highlighter-rouge">sed -e '1d' hello.txt</code> 从⽂件hello.txt 中排除第⼀⾏* <code class="language-plaintext highlighter-rouge">sed -n '/s1/p' hello.txt</code> 查看只包含关键词”s1”的⾏* <code class="language-plaintext highlighter-rouge">sed -e 's/ *$//' hello.txt</code> 删除每⼀⾏最后的空⽩字符* <code class="language-plaintext highlighter-rouge">sed -e 's/s1//g' hello.txt</code> 从⽂档中只删除词汇s1并保留剩余全部* <code class="language-plaintext highlighter-rouge">sed -n '1,5p;5q' hello.txt</code> 查看从第⼀⾏到第5⾏内容* <code class="language-plaintext highlighter-rouge">sed -n '5p;5q' hello.txt</code> 查看第5⾏ |
+| paste          | paste                                                        | paste命令会把每个文件以列对列的方式，一列列地加以合并 ，他就是相当于把两个不同的文件内容粘贴在一起，形成新的文件。<br />注意：paste默认粘贴方式以列的方式粘贴，但是并不是不能以行的方式粘贴，加上-s选项就可以行方式粘贴。* <code class="language-plaintext highlighter-rouge">paste file1 file2</code> 合并两个⽂件或两栏的内容* <code class="language-plaintext highlighter-rouge">paste -d '+' file1 file2</code> 合并两个⽂件或两栏的内容，中间⽤”+”区分 |
+| sort           | sort                                                         | sort命令是在Linux里非常有用，它将文件进行排序，并将排序结果标准输出。sort命令既可以从特定的文件，也可以从stdin中获取输入。* <code class="language-plaintext highlighter-rouge">sort file1 file2</code> 排序两个⽂件的内容 |
+| comm           | compare                                                      | The comm command compares two sorted files line by line and writes three columns to standard output. These columns show lines that are unique to files one, lines that are unique to file two and lines that are shared by both files.<br />comm命令会一列列地比较两个已排序文件的差异，并将其结果显示出来，如果没有指定任何参数，则会把结果分成3行显示：第1行仅是在第1个文件中出现过的列，第2行是仅在第2个文件中出现过的列，第3行则是在第1与第2个文件里都出现过的列。若给予的文件名称为”-“，则comm指令会从标准输入设备读取数据。* <code class="language-plaintext highlighter-rouge">comm -1 file1 file2</code> ⽐较两个⽂件的内容(去除’file1’所含内容)* <code class="language-plaintext highlighter-rouge">comm -2 file1 file2</code> ⽐较两个⽂件的内容(去除’file2’所含内容)* <code class="language-plaintext highlighter-rouge">comm -3 file1 file2</code> ⽐较两个⽂件的内容(去除两⽂件共有部分) |
+| awk            | Awk is abbreviated from the names of the developers – <strong>A</strong>ho, <strong>W</strong>einberger, and <strong>K</strong>ernighan. | awk命令是一种编程语言，用于在linux/unix下对文本和数据进行处理。而且它支持用户自定义函数和动态正则表达式等先进功能，是linux/unix下的一个强大编程工具。具有很多C语言的功能，又称过滤器。Awk is mostly used for pattern scanning and processing. It searches one or more files to see if they contain lines that matches with the specified patterns and then performs the associated actions. |
+| wc             | word count                                                   | 统计指定文件中的字节数、字数、行数，并将统计结果显示输出。利用wc指令我们可以计算文件的Byte数、字数或是列数，若不指定文件名称，或是所给予的文件名为“-”，则wc指令会从标准输入设备读取数据。wc同时也给出所指定文件的总统计数。 |
+| ## 打包和解压  |                                                              |                                                              |
+| 命令           | 英文单词                                                     | 中文释义                                                     |
+| :——        | :———-                                                  | :———-                                                  |
+| tar            | tape archive                                                 | tar命令可以为linux的文件和目录创建档案。利用tar，可以为某一特定文件创建档案（备份文件），也可以在档案中改变文件，或者向档案中加入新的文件。<br />tar最初被用来在磁带上创建档案，现在，用户可以在任何设备上创建档案。利用tar命令，可以把一大堆的文件和目录全部打包成一个文件，这对于备份文件或将几个文件组合成为一个文件以便于网络传输是非常有用的。* <code class="language-plaintext highlighter-rouge">tar -cvf xxx.tar file</code> 创建⾮压缩tar包* <code class="language-plaintext highlighter-rouge">tar -cvf xxx.tar file1 file2 dir1</code> 将多个⽂件+⽬录打tar包* <code class="language-plaintext highlighter-rouge">tar -tf xxx.tar</code> 查看tar包的内容* <code class="language-plaintext highlighter-rouge">tar -xvf xxx.tar</code> 解压tar包* <code class="language-plaintext highlighter-rouge">tar -xvf xxx.tar -C /dir</code> 将tar包解压⾄指定⽬录* <code class="language-plaintext highlighter-rouge">tar -cvfj xxx.tar.bz2 dir</code> 创建bz2压缩包* <code class="language-plaintext highlighter-rouge">tar -jxvf xxx.tar.bz2</code> 解压bz2压缩包* <code class="language-plaintext highlighter-rouge">tar -cvfz xxx.tar.gz dir</code> 创建gzip压缩包* <code class="language-plaintext highlighter-rouge">tar -zxvf xxx.tar.gz</code> 解压gzip压缩包 |
+| zip            | zip                                                          | zip程序将一个或多个压缩文件与有关文件的信息(名称、路径、日期、上次修改的时间、保护和检查信息以验证文件完整性)一起放入一个压缩存档中。可以使用一个命令将整个目录结构打包到zip存档中。<br />对于文本文件来说，压缩比为2：1和3：1是常见的。zip只有一种压缩方法(通缩)，并且可以在不压缩的情况下存储文件。(如果添加了bzip 2支持，zip也可以使用bzip 2压缩，但这些条目需要一个合理的现代解压缩来解压缩。当选择bzip 2压缩时，它将通货紧缩替换为默认方法。)zip会自动为每个要压缩的文件选择更好的两个文件(通缩或存储，如果选择bzip2，则选择bzip2或Store)。* <code class="language-plaintext highlighter-rouge">zip xxx.zip file</code> 压缩⾄zip包* <code class="language-plaintext highlighter-rouge">zip -r xxx.zip file1 file2 dir1</code> 将多个⽂件+⽬录压成zip包 |
+| unzip          | unzip                                                        | unzip命令是用于.zip格式文件的解压缩工具 ，unzip命令将列出、测试或从zip格式存档中提取文件，这些文件通常位于MS-DOS系统上。<br />默认行为（就是没有选项）是从指定的ZIP存档中提取所有的文件到当前目录（及其下面的子目录）。一个配套程序zip（1L）创建ZIP存档；这两个程序都与PKWARE的PKZIP和PKUNZIP为MS-DOS创建的存档文件兼容，但许多情况下，程序选项或默认行为是不同的。* <code class="language-plaintext highlighter-rouge">unzip xxx.zip</code> 解压zip包 |
+| bzip2          | bzip2                                                        | Linux系统中bzip2命令的英文是“bunzip2”，即.bz2文件格式的压缩程序； bzip2命令系统默认是没有安装的，需要安装bzip2库才可以使用此命令。<br />bzip2命令采用新的压缩演算法，压缩效果比传统的LZ77/LZ78压缩演算法来得好。若没有加上任何参数，bzip2压缩完文件后会产生.bz2的压缩文件，并删除原始的文件。* <code class="language-plaintext highlighter-rouge">bzip2 filename</code> 压缩⽂件 |
+| bunzip2        | bunzip2                                                      | bunzip2可解压缩.bz2格式的压缩文件。bunzip2实际上是bzip2的符号连接，执行bunzip2与bzip2 -d的效果相同。* <code class="language-plaintext highlighter-rouge">bunzip2 xxx.bz2</code> 解压bz2压缩包 |
+| gzip           | GNUzip                                                       | gzip命令的英文是“GNUzip”，是常用来压缩文件的工具，gzip是个使用广泛的压缩程序，文件经它压缩过后，其名称后面会多处“.gz”扩展名。<br />gzip是在Linux系统中经常使用的一个对文件进行压缩和解压缩的命令，既方便又好用。gzip不仅可以用来压缩大的、较少使用的文件以节省磁盘空间，还可以和tar命令一起构成Linux操作系统中比较流行的压缩文件格式。据统计，gzip命令对文本文件有60%～70%的压缩率。减少文件大小有两个明显的好处，一是可以减少存储空间，二是通过网络传输文件时，可以减少传输的时间。* <code class="language-plaintext highlighter-rouge">gzip filename</code> 压缩⽂件* <code class="language-plaintext highlighter-rouge">gzip -9 filename</code> 最⼤程度压缩 |
+| gunzip         | gunzip                                                       | gunzip命令用于解压文件，它是个使用广泛的解压缩程序，它用于解开被gzip压缩过的文件，这些压缩文件预设最后的扩展名为”.gz”。<strong>事实上gunzip就是gzip的硬连接，因此不论是压缩或解压缩，都可通过gzip命令单独完成</strong>。* <code class="language-plaintext highlighter-rouge">gunzip xxx.gz</code> 解压gzip压缩包 |
+| <del>compress</del>   |                                                              | compress命令是一个相当古老的 unix 档案压缩指令，压缩后的档案会加上一个 .Z 延伸档名以区别未压缩的档案，压缩后的档案可以以 uncompress 解压。若要将数个档案压成一个压缩档，必须先将档案 tar 起来再压缩。由于 gzip 可以产生更理想的压缩比例，一般人多已改用 gzip 为档案压缩工具。 |
+| <del>uncompress</del> |                                                              | 使用uncompres命令可以压缩或解压缩compress文件。其实uncompres命令是compress命令的符号链接，所以命令语法和命令选项与compress命令是一样的。 |</p>
+
+<h2 id="rpm包管理命令">RPM包管理命令</h2>
+<p>| 命令          | 英文单词                    | 中文释义                                                     |
+| :———— | :————————– | :———————————————————– |
+| rpm           | Red-hat Package Manager     | rpm命令是Red-Hat Package Manager（RPM软件包管理器）的缩写， 该命令用于管理Linux 下软件包的软件。在 Linux 操作系统下，几乎所有的软件均可以通过RPM 进行安装、卸载及管理等操作。<br />概括的说，rpm命令包含了五种基本功能：安装、卸载、升级、查询和验证。* <code class="language-plaintext highlighter-rouge">rpm -qa</code> 查看已安装的rpm包* <code class="language-plaintext highlighter-rouge">rpm -q pkg_name </code>查询某个rpm包* <code class="language-plaintext highlighter-rouge">rpm -q --whatprovides xxx</code> 显示xxx功能是由哪个包提供的* <code class="language-plaintext highlighter-rouge">rpm -q --whatrequires xxx</code> 显示xxx功能被哪个程序包依赖的* <code class="language-plaintext highlighter-rouge">rpm -q --changelog xxx</code> 显示xxx包的更改记录* <code class="language-plaintext highlighter-rouge">rpm -qi pkg_name</code> 查看⼀个包的详细信息* <code class="language-plaintext highlighter-rouge">rpm -qd pkg_name</code> 查询⼀个包所提供的⽂档* <code class="language-plaintext highlighter-rouge">rpm -qc pkg_name</code> 查看已安装rpm包提供的配置⽂件* <code class="language-plaintext highlighter-rouge">rpm -ql pkg_name</code> 查看⼀个包安装了哪些⽂件* <code class="language-plaintext highlighter-rouge">rpm -qf filename</code> 查看某个⽂件属于哪个包* <code class="language-plaintext highlighter-rouge">rpm -qR pkg_name</code> 查询包的依赖关系* <code class="language-plaintext highlighter-rouge">rpm -ivh xxx.rpm</code> 安装rpm包* <code class="language-plaintext highlighter-rouge">rpm -ivh --test xxx.rpm</code> 测试安装rpm包* <code class="language-plaintext highlighter-rouge">rpm -ivh --nodeps xxx.rpm</code> 安装rpm包时忽略依赖关系* <code class="language-plaintext highlighter-rouge">rpm -e xxx</code> 卸载程序包* <code class="language-plaintext highlighter-rouge">rpm -Fvh pkg_name</code> 升级确定已安装的rpm包* <code class="language-plaintext highlighter-rouge">rpm -Uvh pkg_name</code> 升级rpm包(若未安装则会安装)* <code class="language-plaintext highlighter-rouge">rpm -V pkg_name</code> RPM包详细信息校验 |
+| ## 包管理命令 |                             |                                                              |
+| 命令          | 英文单词                    | 中文释义                                                     |
+| :——       | :———-                 | :———-                                                  |
+| yum           | Yellowdog Updater, Modified | The Yellowdog Updater, Modified (YUM) is a free and open-source command-line package-management utility for computers running the Linux operating system using the RPM Package Manager.<br /> yum命令是在Fedora和RedHat以及SUSE中基于rpm的软件包管理器，它可以使系统管理人员交互和自动化地更新与管理RPM软件包，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软体包，无须繁琐地一次次下载、安装。<br />yum提供了查找、安装、删除某一个、一组甚至全部软件包的命令，而且命令简洁而又好记。* <code class="language-plaintext highlighter-rouge">yum repolist enabled</code> 显示可⽤的源仓库* <code class="language-plaintext highlighter-rouge">yum search pkg_name</code> 搜索软件包* <code class="language-plaintext highlighter-rouge">yum install pkg_name</code> 下载并安装软件包* <code class="language-plaintext highlighter-rouge">yum install --downloadonly pkg_name</code> 只下载不安装* <code class="language-plaintext highlighter-rouge">yum list</code> 显示所有程序包* <code class="language-plaintext highlighter-rouge">yum list installed</code> 查看当前系统已安装包* <code class="language-plaintext highlighter-rouge">yum list updates</code> 查看可以更新的包列表* <code class="language-plaintext highlighter-rouge">yum check-update</code> 查看可升级的软件包* <code class="language-plaintext highlighter-rouge">yum update</code> 更新所有软件包* <code class="language-plaintext highlighter-rouge">yum update pkg_name</code> 升级指定软件包* <code class="language-plaintext highlighter-rouge">yum deplist pkg_name</code> 列出软件包依赖关系* <code class="language-plaintext highlighter-rouge">yum remove pkg_name</code> 删除软件包* <code class="language-plaintext highlighter-rouge">yum clean all</code> 清除缓存* <code class="language-plaintext highlighter-rouge">yum clean packages</code> 清除缓存的软件包* <code class="language-plaintext highlighter-rouge">yum clean headers</code> 清除缓存的header |
+| dpkg          | Debian Package              | dpkg (Debian Package) itself is a low-level tool. APT (Advanced Package Tool), a higher-level tool, is more commonly used than dpkg as it can fetch packages from remote locations and deal with complex package relations, such as dependency resolution.<br /> dpkg命令的英文全称是“Debian package”，故名意思是Debian Linux系统用来安装、创建和管理软件包的实用工具。* <code class="language-plaintext highlighter-rouge">dpkg -c xxx.deb</code> 列出deb包的内容* <code class="language-plaintext highlighter-rouge">dpkg -I xxx.deb</code> 安装/更新deb包* <code class="language-plaintext highlighter-rouge">dpkg -r pkg_name</code> 移除deb包* <code class="language-plaintext highlighter-rouge">dpkg -P pkg_name</code> 移除deb包(不保留配置)* <code class="language-plaintext highlighter-rouge">dpkg -l</code> 查看系统中已安装deb包* <code class="language-plaintext highlighter-rouge">dpkg -l pkg_name</code> 显示包的⼤致信息* <code class="language-plaintext highlighter-rouge">dpkg -L pkg_name</code> 查看deb包安装的⽂件* <code class="language-plaintext highlighter-rouge">dpkg -s pkg_name</code> 查看包的详细信息* <code class="language-plaintext highlighter-rouge">dpkg –unpack xxx.deb</code> 解开deb包的内容 |
+| apt           | Advanced Package Tool       | Advanced Package Tool, or APT, is a free-software user interface that works with core libraries to handle the installation and removal of software on Debian, Ubuntu, and related Linux distributions.* <code class="language-plaintext highlighter-rouge">apt-cache search pkg_name</code> 搜索程序包* <code class="language-plaintext highlighter-rouge">apt-cache show pkg_name</code> 获取包的概览信息* <code class="language-plaintext highlighter-rouge">apt-get install pkg_name</code> 安装/升级软件包* <code class="language-plaintext highlighter-rouge">apt-get purge pkg_name</code> 卸载软件（包括配置）* <code class="language-plaintext highlighter-rouge">apt-get remove pkg_name</code> 卸载软件（不包括配置）* <code class="language-plaintext highlighter-rouge">apt-get update</code> 更新包索引信息* <code class="language-plaintext highlighter-rouge">apt-get upgrade</code> 更新已安装软件包* <code class="language-plaintext highlighter-rouge">apt-get clean</code> 清理缓存 |</p>
+
+<h2 id="其它">其它</h2>
+<p>| 命令   | 英文单词                                                     | 中文释义                                                     |
+| :—– | :———————————————————– | :———————————————————– |
+| man    | manual                                                       | 手册。man命令是Linux下最核心的命令之一。而man命令也并不是英文单词“man”的意思，它是单词manual的缩写，即使用手册的意思。<br />man命令会列出一份完整的说明。 其内容包括命令语法、各选项的意义及相关命令 。更为强大的是，不仅可以查看Linux中命令的使用帮助，还可以查看软件服务配置文件、系统调用、库函数等帮助信息。<br />man手册页文件存放在/usr/share/man目录下。 |
+| info   | infomation                                                   | 就内容来说，info页面比man page编写得要更好、更容易理解，也更友好，但man page使用起来确实要更容易得多。一个man page只有一页，而info页面几乎总是将它们的内容组织成多个区段（称为节点），每个区段也可能包含子区段（称为子节点）。理解这个命令的窍门就是不仅要学习如何在单独的Info页面中浏览导航，还要学习如何在节点和子节点之间切换。可能刚开始会一时很难在info页面的节点之间移动和找到你要的东西，真是具有讽刺意味：原本以为对于新手来说，某个东西比man命令会更好些，但实际上学习和使用起来更困难。 |
+| whatis | what is                                                      | whatis命令 是用于查询一个命令执行什么功能，并将查询结果打印到终端上。<br />whatis命令在用catman -w命令创建的数据库中查找command参数指定的命令、系统调用、库函数或特殊文件名。whatis命令显示手册部分的页眉行。然后可以发出man命令以获取附加的信息。whatis命令等同于使用man -f命令。 |
+| *d     | deamon                                                       | linux中很多服务以d结尾命名，d代表deamon，守护进程在后台执行  |
+| NFS    | Network File System                                          | 网络文件系统                                                 |
+| ELF    | Executable and Linkable Format                               | 可执行文件开头的特征字符串，Windows中使用（Portable Executable，PE）；Linux和多数Unix系统中的是<code class="language-plaintext highlighter-rouge">可执行与可链接格式（ELF）</code>，Mac OS中则主要使用Mach-O； |
+| vsftpd | <strong>V</strong>ery <strong>S</strong>ecure <strong>FTP</strong> <strong>D</strong>aemon                       | 安全ftp守护进程                                              |
+| dd     | <strong>D</strong>isc <strong>D</strong>ump                                            | This utility comes from the original UNIX System operational environment where it was common to replicate secondary memory (mass storage devices in a “Virtual Memory” operating system). |
+| lpr    | <strong>L</strong>ine <strong>P</strong>rinter <strong>D</strong>aemon protocol/<strong>L</strong>ine <strong>P</strong>rinter <strong>R</strong>emote protocol | lpr命令用于将文件发送给指定打印机进行打印，如果不指定目标打印机，则使用默认打印机。 |</p>
+<h1 id="linux文件">Linux文件</h1>
+<h2 id="文件结构">文件结构</h2>
+<p><img src="https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASG9sb25f,size_20,color_FFFFFF,t_70,g_se,x_16.png" alt="树状目录结构" />
+<img src="https://img-blog.csdnimg.cn/abe6c8481e2d40b3aa47c0e7b50c8b09.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBASG9sb25f,size_20,color_FFFFFF,t_70,g_se,x_16" alt="文件结构" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">文件</th>
+      <th style="text-align: left">单词</th>
+      <th style="text-align: left">用途</th>
+      <th style="text-align: left">类型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">/boot</td>
+      <td style="text-align: left">boot</td>
+      <td style="text-align: left">这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。</td>
+      <td style="text-align: left">系统启动必须</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/etc</td>
+      <td style="text-align: left">Etcetera</td>
+      <td style="text-align: left">etc 是 Etcetera(等等) 的缩写,这个目录用来存放<strong>所有的系统管理所需要的配置文件和子目录</strong>。<strong>如果你更改了该目录下的某个文件可能会导致系统不能启动。</strong> <br /><code class="language-plaintext highlighter-rouge">/etc/hosts</code>: 主机名到 IP 地址的映射关系的文件<br /><code class="language-plaintext highlighter-rouge">/etc/resolv.conf</code>：DNS 服务的配置文件 <br /><code class="language-plaintext highlighter-rouge">/etc/gateways</code>：建立动态路由需要用到的文件<br /><code class="language-plaintext highlighter-rouge">/etc/services</code>：定义了网络服务的端口<br /><code class="language-plaintext highlighter-rouge">/etc/shadow</code>：用户登录密码文件 <br /><code class="language-plaintext highlighter-rouge">/etc/nologin</code>：文件存在时，系统只允许root帐号登入系统，其他用户一律不准登入。<br /><code class="language-plaintext highlighter-rouge">/etc/groups</code>：保存用户组信息<br /><code class="language-plaintext highlighter-rouge">/ect/profile</code>: 此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行.并从/etc/profile.d 目录的配置文件中搜集shell的设置. <br /><code class="language-plaintext highlighter-rouge">/etc/bashrc</code>为每一个 运行bash shell 的用户执行此文件.当bash shell被打开时,该文件被读取.</td>
+      <td style="text-align: left">系统启动必须</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/lib</td>
+      <td style="text-align: left">Library</td>
+      <td style="text-align: left">lib 是 Library(库) 的缩写这个目录里存放着系统最基本的动态连接共享库，其作用类似于 Windows 里的 DLL 文件。几乎所有的应用程序都需要用到这些共享库。</td>
+      <td style="text-align: left">系统启动必须</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/sys</td>
+      <td style="text-align: left">system</td>
+      <td style="text-align: left">这是 Linux2.6 内核的一个很大的变化。该目录下安装了 2.6 内核中新出现的一个文件系统 sysfs 。<br />sysfs 文件系统集成了下面3种文件系统的信息：针对进程信息的 proc 文件系统、针对设备的 devfs 文件系统以及针对伪终端的 devpts 文件系统。<br />该文件系统是内核设备树的一个直观反映。<br />当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统中被创建。</td>
+      <td style="text-align: left">系统启动必须</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/bin</td>
+      <td style="text-align: left">Binaries</td>
+      <td style="text-align: left">bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着<strong>最经常使用的程序和命令</strong>。</td>
+      <td style="text-align: left">指令集合</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/sbin</td>
+      <td style="text-align: left">super user</td>
+      <td style="text-align: left">s 就是 Super User 的意思，是 Superuser Binaries (超级用户的二进制文件) 的缩写，这里存放的是<strong>系统管理员使用的系统管理程序</strong>。</td>
+      <td style="text-align: left">指令集合</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/dev</td>
+      <td style="text-align: left">Device</td>
+      <td style="text-align: left">dev 是 Device(设备) 的缩写, 该目录下存放的是 Linux 的外部设备，<strong>在 Linux 中访问设备的方式和访问文件的方式是相同的</strong>。</td>
+      <td style="text-align: left">外部文件管理</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/media</td>
+      <td style="text-align: left">media</td>
+      <td style="text-align: left">linux 系统会自动识别一些设备，例如U盘、光驱等等，当识别后，Linux 会把识别的设备挂载到这个目录下。</td>
+      <td style="text-align: left">外部文件管理</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/mnt</td>
+      <td style="text-align: left">mount</td>
+      <td style="text-align: left">系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在 /mnt/ 上，然后进入该目录就可以查看光驱里的内容了。</td>
+      <td style="text-align: left">外部文件管理</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/root</td>
+      <td style="text-align: left">root</td>
+      <td style="text-align: left">该目录为系统管理员，也称作超级权限者的用户主目录。</td>
+      <td style="text-align: left">账户</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/home</td>
+      <td style="text-align: left">home</td>
+      <td style="text-align: left">用户的主目录，在 Linux 中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的，如上图中的 alice、bob 和 eve。<br /><code class="language-plaintext highlighter-rouge">~/.bash_profile</code>: 每个用户都可使用该文件输入 专用于 自己使用的shell信息, 当用户登录时,该文件仅仅执行一次 !默认情况下,他设置一些环境变量,执行~/.bashrc文件.<br /><code class="language-plaintext highlighter-rouge">~/.bashrc</code>: 该文件包含专用于用户的bash shell的bash信息 ,当登录时以及每次打开新的shell时,该文件被读取 . <br /><code class="language-plaintext highlighter-rouge">~/.bash_logout</code>: 当每次退出系统(退出bash shell)时,执行该文件.</td>
+      <td style="text-align: left">账户</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/usr</td>
+      <td style="text-align: left">unix shared resources</td>
+      <td style="text-align: left">usr 是 unix shared resources(共享资源) 的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。</td>
+      <td style="text-align: left">账户</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/usr/bin</td>
+      <td style="text-align: left">unix shared resources/binaries</td>
+      <td style="text-align: left">系统用户使用的应用程序。</td>
+      <td style="text-align: left">账户</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/usr/sbin</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">超级用户使用的比较高级的管理程序和系统守护程序。</td>
+      <td style="text-align: left">账户</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/usr/src</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">内核源代码默认的放置目录。</td>
+      <td style="text-align: left">账户</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/run</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</td>
+      <td style="text-align: left">临时文件</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/lost+found</td>
+      <td style="text-align: left">lost+found</td>
+      <td style="text-align: left">这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。</td>
+      <td style="text-align: left">临时文件</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/tmp</td>
+      <td style="text-align: left">temporary</td>
+      <td style="text-align: left">tmp 是 temporary(临时) 的缩写这个目录是用来存放一些临时文件的。</td>
+      <td style="text-align: left">临时文件</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/var</td>
+      <td style="text-align: left">variable</td>
+      <td style="text-align: left">var 是 variable(变量) 的缩写，这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。<strong>这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 /var/log 目录下，另外 mail 的预设放置也是在这里。</strong><br /><code class="language-plaintext highlighter-rouge">/var/log/lastlog</code>:记录系统中所有用户最后一次的登录时间的曰志。这个文件也是二进制文件.不能直接用Vi 查看。而要使用lastlog命令查看<br /><code class="language-plaintext highlighter-rouge">/var/log/wtmp</code> :永久记录所有用户的登陆、注销信息，同时记录系统的后动、重启、关机事件。这个文件也是二进制文件.不能直接用Vi查看，who、w、users、last和ac来使用这两个文件包含的信息。<br /><code class="language-plaintext highlighter-rouge">/var/log/utmp</code>:记录当前已经登录的用户的信息。这个文件会随着用户的登录和注销而不断变化，只记录当前登录用户的信息。同样，这个文件不能直接用Vi查看，而要使用w、who、users等命令查看。</td>
+      <td style="text-align: left">运行过程中要用</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/proc</td>
+      <td style="text-align: left">processes</td>
+      <td style="text-align: left">proc 是 Processes(进程) 的缩写，/proc 是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器：<code class="language-plaintext highlighter-rouge">echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</code>  <br /><code class="language-plaintext highlighter-rouge">/proc/version</code>linux版本信息<br /> <code class="language-plaintext highlighter-rouge">/proc/cpuinfo</code> CPU信息<br /><code class="language-plaintext highlighter-rouge">/proc/interrupts</code> 中断<br /><code class="language-plaintext highlighter-rouge">/proc/loadavg</code> 系统负载<br /><code class="language-plaintext highlighter-rouge">/proc/meminfo</code> 内存信息<br /><code class="language-plaintext highlighter-rouge">/proc/swaps</code>: SWAP分区信息</td>
+      <td style="text-align: left">运行过程中要用</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/opt</td>
+      <td style="text-align: left">optional</td>
+      <td style="text-align: left">opt 是 optional(可选) 的缩写，这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</td>
+      <td style="text-align: left">扩展用的</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/srv</td>
+      <td style="text-align: left">server</td>
+      <td style="text-align: left">该目录存放一些服务启动之后需要提取的数据。This directory is intended for static files that are served out. /srv/http would be for static websites, /srv/ftp for an FTP server.</td>
+      <td style="text-align: left">扩展用的</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">/selinux</td>
+      <td style="text-align: left">secure linux</td>
+      <td style="text-align: left">这个目录是 Redhat/CentOS 所特有的目录，Selinux 是一个安全机制，类似于 windows 的防火墙，但是这套机制比较复杂，这个目录就是存放selinux相关的文件的。</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="其它文件">其它文件</h2>
+<p>| 文件        | 单词                                                         | 用途                                                         |
+| :———- | :———————————————————– | :———————————————————– |
+| *.conf      | <strong>conf</strong>iguration File (Unix file extension)                 | 配置文件扩展名                                               |
+| *.d         | <strong>d</strong>irectory                                                | Generally when you see that *.d convention, it means “this is a directory holding a bunch of configuration fragments which will be merged together into configuration for some service.<a href="https://unix.stackexchange.com/questions/4029/what-does-the-d-stand-for-in-directory-names">Stack Exchange相关问题</a> |
+| *d.conf     | * <strong>d</strong>aemon.<strong>conf</strong>ig                                      | 后台守护的进程配置文件，一般是服务配置文件，Daemon: BrE ˈdiːmən, AmE ˈdimən 后台驻留程序 |
+| http.conf   | <strong>http</strong>.<strong>conf</strong>ig                                          | WEB服务器配置文件                                            |
+| initd.conf  | <strong>init</strong>iate <strong>d</strong>aemon.<strong>conf</strong>ig                           | 启动脚本配置文件                                             |
+| rc.samba    | <strong>r</strong>un <strong>c</strong>ommands.<strong>samba</strong> | <strong>r</strong>un <strong>c</strong>ontrol.<strong>samba</strong> | samba脚本                                                    |
+| rc.file     | <strong>r</strong>un <strong>c</strong>ommands.file | <strong>r</strong>un <strong>c</strong>ontrol.file        | In the context of Unix-like systems, the term rc stands for the phrase <code class="language-plaintext highlighter-rouge">run commands</code>. It is used for any file that contains startup information for a command…. While not historically precise, rc may also be expanded as <code class="language-plaintext highlighter-rouge">run control</code>, because an rc file controls how a program runs. |
+| smb.conf    | <strong>smb</strong>.<strong>conf</strong>ig                                           | samba服务配置文件                                            |
+| httpd.conf  | <strong>http d</strong>eamon.<strong>conf</strong>ig                                   | 网络服务器软件的配置文件,对WWW服务器进行访问、控制存取和运行等控制 |
+| lilo.conf   | <strong>lilo</strong>.<strong>conf</strong>ig                                          | 由引导管理程序 lilo 读取的文件                               |
+| inetd.conf  | <strong>i</strong>nter<strong>net d</strong>eamon.<strong>conf</strong>ig                           | 保存了系统提供internet服务的数据库并对其进行控制，如打开/关闭某项服务。 |
+| resolv.conf | <strong>resolv</strong>e.<strong>conf</strong>ig                                       | 域名解析器使用的配置文件                                     |</p>
+
+<h1 id="linux端口">Linux端口</h1>
+<p>FTP服务器有两个端口，其中21端口用于连接，20端口用于传输数据 
+进行FTP文件传输中，客户端首先连接到FTP服务器的21端口，进行用户的认证，认证成功后，要传输文件时，服务器会开一个端口为20来进行传输数据文件。 
+也就是说，端口20才是真正传输所用到的端口，端口21只用于FTP的登陆认证。我们平常下载文件时，会遇到下载到99%时，文件不完成，不能成功的下载。其实是因为文件下载完毕后，还要在21端口再行进行用户认证，而下载文件的时间如果过长，客户机与服务器的21端口的连接会被服务器认为是超时连接而中断掉，就是这个原因。解决方法就是设置21端口的响应时间。</p>
+
+<h1 id="软件">软件</h1>
+<h2 id="vim">vim</h2>
+<p><a href="https://www.runoob.com/linux/linux-vim.html">菜鸟教程</a></p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/wholon/image@main/uPic/19c4da683805cd070fdf045e5dba01ab.png" alt="Alt" /></p>
+
+<h2 id="samba">Samba</h2>
+<p>Samba是在Linux和UNIX系统上实现SMB协议的一个免费软件，由服务器及客户端程序构成。SMB（Server Messages Block，信息服务块）是一种在局域网上共享文件和打印机的一种通信协议。
+https://www.runoob.com/linux/linux-system-contents.html</p>
+</div><div class="d-print-none"><footer class="article__footer">
+  <!-- 原 更新时间 位置 --><!-- start custom article footer snippet -->
+
+<!-- end custom article footer snippet -->
+<!--  在页脚作者信息上方添加 联系我 标题 -->
+    <h2>联系我</h2><div itemscope itemtype="http://schema.org/Person" class="author-profile card card--flat item"><a href="https://holon.wang" class="item__image"><img class="author-profile__avatar" itemprop="image" src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220415234156pm7cyt.png" /></a><div class="item__content"><meta itemprop="name" content="Holon">
+        <p class="author-profile__name"><meta itemprop="url" content="https://holon.wang">
+            <a href="https://holon.wang">Holon</a></p><p itemprop="description">Keep it simple, Stupid</p><div class="author-profile__links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="https://holon.wang"><li title="给我发邮件。">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:holon.cn@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="在 Weibo 上关注我。">
+        <a class="button button--circle weibo-button" itemprop="sameAs" href="https://weibo.com/5718657072" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<path d="M769.226164 496.610234c-14.420098-4.330228-24.309277-7.266877-16.746482-26.214823 16.350218-41.133578 18.046881-76.626289 0.307181-101.939024-33.242099-47.500415-124.194284-44.928286-228.44638-1.280945 0-0.056317-32.73525 14.323848-24.371737-11.64523 16.042013-51.54906 13.626547-94.739726-11.332929-119.662341-56.566349-56.601163-206.976479 2.134908-335.954595 131.078209-96.594075 96.61353-152.681222 198.989775-152.681222 287.52035 0 169.337597 217.152361 272.292366 429.593589 272.292366 278.498445 0 463.752111-161.808592 463.752111-290.273715C893.345701 558.867622 827.968378 514.820945 769.226164 496.610234zM430.163922 866.063936c-169.51781 16.728051-315.851649-59.899262-326.864086-171.202185-11.010389-111.275277 117.530505-215.061482 287.031932-231.823323 169.537265-16.761841 315.876224 59.866496 326.86511 171.119247C728.190884 745.495411 599.705282 849.291856 430.163922 866.063936z" />
+	<path d="M954.16753 186.714824c-67.256246-74.565105-166.457264-102.990607-258.020739-83.522502l-0.037886 0c-21.188318 4.535015-34.695065 25.37929-30.159026 46.527675 4.516584 21.166816 25.352668 34.691993 46.54201 30.174385 65.139769-13.832358 135.634727 6.400627 183.442323 59.368863 47.765615 52.96414 60.740938 125.206957 40.282686 188.537431l0.011263 0.012287c-6.666851 20.629249 4.617954 42.698153 25.271777 49.366027 20.570885 6.662755 42.687913-4.607714 49.362955-25.188838 0-0.037886 0-0.116729 0.011263-0.150519C1039.577146 362.756133 1021.443231 261.206205 954.16753 186.714824" />
+	<path d="M850.886125 279.919669c-32.732179-36.315956-81.068126-50.108381-125.685136-40.621609-18.234261 3.885839-29.856965 21.833398-25.946551 40.085067 3.89915 18.173849 21.833398 29.851845 40.024654 25.893307l0 0.037886c21.809848-4.610786 45.459709 2.113405 61.461789 19.83365 16.018463 17.757107 20.323092 41.949655 13.45043 63.178931l0.035838 0c-5.715614 17.717174 3.983113 36.770584 21.717694 42.511796 17.7397 5.677728 36.76956-3.992328 42.493365-21.756603C892.458972 365.691759 883.686907 316.228458 850.886125 279.919669" />
+	<path d="M447.103928 548.691741c-80.666743-20.985579-171.84317 19.215193-206.880229 90.291746-35.685212 72.492657-1.180599 152.963828 80.321676 179.268757 84.41947 27.224424 183.926645-14.492797 218.521364-92.744074C573.187374 649.021137 530.586496 570.268131 447.103928 548.691741zM385.506979 733.819463c-16.398343 26.160554-51.51015 37.623523-77.954335 25.54824-26.066352-11.868448-33.760211-42.248645-17.360844-67.757975 16.197652-25.400793 50.129884-36.716316 76.378497-25.711046C393.129162 677.216253 401.60838 707.401901 385.506979 733.819463zM439.522702 664.493841c-5.929616 10.131852-19.03498 15.010909-29.304039 10.785123-10.096014-4.15411-13.261002-15.495231-7.522862-25.454038 5.906066-9.908634 18.500485-14.747758 28.572948-10.750309C441.502995 642.817105 445.180975 654.283146 439.522702 664.493841z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Telegram 上关注我。">
+        <a class="button button--circle telegram-button" itemprop="sameAs" href="https://t.me/Wholon" target="_blank">
+          <div class="icon"><?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+    <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 20.302734 2.984375 C 20.013769 2.996945 19.748583 3.080055 19.515625 3.171875 C 19.300407 3.256634 18.52754 3.5814726 17.296875 4.0976562 C 16.06621 4.61384 14.435476 5.2982348 12.697266 6.0292969 C 9.2208449 7.4914211 5.314238 9.1361259 3.3125 9.9785156 C 3.243759 10.007156 2.9645852 10.092621 2.65625 10.328125 C 2.3471996 10.564176 2.0039062 11.076462 2.0039062 11.636719 C 2.0039062 12.088671 2.2295201 12.548966 2.5019531 12.8125 C 2.7743861 13.076034 3.0504903 13.199244 3.28125 13.291016 C 3.9563403 13.559857 6.0424892 14.392968 6.9492188 14.755859 C 7.2668647 15.707799 8.0129251 17.950071 8.1875 18.501953 L 8.1855469 18.501953 C 8.3275588 18.951162 8.4659791 19.243913 8.6582031 19.488281 C 8.7543151 19.610465 8.8690398 19.721184 9.0097656 19.808594 C 9.0637596 19.842134 9.1235454 19.868148 9.1835938 19.892578 C 9.191962 19.896131 9.2005867 19.897012 9.2089844 19.900391 L 9.1855469 19.894531 C 9.2029579 19.901531 9.2185841 19.911859 9.2363281 19.917969 C 9.2652427 19.927926 9.2852873 19.927599 9.3242188 19.935547 C 9.4612233 19.977694 9.5979794 20.005859 9.7246094 20.005859 C 10.26822 20.005859 10.601562 19.710938 10.601562 19.710938 L 10.623047 19.695312 L 12.970703 17.708984 L 15.845703 20.367188 C 15.897113 20.439837 16.308174 20.998047 17.261719 20.998047 C 17.829844 20.998047 18.280978 20.718791 18.568359 20.423828 C 18.855741 20.128866 19.034757 19.82706 19.115234 19.417969 L 19.115234 19.414062 L 19.115234 19.412109 C 19.171124 19.121728 21.931641 5.265625 21.931641 5.265625 L 21.925781 5.2890625 C 22.01148 4.9067181 22.036735 4.5369631 21.935547 4.1601562 C 21.834358 3.7833495 21.561271 3.4156252 21.232422 3.2226562 C 20.903572 3.0296874 20.591699 2.9718046 20.302734 2.984375 z M 19.908203 5.1738281 C 19.799749 5.7182284 17.343164 18.059965 17.183594 18.878906 L 14.328125 16.240234 C 13.59209 15.559749 12.44438 15.535812 11.679688 16.181641 L 10.222656 17.414062 L 11 14.375 C 11 14.375 16.362547 8.9468594 16.685547 8.6308594 C 16.945547 8.3778594 17 8.2891719 17 8.2011719 C 17 8.0841719 16.939781 8 16.800781 8 C 16.675781 8 16.506016 8.1197812 16.416016 8.1757812 C 15.267511 8.8918132 10.350132 11.694224 7.96875 13.048828 C 7.8792978 12.995267 7.7913128 12.939666 7.6933594 12.900391 C 6.9119785 12.587666 5.4101276 11.985551 4.53125 11.634766 C 6.6055146 10.76177 10.161156 9.2658083 13.472656 7.8730469 C 15.210571 7.142109 16.840822 6.4570977 18.070312 5.9414062 C 19.108158 5.5060977 19.649538 5.2807035 19.908203 5.1738281 z M 17.152344 19.023438 C 17.152344 19.023438 17.154297 19.023438 17.154297 19.023438 C 17.154234 19.023761 17.152444 19.03095 17.152344 19.03125 C 17.154024 19.022709 17.151187 19.029588 17.152344 19.023438 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"/>
+</svg>
+</div>
+        </a>
+      </li><li title="在 Zhihu 上关注我。">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jeffrey-8-68" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Github 上关注我。">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/wholon" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+
+    </div>
+</div>
+<div class="article__license"><div class="license">
+    <p>本文遵守 <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> 许可协议。
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/cs/lang/java/2022/06/22/Spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1/">Spring声明式事物</a></div><div class="next"><span>下篇</span><a href="/posts/cs/se/database/2022/06/22/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/">数据库笔记</a></div></div></div>
+
+</div>
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    $(function() {
+      var $this ,$scroll;
+      var $articleContent = $('.js-article-content');
+      var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+      var scroll = hasSidebar ? '.js-page-main' : 'html, body';
+      $scroll = $(scroll);
+
+      $articleContent.find('.highlight').each(function() {
+        $this = $(this);
+        $this.attr('data-lang', $this.find('code').attr('data-lang'));
+      });
+      $articleContent.find('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').each(function() {
+        $this = $(this);
+        $this.append($('<a class="anchor d-print-none" aria-hidden="true"></a>').html('<i class="fas fa-anchor"></i>'));
+      });
+      $articleContent.on('click', '.anchor', function() {
+        $scroll.scrollToAnchor('#' + $(this).parent().attr('id'), 400);
+      });
+    });
+  });
+})();
+</script>
+</div><section
+                                        class="page__comments d-print-none"><div id="vcomments"></div>
+
+<!-- 在 valine 下方显示阅读量统计 --><script>
+  window.Lazyload.js(['https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js', 'https://cdn.bootcdn.net/ajax/libs/valine/1.4.18/Valine.min.js'], function() {
+    var _config = {
+      el: '#vcomments',
+      appId:  'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+      appKey: 'jVCnL11R3DvbBvS7T6Vg0lPc',
+      verify: false,
+      avatar: 'wavatar',
+    };_config.placeholder = '添加评论';_config.lang = 'zh-CN';new Valine(_config);
+  });
+</script></section></article><!-- start custom main bottom snippet -->
+
+<!-- end custom main bottom snippet -->
+</div>
+                          </div></div></div><div
+                          class="page__footer d-print-none">
+<footer class="footer py-4 js-page-footer">
+  <div class="main"><div itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Holon"><meta itemprop="url" content="https://holon.wang"><meta itemprop="description" content="Keep it simple, Stupid"><div class="footer__author-links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="https://holon.wang"><li title="给我发邮件。">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:holon.cn@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="在 Weibo 上关注我。">
+        <a class="button button--circle weibo-button" itemprop="sameAs" href="https://weibo.com/5718657072" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<path d="M769.226164 496.610234c-14.420098-4.330228-24.309277-7.266877-16.746482-26.214823 16.350218-41.133578 18.046881-76.626289 0.307181-101.939024-33.242099-47.500415-124.194284-44.928286-228.44638-1.280945 0-0.056317-32.73525 14.323848-24.371737-11.64523 16.042013-51.54906 13.626547-94.739726-11.332929-119.662341-56.566349-56.601163-206.976479 2.134908-335.954595 131.078209-96.594075 96.61353-152.681222 198.989775-152.681222 287.52035 0 169.337597 217.152361 272.292366 429.593589 272.292366 278.498445 0 463.752111-161.808592 463.752111-290.273715C893.345701 558.867622 827.968378 514.820945 769.226164 496.610234zM430.163922 866.063936c-169.51781 16.728051-315.851649-59.899262-326.864086-171.202185-11.010389-111.275277 117.530505-215.061482 287.031932-231.823323 169.537265-16.761841 315.876224 59.866496 326.86511 171.119247C728.190884 745.495411 599.705282 849.291856 430.163922 866.063936z" />
+	<path d="M954.16753 186.714824c-67.256246-74.565105-166.457264-102.990607-258.020739-83.522502l-0.037886 0c-21.188318 4.535015-34.695065 25.37929-30.159026 46.527675 4.516584 21.166816 25.352668 34.691993 46.54201 30.174385 65.139769-13.832358 135.634727 6.400627 183.442323 59.368863 47.765615 52.96414 60.740938 125.206957 40.282686 188.537431l0.011263 0.012287c-6.666851 20.629249 4.617954 42.698153 25.271777 49.366027 20.570885 6.662755 42.687913-4.607714 49.362955-25.188838 0-0.037886 0-0.116729 0.011263-0.150519C1039.577146 362.756133 1021.443231 261.206205 954.16753 186.714824" />
+	<path d="M850.886125 279.919669c-32.732179-36.315956-81.068126-50.108381-125.685136-40.621609-18.234261 3.885839-29.856965 21.833398-25.946551 40.085067 3.89915 18.173849 21.833398 29.851845 40.024654 25.893307l0 0.037886c21.809848-4.610786 45.459709 2.113405 61.461789 19.83365 16.018463 17.757107 20.323092 41.949655 13.45043 63.178931l0.035838 0c-5.715614 17.717174 3.983113 36.770584 21.717694 42.511796 17.7397 5.677728 36.76956-3.992328 42.493365-21.756603C892.458972 365.691759 883.686907 316.228458 850.886125 279.919669" />
+	<path d="M447.103928 548.691741c-80.666743-20.985579-171.84317 19.215193-206.880229 90.291746-35.685212 72.492657-1.180599 152.963828 80.321676 179.268757 84.41947 27.224424 183.926645-14.492797 218.521364-92.744074C573.187374 649.021137 530.586496 570.268131 447.103928 548.691741zM385.506979 733.819463c-16.398343 26.160554-51.51015 37.623523-77.954335 25.54824-26.066352-11.868448-33.760211-42.248645-17.360844-67.757975 16.197652-25.400793 50.129884-36.716316 76.378497-25.711046C393.129162 677.216253 401.60838 707.401901 385.506979 733.819463zM439.522702 664.493841c-5.929616 10.131852-19.03498 15.010909-29.304039 10.785123-10.096014-4.15411-13.261002-15.495231-7.522862-25.454038 5.906066-9.908634 18.500485-14.747758 28.572948-10.750309C441.502995 642.817105 445.180975 654.283146 439.522702 664.493841z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Telegram 上关注我。">
+        <a class="button button--circle telegram-button" itemprop="sameAs" href="https://t.me/Wholon" target="_blank">
+          <div class="icon"><?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+    <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 20.302734 2.984375 C 20.013769 2.996945 19.748583 3.080055 19.515625 3.171875 C 19.300407 3.256634 18.52754 3.5814726 17.296875 4.0976562 C 16.06621 4.61384 14.435476 5.2982348 12.697266 6.0292969 C 9.2208449 7.4914211 5.314238 9.1361259 3.3125 9.9785156 C 3.243759 10.007156 2.9645852 10.092621 2.65625 10.328125 C 2.3471996 10.564176 2.0039062 11.076462 2.0039062 11.636719 C 2.0039062 12.088671 2.2295201 12.548966 2.5019531 12.8125 C 2.7743861 13.076034 3.0504903 13.199244 3.28125 13.291016 C 3.9563403 13.559857 6.0424892 14.392968 6.9492188 14.755859 C 7.2668647 15.707799 8.0129251 17.950071 8.1875 18.501953 L 8.1855469 18.501953 C 8.3275588 18.951162 8.4659791 19.243913 8.6582031 19.488281 C 8.7543151 19.610465 8.8690398 19.721184 9.0097656 19.808594 C 9.0637596 19.842134 9.1235454 19.868148 9.1835938 19.892578 C 9.191962 19.896131 9.2005867 19.897012 9.2089844 19.900391 L 9.1855469 19.894531 C 9.2029579 19.901531 9.2185841 19.911859 9.2363281 19.917969 C 9.2652427 19.927926 9.2852873 19.927599 9.3242188 19.935547 C 9.4612233 19.977694 9.5979794 20.005859 9.7246094 20.005859 C 10.26822 20.005859 10.601562 19.710938 10.601562 19.710938 L 10.623047 19.695312 L 12.970703 17.708984 L 15.845703 20.367188 C 15.897113 20.439837 16.308174 20.998047 17.261719 20.998047 C 17.829844 20.998047 18.280978 20.718791 18.568359 20.423828 C 18.855741 20.128866 19.034757 19.82706 19.115234 19.417969 L 19.115234 19.414062 L 19.115234 19.412109 C 19.171124 19.121728 21.931641 5.265625 21.931641 5.265625 L 21.925781 5.2890625 C 22.01148 4.9067181 22.036735 4.5369631 21.935547 4.1601562 C 21.834358 3.7833495 21.561271 3.4156252 21.232422 3.2226562 C 20.903572 3.0296874 20.591699 2.9718046 20.302734 2.984375 z M 19.908203 5.1738281 C 19.799749 5.7182284 17.343164 18.059965 17.183594 18.878906 L 14.328125 16.240234 C 13.59209 15.559749 12.44438 15.535812 11.679688 16.181641 L 10.222656 17.414062 L 11 14.375 C 11 14.375 16.362547 8.9468594 16.685547 8.6308594 C 16.945547 8.3778594 17 8.2891719 17 8.2011719 C 17 8.0841719 16.939781 8 16.800781 8 C 16.675781 8 16.506016 8.1197812 16.416016 8.1757812 C 15.267511 8.8918132 10.350132 11.694224 7.96875 13.048828 C 7.8792978 12.995267 7.7913128 12.939666 7.6933594 12.900391 C 6.9119785 12.587666 5.4101276 11.985551 4.53125 11.634766 C 6.6055146 10.76177 10.161156 9.2658083 13.472656 7.8730469 C 15.210571 7.142109 16.840822 6.4570977 18.070312 5.9414062 C 19.108158 5.5060977 19.649538 5.2807035 19.908203 5.1738281 z M 17.152344 19.023438 C 17.152344 19.023438 17.154297 19.023438 17.154297 19.023438 C 17.154234 19.023761 17.152444 19.03095 17.152344 19.03125 C 17.154024 19.022709 17.151187 19.029588 17.152344 19.023438 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"/>
+</svg>
+</div>
+        </a>
+      </li><li title="在 Zhihu 上关注我。">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jeffrey-8-68" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Github 上关注我。">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/wholon" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+    </div>
+    <!--    在非文章的页脚显示总浏览量 使用VALINE统计    --><!--    在网站底部显示总访问量 使用 leanCLoud统计， key: 网站浏览量  -->
+    <div class="article__content code.info" style="text-align: center">
+      <code class="language-plaintext warning highlighter-rouge">总点击量</code>
+      <code id="site-view" class="js-pageview language-plaintext success highlighter-rouge" data-page-key="网站浏览量">0</code>
+    </div><div class="site-info mt-2">
+      <div>© Holon's Blog 2022,
+        Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/" target="_blank">Jekyll</a>/<a title="Jekyll中文文档." href="http://jekyllcn.com" target="_blank">Jekyllcn</a> & <a
+        title="TeXt is a super customizable Jekyll theme." href="https://tianqi.name/jekyll-TeXt-theme/docs/zh/quick-start" target="_blank">TeXt Theme</a>.
+      </div>
+    </div>
+  </div>
+</footer>
+</div></div>
+                  </div><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $body = $('body'), $window = $(window);
+    var $pageRoot = $('.js-page-root'), $pageMain = $('.js-page-main');
+    var activeCount = 0;
+    function modal(options) {
+      var $root = this, visible, onChange, hideWhenWindowScroll = false;
+      var scrollTop;
+      function setOptions(options) {
+        var _options = options || {};
+        visible = _options.initialVisible === undefined ? false : show;
+        onChange = _options.onChange;
+        hideWhenWindowScroll = _options.hideWhenWindowScroll;
+      }
+      function init() {
+        setState(visible);
+      }
+      function setState(isShow) {
+        if (isShow === visible) {
+          return;
+        }
+        visible = isShow;
+        if (visible) {
+          activeCount++;
+          scrollTop = $(window).scrollTop() || $pageMain.scrollTop();
+          $root.addClass('modal--show');
+          $pageMain.scrollTop(scrollTop);
+          activeCount === 1 && ($pageRoot.addClass('show-modal'), $body.addClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.on('scroll', hide);
+          $window.on('keyup', handleKeyup);
+        } else {
+          activeCount > 0 && activeCount--;
+          $root.removeClass('modal--show');
+          $window.scrollTop(scrollTop);
+          activeCount === 0 && ($pageRoot.removeClass('show-modal'), $body.removeClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.off('scroll', hide);
+          $window.off('keyup', handleKeyup);
+        }
+        onChange && onChange(visible);
+      }
+      function show() {
+        setState(true);
+      }
+      function hide() {
+        setState(false);
+      }
+      function handleKeyup(e) {
+        // Char Code: 27  ESC
+        if (e.which ===  27) {
+          hide();
+        }
+      }
+      setOptions(options);
+      init();
+      return {
+        show: show,
+        hide: hide,
+        $el: $root
+      };
+    }
+    $.fn.modal = modal;
+  });
+})();
+</script><div
+                  class="modal modal--overflow page__search-modal d-print-none js-page-search-modal"><script>
+(function () {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    // search panel
+    var search = (window.search || (window.search = {}));
+    var useDefaultSearchBox = window.useDefaultSearchBox === undefined ?
+      true : window.useDefaultSearchBox ;
+
+    var $searchModal = $('.js-page-search-modal');
+    var $searchToggle = $('.js-search-toggle');
+    var searchModal = $searchModal.modal({ onChange: handleModalChange, hideWhenWindowScroll: true });
+    var modalVisible = false;
+    search.searchModal = searchModal;
+
+    var $searchBox = null;
+    var $searchInput = null;
+    var $searchClear = null;
+
+    function getModalVisible() {
+      return modalVisible;
+    }
+    search.getModalVisible = getModalVisible;
+
+    function handleModalChange(visible) {
+      modalVisible = visible;
+      if (visible) {
+        search.onShow && search.onShow();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].focus();
+      } else {
+        search.onShow && search.onHide();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].blur();
+        setTimeout(function() {
+          useDefaultSearchBox && ($searchInput.val(''), $searchBox.removeClass('not-empty'));
+          search.clear && search.clear();
+          window.pageAsideAffix && window.pageAsideAffix.refresh();
+        }, 400);
+      }
+    }
+
+    $searchToggle.on('click', function() {
+      modalVisible ? searchModal.hide() : searchModal.show();
+    });
+    // Char Code: 83  S, 191 /
+    $(window).on('keyup', function(e) {
+      if (!modalVisible && !window.isFormElement(e.target || e.srcElement) && (e.which === 83 || e.which === 191)) {
+        modalVisible || searchModal.show();
+      }
+    });
+
+    if (useDefaultSearchBox) {
+      $searchBox = $('.js-search-box');
+      $searchInput = $searchBox.children('input');
+      $searchClear = $searchBox.children('.js-icon-clear');
+      search.getSearchInput = function() {
+        return $searchInput.get(0);
+      };
+      search.getVal = function() {
+        return $searchInput.val();
+      };
+      search.setVal = function(val) {
+        $searchInput.val(val);
+      };
+
+      $searchInput.on('focus', function() {
+        $(this).addClass('focus');
+      });
+      $searchInput.on('blur', function() {
+        $(this).removeClass('focus');
+      });
+      $searchInput.on('input', window.throttle(function() {
+        var val = $(this).val();
+        if (val === '' || typeof val !== 'string') {
+          search.clear && search.clear();
+        } else {
+          $searchBox.addClass('not-empty');
+          search.onInputNotEmpty && search.onInputNotEmpty(val);
+        }
+      }, 400));
+      $searchClear.on('click', function() {
+        $searchInput.val(''); $searchBox.removeClass('not-empty');
+        search.clear && search.clear();
+      });
+    }
+  });
+})();
+</script><div class="search search--dark">
+  <div class="main">
+    <div class="search__header">搜索</div>
+    <div class="search-bar">
+      <div class="search-box js-search-box">
+        <div class="search-box__icon-search"><i class="fas fa-search"></i></div>
+        <input type="text" />
+        <div class="search-box__icon-clear js-icon-clear">
+          <a><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      <button class="button button--theme-dark button--pill search__cancel js-search-toggle">
+        取消</button>
+    </div>
+    <div class="search-result js-search-result"></div>
+  </div>
+</div>
+<script>var SOURCES = window.TEXT_VARIABLES.sources;
+var PAHTS = window.TEXT_VARIABLES.paths;
+window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
+  var search = (window.search || (window.search = {}));
+  var searchData = window.TEXT_SEARCH_DATA || {};
+
+  function memorize(f) {
+    var cache = {};
+    return function () {
+      var key = Array.prototype.join.call(arguments, ',');
+      if (key in cache) return cache[key];
+      else return cache[key] = f.apply(this, arguments);
+    };
+  }
+
+  /// search
+  function searchByQuery(query) {
+    var i, j, key, keys, cur, _title, result = {};
+    keys = Object.keys(searchData);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      for (j = 0; j < searchData[key].length; j++) {
+        cur = searchData[key][j], _title = cur.title;
+        if ((result[key] === undefined || result[key] && result[key].length < 4 )
+          && _title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
+          if (result[key] === undefined) {
+            result[key] = [];
+          }
+          result[key].push(cur);
+        }
+      }
+    }
+    return result;
+  }
+
+  var renderHeader = memorize(function(header) {
+    return $('<p class="search-result__header">' + header + '</p>');
+  });
+
+  var renderItem = function(index, title, url) {
+    return $('<li class="search-result__item" data-index="' + index + '"><a class="button" href="' + url + '">' + title + '</a></li>');
+  };
+
+  function render(data) {
+    if (!data) { return null; }
+    var $root = $('<ul></ul>'), i, j, key, keys, cur, itemIndex = 0;
+    keys = Object.keys(data);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      $root.append(renderHeader(key));
+      for (j = 0; j < data[key].length; j++) {
+        cur = data[key][j];
+        $root.append(renderItem(itemIndex++, cur.title, cur.url));
+      }
+    }
+    return $root;
+  }
+
+  // search box
+  var $result = $('.js-search-result'), $resultItems;
+  var lastActiveIndex, activeIndex;
+
+  function clear() {
+    $result.html(null);
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+  }
+  function onInputNotEmpty(val) {
+    $result.html(render(searchByQuery(val)));
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+    $resultItems.eq(0).addClass('active');
+  }
+
+  search.clear = clear;
+  search.onInputNotEmpty = onInputNotEmpty;
+
+  function updateResultItems() {
+    lastActiveIndex >= 0 && $resultItems.eq(lastActiveIndex).removeClass('active');
+    activeIndex >= 0 && $resultItems.eq(activeIndex).addClass('active');
+  }
+
+  function moveActiveIndex(direction) {
+    var itemsCount = $resultItems ? $resultItems.length : 0;
+    if (itemsCount > 1) {
+      lastActiveIndex = activeIndex;
+      if (direction === 'up') {
+        activeIndex = (activeIndex - 1 + itemsCount) % itemsCount;
+      } else if (direction === 'down') {
+        activeIndex = (activeIndex + 1 + itemsCount) % itemsCount;
+      }
+      updateResultItems();
+    }
+  }
+
+  // Char Code: 13  Enter, 37  ⬅, 38  ⬆, 39  ➡, 40  ⬇
+  $(window).on('keyup', function(e) {
+    var modalVisible = search.getModalVisible && search.getModalVisible();
+    if (modalVisible) {
+      if (e.which === 38) {
+        modalVisible && moveActiveIndex('up');
+      } else if (e.which === 40) {
+        modalVisible && moveActiveIndex('down');
+      } else if (e.which === 13) {
+        modalVisible && $resultItems && activeIndex >= 0 && $resultItems.eq(activeIndex).children('a')[0].click();
+      }
+    }
+  });
+
+  $result.on('mouseover', '.search-result__item > a', function() {
+    var itemIndex = $(this).parent().data('index');
+    itemIndex >= 0 && (lastActiveIndex = activeIndex, activeIndex = itemIndex, updateResultItems());
+  });
+});
+</script>
+</div></div>
+
+
+            <script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function scrollToAnchor(anchor, duration, callback) {
+      var $root = this;
+      $root.animate({ scrollTop: $(anchor).position().top }, duration, function() {
+        window.history.replaceState(null, '', window.location.href.split('#')[0] + anchor);
+        callback && callback();
+      });
+    }
+    $.fn.scrollToAnchor = scrollToAnchor;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function affix(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroll,
+        offsetBottom = 0, scrollTarget = window, scroll = window.document, disabled = false, isOverallScroller = true,
+        rootTop, rootLeft, rootHeight, scrollBottom, rootBottomTop,
+        hasInit = false, curState;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.offsetBottom && (offsetBottom = _options.offsetBottom);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroll && (scroll = _options.scroll);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $scrollTarget = $(scrollTarget);
+        isOverallScroller = window.isOverallScroller($scrollTarget[0]);
+        $scroll = $(scroll);
+      }
+      function preCalc() {
+        top();
+        rootHeight = $root.outerHeight();
+        rootTop = $root.offset().top + (isOverallScroller ? 0 :  $scrollTarget.scrollTop());
+        rootLeft = $root.offset().left;
+      }
+      function calc(needPreCalc) {
+        needPreCalc && preCalc();
+        scrollBottom = $scroll.outerHeight() - offsetBottom - rootHeight;
+        rootBottomTop = scrollBottom - rootTop;
+      }
+      function top() {
+        if (curState !== 'top') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: 0
+          });
+          curState = 'top';
+        }
+      }
+      function fixed() {
+        if (curState !== 'fixed') {
+          $root.addClass('fixed').css({
+            left: rootLeft + 'px',
+            top: 0
+          });
+          curState = 'fixed';
+        }
+      }
+      function bottom() {
+        if (curState !== 'bottom') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: rootBottomTop + 'px'
+          });
+          curState = 'bottom';
+        }
+      }
+      function setState() {
+        var scrollTop = $scrollTarget.scrollTop();
+        if (scrollTop >= rootTop && scrollTop <= scrollBottom) {
+          fixed();
+        } else if (scrollTop < rootTop) {
+          top();
+        } else {
+          bottom();
+        }
+      }
+      function init() {
+        if(!hasInit) {
+          var interval, timeout;
+          calc(true); setState();
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState();
+          });
+          $window.on('resize', function() {
+            disabled || (calc(true), setState());
+          });
+          hasInit = true;
+        }
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions,
+        refresh: function() {
+          calc(true, { animation: false }); setState();
+        }
+      };
+    }
+    $.fn.affix = affix;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function toc(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroller, $tocUl = $('<ul class="toc toc--ellipsis"></ul>'), $tocLi, $headings, $activeLast, $activeCur,
+        selectors = 'h1,h2,h3', container = 'body', scrollTarget = window, scroller = 'html, body', disabled = false,
+        headingsPos, scrolling = false, hasRendered = false, hasInit = false;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.selectors && (selectors = _options.selectors);
+        _options.container && (container = _options.container);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroller && (scroller = _options.scroller);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $headings = $(container).find(selectors).filter('[id]');
+        $scrollTarget = $(scrollTarget);
+        $scroller = $(scroller);
+      }
+      function calc() {
+        headingsPos = [];
+        $headings.each(function() {
+          headingsPos.push(Math.floor($(this).position().top));
+        });
+      }
+      function setState(element, disabled) {
+        var scrollTop = $scrollTarget.scrollTop(), i;
+        if (disabled || !headingsPos || headingsPos.length < 1) { return; }
+        if (element) {
+          $activeCur = element;
+        } else {
+          for (i = 0; i < headingsPos.length; i++) {
+            if (scrollTop >= headingsPos[i]) {
+              $activeCur = $tocLi.eq(i);
+            } else {
+              $activeCur || ($activeCur = $tocLi.eq(i));
+              break;
+            }
+          }
+        }
+        $activeLast && $activeLast.removeClass('active');
+        ($activeLast = $activeCur).addClass('active');
+      }
+      function render() {
+        if(!hasRendered) {
+          $root.append($tocUl);
+          $headings.each(function() {
+            var $this = $(this);
+            $tocUl.append($('<li></li>').addClass('toc-' + $this.prop('tagName').toLowerCase())
+              .append($('<a></a>').text($this.text()).attr('href', '#' + $this.prop('id'))));
+          });
+          $tocLi = $tocUl.children('li');
+          $tocUl.on('click', 'a', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            scrolling = true;
+            setState($this.parent());
+            $scroller.scrollToAnchor($this.attr('href'), 400, function() {
+              scrolling = false;
+            });
+          });
+        }
+        hasRendered = true;
+      }
+      function init() {
+        var interval, timeout;
+        if(!hasInit) {
+          render(); calc(); setState(null, scrolling);
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState(null, scrolling);
+          });
+          $window.on('resize', window.throttle(function() {
+            if (!disabled) {
+              render(); calc(); setState(null, scrolling);
+            }
+          }, 100));
+        }
+        hasInit = true;
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions
+      };
+    }
+    $.fn.toc = toc;
+  });
+})();
+/*(function () {
+
+})();*/
+</script><script>
+                /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script>
+  window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.bootcdn.net/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js'], function() {
+    var $canvas = null, $this = null, _ctx = null, _text = '';
+    $('.language-chart').each(function(){
+      $this = $(this);
+      $canvas = $('<canvas></canvas>');
+      _text = $this.text();
+      $this.text('').append($canvas);
+      _ctx = $canvas.get(0).getContext('2d');
+      (_ctx && _text) && (new Chart(_ctx, JSON.parse(_text)) && $this.attr('data-processed', true));
+    });
+  });
+</script>
+<script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};_config.TeX = { equationNumbers: { autoNumber: "all" } };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  window.Lazyload.js('https://cdn.bootcdn.net/ajax/libs/mermaid/9.0.0/mermaid.js', function() {
+    mermaid.initialize({
+      startOnLoad: true
+    });
+    mermaid.init(undefined, '.language-mermaid');
+  });
+</script>
+<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      serverURLs: 'https://avoscloud.com',
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      
+      blog.set('title', title);
+      // 将插入的 key 设置为 title
+      // blog.set('key', key);
+      blog.set('key', title);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+        appKey:   'jVCnL11R3DvbBvS7T6Vg0lPc',
+        appClass: 'BlogPageView'
+      });
+      //  总浏览量增加
+      pageview.increase("网站浏览量", "网站浏览量", function(view) {
+        $("#site-view").text(view);
+      });
+      // 文章浏览量增加
+      var key =   'Linux 命令详解手册';
+      var title = "Linux 命令详解手册";
+      pageview.increase(key, key, function(view) {
+        $("[data-page-key='Linux 命令详解手册']").text(view);
+      });
+    });
+  </script><!-- start custom pageview snippet (for the post) -->
+
+<!-- end custom pageview snippet (for the post) -->
+
+
+<!---->
+<!---->
+<!---->
+<!---->
+<!--<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      serverURLs: 'https://avoscloud.com',
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      
+      blog.set('title', title);
+      // 将插入的 key 设置为 title
+      // blog.set('key', key);
+      blog.set('key', title);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+        appKey:   'jVCnL11R3DvbBvS7T6Vg0lPc',
+        appClass: 'BlogPageView'
+      });
+      //  总浏览量增加
+      pageview.increase("网站浏览量", "网站浏览量", function(view) {
+        $("#site-view").text(view);
+      });
+      // 文章浏览量增加
+      var key =   'Linux 命令详解手册';
+      var title = "Linux 命令详解手册";
+      pageview.increase(key, key, function(view) {
+        $("[data-page-key='Linux 命令详解手册']").text(view);
+      });
+    });
+  </script>-->
+<!---->
+<!---->
+<!---->
+<!---->
+
+    </div>
+    <script>(function () {
+  var $root = document.getElementsByClassName('root')[0];
+  if (window.hasEvent('touchstart')) {
+    $root.dataset.isTouch = true;
+    document.addEventListener('touchstart', function(){}, false);
+  }
+})();
+</script>
+  </body>
+</html>
+

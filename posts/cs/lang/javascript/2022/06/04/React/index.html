@@ -1,0 +1,2644 @@
+<!DOCTYPE html><html lang="zh">
+  <head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>React - Holon's Blog</title>
+
+<meta name="description" content="React 是一个流行的 JavaScript 库，用于为网页或应用程序构建可重用的组件驱动的用户界面。React 将 HTML 与 JavaScript 结合在了一起，以此创建出一个新的标记语言 JSX。React 还使得管理整个应用程序的数据流变得更容易。在这个课程中，你将学习如何创建不同的 React 组件...">
+<link rel="canonical" href="https://wholon.github.io/posts/cs/lang/javascript/2022/06/04/React/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
+
+<meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/browserconfig.xml">
+
+<meta name="theme-color" content="#ffffff">
+<!-- <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/browserconfig.xml">
+<meta name="theme-color" content="#ffffff"> -->
+<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.1/css/all.css" ><!-- start custom head snippets -->
+
+<!-- end custom head snippets -->
+<script>(function() {
+  window.isArray = function(val) {
+    return Object.prototype.toString.call(val) === '[object Array]';
+  };
+  window.isString = function(val) {
+    return typeof val === 'string';
+  };
+
+  window.hasEvent = function(event) {
+    return 'on'.concat(event) in window.document;
+  };
+
+  window.isOverallScroller = function(node) {
+    return node === document.documentElement || node === document.body || node === window;
+  };
+
+  window.isFormElement = function(node) {
+    var tagName = node.tagName;
+    return tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
+  };
+
+  window.pageLoad = (function () {
+    var loaded = false, cbs = [];
+    window.addEventListener('load', function () {
+      var i;
+      loaded = true;
+      if (cbs.length > 0) {
+        for (i = 0; i < cbs.length; i++) {
+          cbs[i]();
+        }
+      }
+    });
+    return {
+      then: function(cb) {
+        cb && (loaded ? cb() : (cbs.push(cb)));
+      }
+    };
+  })();
+})();
+(function() {
+  window.throttle = function(func, wait) {
+    var args, result, thisArg, timeoutId, lastCalled = 0;
+
+    function trailingCall() {
+      lastCalled = new Date;
+      timeoutId = null;
+      result = func.apply(thisArg, args);
+    }
+    return function() {
+      var now = new Date,
+        remaining = wait - (now - lastCalled);
+
+      args = arguments;
+      thisArg = this;
+
+      if (remaining <= 0) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+        lastCalled = now;
+        result = func.apply(thisArg, args);
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(trailingCall, remaining);
+      }
+      return result;
+    };
+  };
+})();
+(function() {
+  var Set = (function() {
+    var add = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (data[i] === item) {
+          return;
+        }
+      }
+      this.size ++;
+      data.push(item);
+      return data;
+    };
+
+    var Set = function(data) {
+      this.size = 0;
+      this._data = [];
+      var i;
+      if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+          add.call(this, data[i]);
+        }
+      }
+    };
+    Set.prototype.add = add;
+    Set.prototype.get = function(index) { return this._data[index]; };
+    Set.prototype.has = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (this.get(i) === item) {
+          return true;
+        }
+      }
+      return false;
+    };
+    Set.prototype.is = function(map) {
+      if (map._data.length !== this._data.length) { return false; }
+      var i, j, flag, tData = this._data, mData = map._data;
+      for (i = 0; i < tData.length; i++) {
+        for (flag = false, j = 0; j < mData.length; j++) {
+          if (tData[i] === mData[j]) {
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) { return false; }
+      }
+      return true;
+    };
+    Set.prototype.values = function() {
+      return this._data;
+    };
+    return Set;
+  })();
+
+  window.Lazyload = (function(doc) {
+    var queue = {js: [], css: []}, sources = {js: {}, css: {}}, context = this;
+    var createNode = function(name, attrs) {
+      var node = doc.createElement(name), attr;
+      for (attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) {
+          node.setAttribute(attr, attrs[attr]);
+        }
+      }
+      return node;
+    };
+    var end = function(type, url) {
+      var s, q, qi, cbs, i, j, cur, val, flag;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        s[url] = true;
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (cur.urls.has(url)) {
+            qi = cur, val = qi.urls.values();
+            qi && (cbs = qi.callbacks);
+            for (flag = true, j = 0; j < val.length; j++) {
+              cur = val[j];
+              if (!s[cur]) {
+                flag = false;
+              }
+            }
+            if (flag && cbs && cbs.length > 0) {
+              for (j = 0; j < cbs.length; j++) {
+                cbs[j].call(context);
+              }
+              qi.load = true;
+            }
+          }
+        }
+      }
+    };
+    var load = function(type, urls, callback) {
+      var s, q, qi, node, i, cur,
+        _urls = typeof urls === 'string' ? new Set([urls]) : new Set(urls), val, url;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (_urls.is(cur.urls)) {
+            qi = cur;
+            break;
+          }
+        }
+        val = _urls.values();
+        if (qi) {
+          callback && (qi.load || qi.callbacks.push(callback));
+          callback && (qi.load && callback());
+        } else {
+          q.push({
+            urls: _urls,
+            callbacks: callback ? [callback] : [],
+            load: false
+          });
+          for (i = 0; i < val.length; i++) {
+            node = null, url = val[i];
+            if (s[url] === undefined) {
+              (type === 'js' ) && (node = createNode('script', { src: url }));
+              (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
+              if (node) {
+                node.onload = (function(type, url) {
+                  return function() {
+                    end(type, url);
+                  };
+                })(type, url);
+                (doc.head || doc.body).appendChild(node);
+                s[url] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+    return {
+      js: function(url, callback) {
+        load('js', url, callback);
+      },
+      css: function(url, callback) {
+        load('css', url, callback);
+      }
+    };
+  })(this.document);
+})();
+</script><script>
+  (function() {
+    var TEXT_VARIABLES = {
+      version: '2.2.6',
+      sources: {
+        font_awesome: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.1/css/all.css',
+        jquery: 'https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js',
+        leancloud_js_sdk: 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js',
+        chart: 'https://cdn.bootcdn.net/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js',
+        gitalk: {
+          js: 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.2.2/gitalk.min.js',
+          css: 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.2.2/gitalk.min.css'
+        },
+        valine: 'https://cdn.bootcdn.net/ajax/libs/valine/1.4.18/Valine.min.js',
+        mathjax: 'https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML',
+        mermaid: 'https://cdn.bootcdn.net/ajax/libs/mermaid/9.0.0/mermaid.js'
+      },
+      site: {
+        toc: {
+          selectors: 'h1,h2,h3,h4,h5,h6'
+        }
+      },
+      paths: {
+        search_js: '/assets/search.js'
+      }
+    };
+    window.TEXT_VARIABLES = TEXT_VARIABLES;
+  })();
+</script>
+</head>
+  <body>
+    <div class="root" data-is-touch="false">
+      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport has-aside cell cell--auto">
+
+          <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
+      <div class="header__title">
+        <div class="header__brand"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240px" height="240px" viewBox="0 0 240 240" enable-background="new 0 0 240 240" xml:space="preserve">  <image id="image0" width="240" height="240" x="0" y="0"
+    href="data:image/png;base64,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
+zbrW+o4N2YZlI7JZZXPW5r2tnW2a7TzbBtvndoZ2XLtiu1q7e/Y0+yD7ifbV9tcciA4shzyHdQ6X
+HVFHL0eRY5XjJSfUydtJ7LTOqW0YYZjvMMmw6mE3nanObOci51rnhy4GLjEuJS4NLq+GWw/PGL50
++NnhX129XPNdt7jeddN1i3IrcWtye+Pu6M53r3K/5kHzCPeY6dHo8drTyVPoud7zlhfDa6TXPK9m
+ry/ePt4y7zrvTh9rn0yftT43WXqseNZC1jlfgm+I70zfw74f/bz9Cv32+f3p7+yf57/D//kIuxHC
+EVtGPA6wDOAFbApoD2QGZgZuDGwPsgjiBVUHPQq2ChYEbw1+xnZg57J3sl+FuIbIQg6EvOf4caZz
+jodioRGhZaGtYbphKWFrwh6EW4bnhNeGd0d4RUyNOB5JiIyOXBp5k2vK5XNruN1RPlHTo05FU6OT
+otdEP4pxjJHFNI1ER0aNXD7yXqxNrCS2IQ7EceOWx92Pt4ufGH8ogZgQn1CV8DTRLXFa4tkkRtL4
+pB1J75JDkhcn302xT1GkNKfSU8ek1qS+TwtNW5bWPmr4qOmjLqYbp4vTGzNIGakZWzN6RoeNXjm6
+Y4zXmNIxN8bajZ089vw443H5446Mp4/njd+fSchMy9yR+ZkXx6vm9WRxs9ZmdfM5/FX8l4JgwQpB
+pzBAuEz4LDsge1n285yAnOU5naIgUYWoS8wRrxG/zo3M3ZD7Pi8ub1teX35a/u4CjYLMgoMSXUme
+5NQEswmTJ7RJnaSl0vaJfhNXTuyWRcu2yhH5WHljoR78qG9R2Ct+UjwsCiyqKvowKXXS/sk6kyWT
+W6Y4Tlkw5VlxePEvU/Gp/KnN0yymzZ72cDp7+qYZyIysGc0zrWbOndkxK2LW9tmU2XmzfytxLVlW
+8tectDlNc03nzpr7+KeIn2pLtUplpTfn+c/bMB+fL57fusBjweoFX8sEZRfKXcsryj8v5C+88LPb
+z5U/9y3KXtS62Hvx+iXEJZIlN5YGLd2+TGdZ8bLHy0cur1/BXFG24q+V41eer/Cs2LCKskqxqr0y
+prJxtfXqJas/rxGtuV4VUrV7rcnaBWvfrxOsu7I+eH3dBtMN5Rs+bRRvvLUpYlN9tW11xWbi5qLN
+T7ekbjn7C+uXmq3GW8u3ftkm2da+PXH7qRqfmpodJjsW16K1itrOnWN2Xt4Vuquxzrlu026D3eV7
+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
+b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
+</svg>
+<a title="Think Different" href="/">Holon's Blog</a></div>
+<!--        <p>Think Different</p>--><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
+        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item navigation__item--active"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+      </nav></div>
+  </header>
+</div><div class="page__content"><div class="main"><div class="grid grid--reverse">
+                            <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root">
+    <!-- 固定于 TOC 顶部的文章标题 -->
+    <a href="#" name="点击返回顶部">React</a>
+</div>
+</aside></div>
+
+                            <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
+
+<!-- end custom main top snippet -->
+<article itemscope
+                                       itemtype="http://schema.org/Article"><div class="article__header"><header><h1>React</h1></header></div><meta itemprop="headline" content="React"><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+      
+
+    
+    
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/">编程语言</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/javascript/">JavaScript</a>
+      </li>
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 06月04日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="React">0</span> 阅读</li></ul></div>
+    <!-- 展示更新时间 -->
+    
+<div class="article__info clearfix"><li class="right-col menu">
+    <time itemprop="dateModified" datetime="2023-12-15T08:24:22+08:00">更新于2023年12月15日 08:24:22</time>
+  </li></div>
+
+
+    
+<div class="article__info clearfix">
+  <li class="right-col menu">
+    <span>
+      
+      
+      预计阅读时间 39 分
+      
+    </span>
+  </li>
+</div>
+
+
+
+<!-- /展示更新时间 --><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-06-04T00:00:00+08:00"><div
+                                      class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+
+<!-- end custom article top snippet -->
+<div class="article__content" itemprop="articleBody"><p>React 是一个流行的 JavaScript 库，用于为网页或应用程序构建可重用的组件驱动的用户界面。</p>
+
+<p>React 将 HTML 与 JavaScript 结合在了一起，以此创建出一个新的标记语言 JSX。React 还使得管理整个应用程序的数据流变得更容易。</p>
+
+<p>在这个课程中，你将学习如何创建不同的 React 组件，以 state props 管理数据，以及使用不同的生命周期方法（例如 <code class="language-plaintext highlighter-rouge">componentDidMount</code>）和更多内容。</p>
+
+<!--more-->
+
+<h2 id="创建一个简单的-jsx-元素">创建一个简单的 JSX 元素</h2>
+
+<p>简介：React 是由 Facebook 创建和维护的开源视图库。 它是渲染现代 Web 应用程序用户界面（UI）的好工具。</p>
+
+<p>React 使用名为 JSX 的 JavaScript 语法扩展，可以直接在 JavaScript 中编写 HTML。 这有几个好处。 可以在 HTML 中使用 JavaScript 的完整程序功能，并有助于保持代码的可读性。 在大多数情况下，JSX 类似于已经学过的 HTML，但是在这些挑战中将会涉及一些关键差异。</p>
+
+<p>例如，因为 JSX 是 JavaScript 的语法扩展，所以实际上可以直接在 JSX 中编写 JavaScript。 要做到这一点，只需在花括号中包含希望被视为 JavaScript 的代码：<code class="language-plaintext highlighter-rouge">{ 'this is treated as JavaScript code' }</code>（这被视为 JavaScript 代码）。 请牢记这个写法，将会在接下来的挑战中使用。</p>
+
+<p>但是，由于浏览器不能解析 JSX，因此必须将 JSX 代码编译为 JavaScript。 在这个过程中，转换器 Babel 是一个很受欢迎的工具。 后续挑战已经在后台引入了 Babel，可以直接写 JSX 代码。 如果代码不符合 JSX 语法，那么挑战中的第一个测试就不会通过。</p>
+
+<p>值得注意的是，这些挑战在底层调用 <code class="language-plaintext highlighter-rouge">ReactDOM.render(JSX, document.getElementById('root'))</code>。 这个函数调用将 JSX 置于 React 自己的轻量级 DOM 中。 然后，React 使用自己的 DOM 快照来实现增量更新。</p>
+
+<hr />
+
+<p>当前代码使用 JSX 将 <code class="language-plaintext highlighter-rouge">div</code> 元素赋值给常量 <code class="language-plaintext highlighter-rouge">JSX</code>。 将 <code class="language-plaintext highlighter-rouge">div</code> 替换为 <code class="language-plaintext highlighter-rouge">h1</code> 元素，并在其中添加文本 <code class="language-plaintext highlighter-rouge">Hello JSX!</code>。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">JSX</span> <span class="o">=</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
+<span class="kd">const</span> <span class="nx">JSX</span> <span class="o">=</span> <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello JSX!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="创建一个复杂的-jsx-元素">创建一个复杂的 JSX 元素</h2>
+
+<p>上一个挑战是 JSX 的一个简单示例，但 JSX 也可以表示更复杂的 HTML。关于嵌套的 JSX，需要知道的一件重要的事情，那就是它必须返回单个元素。这个父元素将包裹所有其他级别的嵌套元素。例如，几个作为兄弟元素编写的 JSX 元素而没有父元素包裹将不会被转换。这里是一个示例：</p>
+
+<p><strong>有效的 JSX：</strong></p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Paragraph One<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Paragraph Two<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Paragraph Three<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p><strong>无效的 JSX：</strong></p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Paragraph One<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Paragraph Two<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Paragraph Three<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<hr />
+
+<p>定义一个新的常量 <code class="language-plaintext highlighter-rouge">JSX</code>，渲染一个 <code class="language-plaintext highlighter-rouge">div</code>，其中依次包含以下元素：</p>
+
+<p>一个 <code class="language-plaintext highlighter-rouge">h1</code>，一个 <code class="language-plaintext highlighter-rouge">p</code>，一个包含三个 <code class="language-plaintext highlighter-rouge">li</code> 项的无序列表。 可以在每个元素中包含任意文本。</p>
+
+<p><strong>注意：</strong> 当像这样渲染多个元素时，可以把它们都用圆括号括起来，但是这并不是必须的。 另外，此挑战使用 <code class="language-plaintext highlighter-rouge">div</code> 标签把所有子元素包裹在里面。 如果删除 <code class="language-plaintext highlighter-rouge">div</code>，JSX 将不会编译这些元素。 请记住这一点，因为在 React 组件中返回 JSX 元素时也适用。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">JSX</span> <span class="o">=</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Heading 1<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Some text<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>无序列表<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>无序列表<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>无序列表<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="在-jsx-中添加注释">在 JSX 中添加注释</h2>
+
+<p>JSX 是一种可以编译成 JavaScript 的语法。 有时，为了便于阅读，可能需要在代码中添加注释。 像大多数编程语言一样，JSX 也有自己的方法来实现这一点。</p>
+
+<p>要将注释放在 JSX 中，可以使用 <code class="language-plaintext highlighter-rouge">{/* */}</code> 语法来包裹注释文本。</p>
+
+<hr />
+
+<p>代码编辑器中的 JSX 元素与在上一个挑战中创建的元素类似。 在提供的 <code class="language-plaintext highlighter-rouge">div</code> 元素里添加注释，不修改现有的 <code class="language-plaintext highlighter-rouge">h1</code> 或 <code class="language-plaintext highlighter-rouge">p</code> 元素。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">JSX</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="si">{</span><span class="cm">/* 这是一行注释 */</span><span class="si">}</span>    
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>This is a block of JSX<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Here's a subtitle<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="渲染-html-元素为-dom-树">渲染 HTML 元素为 DOM 树</h2>
+
+<p>到目前为止，已经了解到 JSX 是一种在 JavaScript 中编写可读 HTML 的便捷工具。 在 React 中，可以使用它的的渲染 API（ReactDOM）将此 JSX 直接渲染到 HTML DOM。</p>
+
+<p>ReactDOM 提供了一个简单的方法来将 React 元素呈现给 DOM，如下所示：<code class="language-plaintext highlighter-rouge">ReactDOM.render(componentToRender, targetNode)</code>，其中第一个参数是要渲染的 React 元素或组件，第二个参数是组件将要渲染到的 DOM 节点。</p>
+
+<p>如你所料，必须在 JSX 元素声明之后调用 <code class="language-plaintext highlighter-rouge">ReactDOM.render()</code>，就像在使用变量之前必须声明它一样。</p>
+
+<hr />
+
+<p>代码编辑器有一个简单的 JSX 组件。 使用 <code class="language-plaintext highlighter-rouge">ReactDOM.render()</code> 方法将该组件渲染到页面。 可以将定义好的 JSX 元素直接作为第一个参数传入，然后使用 <code class="language-plaintext highlighter-rouge">document.getElementById()</code> 来选择要渲染到的 DOM 节点， 在这个挑战中，请渲染到 <code class="language-plaintext highlighter-rouge">id='challenge-node'</code>的 <code class="language-plaintext highlighter-rouge">div</code> 中。 确保没有修改 <code class="language-plaintext highlighter-rouge">JSX</code> 常量。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604180829v4lYvx.png" alt="image-20220604180829136" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604180851XdXypv.png" alt="image-20220604180851028" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="在-jsx-中定义一个-html-class">在 JSX 中定义一个 HTML Class</h2>
+
+<p>现在已经习惯了编写 JSX，可能想知道它与 HTML 有什么不同。</p>
+
+<p>到目前为止，HTML 和 JSX 似乎完全相同。</p>
+
+<p>JSX 的一个关键区别是你不能再使用 <code class="language-plaintext highlighter-rouge">class</code> 这个单词来做为 HTML 的 class 名。 这是因为 <code class="language-plaintext highlighter-rouge">class</code> 是 JavaScript 中的关键字。 而 JSX 使用 <code class="language-plaintext highlighter-rouge">className</code> 来代替。</p>
+
+<p>事实上，JSX 中所有 HTML 属性和事件引用的命名约定都变成了驼峰式。 例如，JSX 中的单击事件是 <code class="language-plaintext highlighter-rouge">onClick</code>，而不是 <code class="language-plaintext highlighter-rouge">onclick</code>。 同样，<code class="language-plaintext highlighter-rouge">onchange</code> 变成了<code class="language-plaintext highlighter-rouge">onChange</code>。 虽然这是一个微小的差异，但请你一定要记住。</p>
+
+<hr />
+
+<p>将 class <code class="language-plaintext highlighter-rouge">myDiv</code> 应用于 JSX 提供的 <code class="language-plaintext highlighter-rouge">div</code>上。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604181040IzWrye.png" alt="image-20220604181039920" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/202206041811174GeA5I.png" alt="image-20220604181117812" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="了解-jsx-的自动闭合">了解 JSX 的自动闭合</h2>
+
+<p>到目前为止，已经看到 JSX 与 HTML 的关键不同在于使用 <code class="language-plaintext highlighter-rouge">className</code> 还是 <code class="language-plaintext highlighter-rouge">class</code> 来定义 HTML 的 class。</p>
+
+<p>JSX 不同于 HTML 的另一个重要方面是自闭合标签。</p>
+
+<p>在HTML中，几乎所有的标签都有一个开始和结束标签：<code class="language-plaintext highlighter-rouge">&lt;div&gt;&lt;/div&gt;</code>，结束标签在你要关闭的标签名之前始终具有正斜杠。 但是，HTML 中有一些称为 “自闭合标签” 的特殊实例，它们在另一个标签开始之前，不需要开始和结束标签都存在。</p>
+
+<p>例如，换行标签可以写成 <code class="language-plaintext highlighter-rouge">&lt;br&gt;</code> 或者 <code class="language-plaintext highlighter-rouge">&lt;br /&gt;</code>，但是不应该写成 <code class="language-plaintext highlighter-rouge">&lt;br&gt;&lt;/br&gt;</code>，因为它不包含任何内容。</p>
+
+<p>在 JSX 中，规则略有不同。 任何 JSX 元素都可以使用自闭合标签编写，并且每个元素都必须关闭。 例如，为了通过编译换行标签必须始终编写为 <code class="language-plaintext highlighter-rouge">&lt;br /&gt;</code>。 另一方面 <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> 可以写成 <code class="language-plaintext highlighter-rouge">&lt;div /&gt;</code> 或者 <code class="language-plaintext highlighter-rouge">&lt;div&gt;&lt;/div&gt;</code>。 不同之处在于，在第一个语法版本中，无法在 <code class="language-plaintext highlighter-rouge">&lt;div /&gt;</code> 中包含任何内容。 在后面的挑战中你会发现，这种语法在渲染 React 组件时非常有用。</p>
+
+<hr />
+
+<p>修复代码编辑器中的错误，使其成为有效的 JSX 并成功编译。 确保不更改任何内容 – 只需要在需要的地方关闭标签。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604181453yu0ovg.png" alt="image-20220604181453185" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604181402eu6efp.png" alt="image-20220604181401837" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="创建一个无状态的函数组件">创建一个无状态的函数组件</h2>
+
+<p>组件是 React 的核心。 React 中的所有内容都是一个组件，在这里将学习如何创建一个组件。</p>
+
+<p>有两种方法可以创建 React 组件。 第一种方法是使用 JavaScript 函数。 以这种方式定义组件会创建<em>无状态功能组件</em>。 应用程序中的状态概念将在以后的挑战中介绍。 目前为止，可以将无状态组件视为能接收数据并对其进行渲染，但不管理或跟踪该数据的更改的组件。 (我们将下一个挑战使用中第二种方式创建 React 组件。)</p>
+
+<p>要用函数创建组件，只需编写一个返回 JSX 或 <code class="language-plaintext highlighter-rouge">null</code> 的 JavaScript 函数。 需要注意的一点是，React 要求你的函数名以大写字母开头。 下面是一个无状态功能组件的示例，该组件在 JSX 中分配一个 HTML 的 class：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">DemoComponent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">'customClass'</span> <span class="p">/&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>翻译完成后， <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> 将有一个 <code class="language-plaintext highlighter-rouge">customClass</code> 的 CSS class。</p>
+
+<p>因为 JSX 组件代表 HTML，所以你可以将几个组件放在一起以创建更复杂的 HTML 页面。 这是 React 提供的组件架构的关键优势之一。 它允许用许多独立的组件组合成 UI。 这使得构建和维护复杂的用户界面变得更加容易。</p>
+
+<hr />
+
+<p>代码编辑器中有一个名为 <code class="language-plaintext highlighter-rouge">MyComponent</code> 的函数。 完成此函数，使其返回包含一些文本字符串的单个<code class="language-plaintext highlighter-rouge">div</code>元素。</p>
+
+<p><strong>注意：</strong> 文本被视为是 <code class="language-plaintext highlighter-rouge">div</code> 的子元素，因此不能使用自闭合标签。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/202206041818002RdBui.png" alt="image-20220604181800213" /></p>
+
+<h2 id="创建一个-react-组件">创建一个 React 组件</h2>
+
+<p>定义 React 组件的另一种方法是使用 ES6 的 <code class="language-plaintext highlighter-rouge">class</code>语法。 在以下示例中，<code class="language-plaintext highlighter-rouge">Kitten</code> 扩展了<code class="language-plaintext highlighter-rouge">React.Component</code>：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Kitten</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hi<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>这将创建一个 ES6 类 <code class="language-plaintext highlighter-rouge">Kitten</code>，它扩展了 <code class="language-plaintext highlighter-rouge">React.Component</code> 类。 因此，<code class="language-plaintext highlighter-rouge">Kitten</code> 类现在可以访问许多有用的 React 功能，例如本地状态和生命周期钩子。 如果还不熟悉这些术语，请不要担心，在以后的挑战中我们将更详细地介绍它们。 另请注意，<code class="language-plaintext highlighter-rouge">Kitten</code> 类中定义了一个调用 <code class="language-plaintext highlighter-rouge">super()</code> 方法的 <code class="language-plaintext highlighter-rouge">constructor</code>。 它使用 <code class="language-plaintext highlighter-rouge">super()</code> 调用父类的构造函数，即本例中的 <code class="language-plaintext highlighter-rouge">React.Component</code>。 构造函数是使用 <code class="language-plaintext highlighter-rouge">class</code> 关键字创建的特殊方法，它在实例初始化之前调用。 最佳做法是在组件的 <code class="language-plaintext highlighter-rouge">constructor</code> 里调用 <code class="language-plaintext highlighter-rouge">super</code>，并将 <code class="language-plaintext highlighter-rouge">props</code> 传递给它们， 这样可以保证组件能够正确地初始化。 目前为止 ，需要知道这些代码是必要的。 很快会了解到到构造函数的其他用途以及 <code class="language-plaintext highlighter-rouge">props</code>。</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">MyComponent</code> 是使用类语法在代码编辑器中定义的。 完成 <code class="language-plaintext highlighter-rouge">render</code> 方法的编写，使其返回 <code class="language-plaintext highlighter-rouge">div</code> 元素，其中包含文本内容为 <code class="language-plaintext highlighter-rouge">Hello React!</code> 的 <code class="language-plaintext highlighter-rouge">h1</code> 元素。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604210737S5fMpt.png" alt="image-20220604210737317" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604210845UgnYxK.png" alt="image-20220604210845356" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="用组合的方式创建一个-react-组件">用组合的方式创建一个 React 组件</h2>
+
+<p>现在来看看如何组合多个 React 组件。 想象一下，现在正在构建一个应用程序，并创建了三个组件：<code class="language-plaintext highlighter-rouge">Navbar</code>、<code class="language-plaintext highlighter-rouge">Dashboard</code> 和 <code class="language-plaintext highlighter-rouge">Footer</code>。</p>
+
+<p>要将这些组件组合在一起，可以创建一个 <code class="language-plaintext highlighter-rouge">App</code> <em>父组件</em>，将这三个组件分别渲染成为<em>子组件</em>。 要在 React 组件中渲染一个子组件，需要在 JSX 中包含作为自定义 HTML 标签编写的组件名称。 例如，在 <code class="language-plaintext highlighter-rouge">render</code> 方法中，可以这样编写：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="p">(</span>
+ <span class="p">&lt;</span><span class="nc">App</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">Navbar</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nc">Dashboard</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nc">Footer</span> <span class="p">/&gt;</span>
+ <span class="p">&lt;/</span><span class="nc">App</span><span class="p">&gt;</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>当 React 遇到一个自定义 HTML 标签引用另一个组件的时（如本例所示，组件名称包含在 <code class="language-plaintext highlighter-rouge">&lt; /&gt;</code> 中），它在自定义标签的位置渲染该组件的标签。 这可以说明 <code class="language-plaintext highlighter-rouge">App</code> 组件和 <code class="language-plaintext highlighter-rouge">Navbar</code>、<code class="language-plaintext highlighter-rouge">Dashboard</code> 以及 <code class="language-plaintext highlighter-rouge">Footer</code> 之间的父子关系。</p>
+
+<hr />
+
+<p>在代码编辑器中，有一个名为 <code class="language-plaintext highlighter-rouge">ChildComponent</code> 的简单功能组件和一个名为 <code class="language-plaintext highlighter-rouge">ParentComponent</code> 的 React 组件。 通过在 <code class="language-plaintext highlighter-rouge">ParentComponent</code> 中渲染 <code class="language-plaintext highlighter-rouge">ChildComponent</code> 来将两者组合在一起。 确保使用正斜杠关闭 <code class="language-plaintext highlighter-rouge">ChildComponent</code> 标签。</p>
+
+<p><strong>注意：</strong> <code class="language-plaintext highlighter-rouge">ChildComponent</code> 是使用 ES6 的箭头函数定义的，这是使用 React 时非常常见的做法。 但是，要知道这只是一个函数。 如果你不熟悉箭头函数语法，请参阅 JavaScript 部分。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604211516LEIACn.png" alt="image-20220604211516103" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604211542EUTzNA.png" alt="image-20220604211542006" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="使用-react-渲染嵌套组件">使用 React 渲染嵌套组件</h2>
+
+<p>上一个挑战显示了组合两个组件的简单方法，但是有许多不同的方法可以把 React 组件组合在一起。</p>
+
+<p>组件组合是 React 的强大功能之一。 当使用 React 时，应当先用组件的思路考虑清楚用户界面的结构（如上一个挑战中的 App 示例）。 可以将 UI 分解为基本的构建块，这些构建块就是组件。 这样做有助于将负责 UI 的代码与负责处理应用程序逻辑的代码分开， 并可以大大简化复杂项目的开发和维护。</p>
+
+<hr />
+
+<p>代码编辑器中定义了两个功能组件，分别是 <code class="language-plaintext highlighter-rouge">TypesOfFruit</code> 和 <code class="language-plaintext highlighter-rouge">Fruits</code>。 请用组合或者<em>嵌套</em>把 <code class="language-plaintext highlighter-rouge">TypesOfFruit</code> 组件放到 <code class="language-plaintext highlighter-rouge">Fruits</code> 组件中， 然后把 <code class="language-plaintext highlighter-rouge">Fruits</code> 组件放到 <code class="language-plaintext highlighter-rouge">TypesOfFood</code> 组件中。 结果应该是子组件嵌套在父组件中，父组件嵌套在它本身的父组件中！</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">TypesOfFruit</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Fruits:<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Apples<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Blueberries<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Strawberries<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>Bananas<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">Fruits</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="si">{</span> <span class="cm">/* 修改这行下面的代码 */</span> <span class="si">}</span>
+      <span class="p">&lt;</span><span class="nc">TypesOfFruit</span> <span class="p">/&gt;</span>
+      <span class="si">{</span> <span class="cm">/* 修改这行上面的代码 */</span> <span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">class</span> <span class="nx">TypesOfFood</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Types of Food:<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行下面的代码 */</span> <span class="si">}</span>
+        <span class="p">&lt;</span><span class="nc">Fruits</span> <span class="p">/&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行上面的代码 */</span> <span class="si">}</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="组合-react-组件">组合 React 组件</h2>
+
+<p>随着挑战继续，将组合使用更复杂的 React 组件和 JSX，有一点需要注意。 在其它组件中渲染 ES6 风格的类组件和渲染在过去几个挑战中使用的简单组件没有什么不同。 可以在其它组件中渲染 JSX 元素、无状态功能组件和 ES6 类组件。</p>
+
+<hr />
+
+<p>在代码编辑器中，<code class="language-plaintext highlighter-rouge">TypesOfFood</code> 组件已经渲染了一个名为 <code class="language-plaintext highlighter-rouge">Vegetables</code> 的组件。 此外，还有上次挑战中的 <code class="language-plaintext highlighter-rouge">Fruits</code> 组件。</p>
+
+<p>在 <code class="language-plaintext highlighter-rouge">Fruits</code> 中嵌套两个组件，首先 <code class="language-plaintext highlighter-rouge">NonCitrus</code>，然后是 <code class="language-plaintext highlighter-rouge">Citrus</code>， 这两个组件都已经引入。 接下来，将 <code class="language-plaintext highlighter-rouge">Fruits</code> 类组件嵌套到 <code class="language-plaintext highlighter-rouge">TypesOfFood</code> 组件中，位于 <code class="language-plaintext highlighter-rouge">h1</code> 标题元素下方和 <code class="language-plaintext highlighter-rouge">Vegetables</code> 上方。 结果应该是一系列嵌套的组件，它们使用两种不同的组件类型。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604212338LVUKu4.png" alt="image-20220604212338649" style="zoom:25%;" /></p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Fruits</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Fruits:<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行下面的代码 */</span> <span class="si">}</span>
+        <span class="p">&lt;</span><span class="nc">NonCitrus</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nc">Citrus</span> <span class="p">/&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行上面的代码 */</span> <span class="si">}</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">class</span> <span class="nx">TypesOfFood</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Types of Food:<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行下面的代码 */</span> <span class="si">}</span>
+        <span class="p">&lt;</span><span class="nc">Fruits</span> <span class="p">/&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行上面的代码 */</span> <span class="si">}</span>
+        <span class="p">&lt;</span><span class="nc">Vegetables</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="将-class-组件渲染到-dom-树">将 class 组件渲染到 DOM 树</h2>
+
+<p>还记不记得在之前的挑战中使用 ReactDOM API 将 JSX 元素渲染到 DOM， 这与渲染 React 组件的过程十分相似。 过去的几个挑战主要针对组件和组合，因此渲染是在幕后完成的。 但是，如果不调用 ReactDOM API，编写的任何 React 代码都不会渲染到 DOM。</p>
+
+<p>复习一下语法： <code class="language-plaintext highlighter-rouge">ReactDOM.render(componentToRender, targetNode)</code>。 第一个参数是要渲染的 React 组件。 第二个参数是要在其中渲染该组件的 DOM 节点。</p>
+
+<p>传递到<code class="language-plaintext highlighter-rouge">ReactDOM.render()</code> 的React 组件与 JSX 元素略有不同。 对于 JSX 元素，传入的是要渲染的元素的名称。 但是，对于 React 组件，需要使用与渲染嵌套组件相同的语法，例如<code class="language-plaintext highlighter-rouge">ReactDOM.render(&lt;ComponentToRender /&gt;, targetNode)</code>。 此语法用于 ES6 class 组件和函数组件都可以。</p>
+
+<hr />
+
+<p>在后台引入了 <code class="language-plaintext highlighter-rouge">Fruits</code> 和 <code class="language-plaintext highlighter-rouge">Vegetables</code> 组件。 将两个组件渲染为 <code class="language-plaintext highlighter-rouge">TypesOfFood</code> 组件的子组件，然后将 <code class="language-plaintext highlighter-rouge">TypesOfFood</code> 渲染到 DOM 节点， 在这个挑战中，请渲染到 <code class="language-plaintext highlighter-rouge">id='challenge-node'</code>的 <code class="language-plaintext highlighter-rouge">div</code> 中。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604212858jWNJ61.png" alt="image-20220604212858265" /></p>
+
+<h2 id="从零开始写一个-react-组件">从零开始写一个 React 组件</h2>
+
+<p>你已经了解了 JSX 和 React 组件的基础知识，是时候自己编写一个组件了。 React 组件是 React 应用程序的核心组成部分，因此熟练编写它们是非常重要的。 记住，典型的 React 组件是 ES6 <code class="language-plaintext highlighter-rouge">class</code>，它扩展了 <code class="language-plaintext highlighter-rouge">React.Component</code>。 它有一个返回 HTML（从 JSX 返回）或 <code class="language-plaintext highlighter-rouge">null</code> 的渲染方法， 这是 React 组件的基本形式。 理解了这一点之后，就可以开始构建更复杂的 React 项目了。</p>
+
+<hr />
+
+<p>定义一个 <code class="language-plaintext highlighter-rouge">MyComponent</code> 类，它是 <code class="language-plaintext highlighter-rouge">React.Component</code> 的扩展。 它的渲染方法应该返回一个 <code class="language-plaintext highlighter-rouge">div</code>，其中包含一个 <code class="language-plaintext highlighter-rouge">h1</code> 标签，标签文本为：<code class="language-plaintext highlighter-rouge">My First React Component!</code>。 准确使用此文本，大小写和标点符号也要考虑。 确保也调用组件的构造器。</p>
+
+<p>使用 <code class="language-plaintext highlighter-rouge">ReactDOM.render()</code> 把该组件渲染到 DOM 中。 有一个 <code class="language-plaintext highlighter-rouge">id='challenge-node'</code> 的 <code class="language-plaintext highlighter-rouge">div</code> 可供渲染。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604213244YDlBRI.png" alt="image-20220604213243727" /></p>
+
+<h2 id="将-props-传递给无状态函数组件">将 Props 传递给无状态函数组件</h2>
+
+<p>之前的挑战涵盖了关于在 React 中创建和组合 JSX 元素、函数组件和 ES6 风格的类组件的很多内容。 有了这个基础，现在是时候看看 React 中的另一个常见特性 <strong>props</strong> 了。 在 React 中，可以将属性传递给子组件。 假设有一个 <code class="language-plaintext highlighter-rouge">App</code> 组件，该组件渲染了一个名为 <code class="language-plaintext highlighter-rouge">Welcome</code> 的子组件，它是一个无状态函数组件。 可以通过以下方式给 <code class="language-plaintext highlighter-rouge">Welcome</code> 传递一个 <code class="language-plaintext highlighter-rouge">user</code> 属性：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">App</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">Welcome</span> <span class="na">user</span><span class="p">=</span><span class="s">'Mark'</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nc">App</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>可以把创建的 React 支持的<strong>自定义 HTML 属性</strong>传递给组件， 在上面的例子里，将创建的属性 <code class="language-plaintext highlighter-rouge">user</code> 传递给组件 <code class="language-plaintext highlighter-rouge">Welcome</code>。 由于 <code class="language-plaintext highlighter-rouge">Welcome</code> 是一个无状态函数组件，它可以像这样访问该值：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Welcome</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello, <span class="si">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">user</span><span class="si">}</span>!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>调用 <code class="language-plaintext highlighter-rouge">props</code> 这个值是常见做法，当处理无状态函数组件时，基本上可以将其视为返回 JSX 的函数的参数。 这样，你就可以在函数体中访问该值。 但对于类组件，访问方式会略有不同。</p>
+
+<hr />
+
+<p>代码编辑器中有 <code class="language-plaintext highlighter-rouge">Calendar</code> 和 <code class="language-plaintext highlighter-rouge">CurrentDate</code> 组件。 从 <code class="language-plaintext highlighter-rouge">Calendar</code> 组件渲染 <code class="language-plaintext highlighter-rouge">CurrentDate</code> 时，从 JavaScript 的 <code class="language-plaintext highlighter-rouge">Date</code> 对象分配当前日期，并将其作为 <code class="language-plaintext highlighter-rouge">date</code> 属性传入。 然后访问 <code class="language-plaintext highlighter-rouge">CurrentDate</code> 组件的 <code class="language-plaintext highlighter-rouge">prop</code>，并在 <code class="language-plaintext highlighter-rouge">p</code> 标签中显示其值。 请注意，要将 <code class="language-plaintext highlighter-rouge">prop</code> 的值视为 JavaScript，必须将它们括在花括号中，例如<code class="language-plaintext highlighter-rouge">date={Date()}</code>。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/2022060423365407GF9P.png" alt="image-20220604233653593" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604234001Bl0956.png" alt="image-20220604234001423" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="传递一个数组作为-props">传递一个数组作为 Props</h2>
+
+<p>上一个挑战演示了如何将来自父组件的信息作为 <code class="language-plaintext highlighter-rouge">props</code> 传递给子组件。 这个挑战着眼于如何将数组作为 <code class="language-plaintext highlighter-rouge">props</code> 传递。 要将数组传递给 JSX 元素，必须将其视为 JavaScript 并用花括号括起来。</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">ParentComponent</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">ChildComponent</span> <span class="na">colors</span><span class="p">=</span><span class="si">{</span><span class="p">[</span><span class="dl">"</span><span class="s2">green</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">blue</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">red</span><span class="dl">"</span><span class="p">]</span><span class="si">}</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nc">ParentComponent</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>这样，子组件就可以访问数组属性 <code class="language-plaintext highlighter-rouge">colors</code>。 访问属性时可以使用 <code class="language-plaintext highlighter-rouge">join()</code> 等数组方法。 <code class="language-plaintext highlighter-rouge">const ChildComponent = (props) =&gt; &lt;p&gt;{props.colors.join(', ')}&lt;/p&gt;</code> 这将把所有 <code class="language-plaintext highlighter-rouge">colors</code> 数组项连接成一个逗号分隔的字符串并生成： <code class="language-plaintext highlighter-rouge">&lt;p&gt;green, blue, red&lt;/p&gt;</code> 稍后，我们将了解在 React 中渲染数组数据的其他常用方法。</p>
+
+<hr />
+
+<p>代码编辑器中有 <code class="language-plaintext highlighter-rouge">List</code> 和 <code class="language-plaintext highlighter-rouge">ToDo</code> 组件。 在 <code class="language-plaintext highlighter-rouge">ToDo</code> 组件中渲染每个 <code class="language-plaintext highlighter-rouge">List</code> 时，传入 <code class="language-plaintext highlighter-rouge">tasks</code> 属性并将其分配给待办任务数组，例如 <code class="language-plaintext highlighter-rouge">["walk dog", "workout"]</code>。 然后访问 <code class="language-plaintext highlighter-rouge">List</code> 组件中的 <code class="language-plaintext highlighter-rouge">tasks</code> 数组，在<code class="language-plaintext highlighter-rouge">p</code>元素中显示其值。 使用 <code class="language-plaintext highlighter-rouge">join(", ")</code> 把 <code class="language-plaintext highlighter-rouge">props.tasks</code> 数组作为逗号分隔列表显示在 <code class="language-plaintext highlighter-rouge">p</code> 元素中。 今天的列表应该至少有 2 个任务，明天的列表应该至少有 3 个任务。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604234143eySUp0.png" alt="image-20220604234142715" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604234508BfoHTS.png" alt="image-20220604234508320" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="使用默认的-props">使用默认的 Props</h2>
+
+<p>React 还有一个设置默认 props 的选项。 可以将默认 props 作为组件本身的属性分配给组件，React 会在必要时分配默认 prop。 如果没有显式的提供任何值，这允许指定 prop 值应该是什么。 例如，如果声明 <code class="language-plaintext highlighter-rouge">MyComponent.defaultProps = { location: 'San Francisco' }</code>，即定义一个 location 属性，并且其值在没有另行制定的情况下被设置为字符串 <code class="language-plaintext highlighter-rouge">San Francisco</code>。 如果 props 未定义，则 React 会分配默认 props，但如果你将 <code class="language-plaintext highlighter-rouge">null</code> 作为 prop 的值，它将保持 <code class="language-plaintext highlighter-rouge">null</code>。</p>
+
+<hr />
+
+<p>代码编辑器中有一个 <code class="language-plaintext highlighter-rouge">ShoppingCart</code> 组件。 在这个组件上定义默认 props，它指定一个 <code class="language-plaintext highlighter-rouge">items</code> prop，其值为 <code class="language-plaintext highlighter-rouge">0</code>。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">ShoppingCart</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Shopping Cart Component<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">)</span>
+<span class="p">};</span>
+<span class="c1">// 修改这行下面的代码</span>
+<span class="nx">ShoppingCart</span><span class="p">.</span><span class="nx">defaultProps</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">items</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="覆盖默认的-props">覆盖默认的 Props</h2>
+
+<p>在 React 中，设置默认的 props 是一个很有用的特性， 显式设置组件的 prop 值即可覆盖默认 props。</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">ShoppingCart</code> 组件现在渲染了一个子组件 <code class="language-plaintext highlighter-rouge">Items</code>。 该 <code class="language-plaintext highlighter-rouge">Items</code> 组件有一个默认 <code class="language-plaintext highlighter-rouge">quantity</code> prop，其值被设置为整数 <code class="language-plaintext highlighter-rouge">0</code>。 通过传入数值 <code class="language-plaintext highlighter-rouge">10</code> 来覆盖 <code class="language-plaintext highlighter-rouge">quantity</code> 的默认 prop。</p>
+
+<p><strong>注意：</strong> 请记住，向组件添加 prop 的语法与添加 HTML 属性类似。 但是，由于 <code class="language-plaintext highlighter-rouge">quantity</code> 的值是整数，所以它不会加引号，但应该用花括号括起来， 例如<code class="language-plaintext highlighter-rouge">{100}</code>。 这个语法告诉 JSX 直接将花括号中的值解释为 JavaScript。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604235306lCW4FM.png" alt="image-20220604235306490" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220604235340xrtDsc.png" alt="image-20220604235340328" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="使用-proptypes-来定义-props-的类型">使用 PropTypes 来定义 Props 的类型</h2>
+
+<p>React 提供了有用的类型检查特性，以验证组件是否接收了正确类型的 props。 例如，应用程序调用 API 来检索数据是否是数组，然后将数据作为 prop 传递给组件。 可以在组件上设置 <code class="language-plaintext highlighter-rouge">propTypes</code>，以要求数据的类型为 <code class="language-plaintext highlighter-rouge">array</code>。 当数据是任何其它类型时，都会抛出警告。</p>
+
+<p>当提前知道 prop 的类型时，最佳实践是设置其 <code class="language-plaintext highlighter-rouge">propTypes</code>。 可以为组件定义 <code class="language-plaintext highlighter-rouge">propTypes</code> 属性，方法与定义 <code class="language-plaintext highlighter-rouge">defaultProps</code> 相同。 这样做将检查给定键的 prop 是否是给定类型。 这里有一个示例，表示名为 <code class="language-plaintext highlighter-rouge">handleClick</code> 的 prop 应为 <code class="language-plaintext highlighter-rouge">function</code> 类型：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">MyComponent</span><span class="p">.</span><span class="nx">propTypes</span> <span class="o">=</span> <span class="p">{</span> <span class="na">handleClick</span><span class="p">:</span> <span class="nx">PropTypes</span><span class="p">.</span><span class="nx">func</span><span class="p">.</span><span class="nx">isRequired</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>在上面的示例中，<code class="language-plaintext highlighter-rouge">PropTypes.func</code> 部分检查 <code class="language-plaintext highlighter-rouge">handleClick</code> 是否为函数。 添加 <code class="language-plaintext highlighter-rouge">isRequired</code>，告诉 React <code class="language-plaintext highlighter-rouge">handleClick</code> 是该组件的必需属性。 如果没有那个属性，将出现警告。 还要注意 <code class="language-plaintext highlighter-rouge">func</code> 代表 <code class="language-plaintext highlighter-rouge">function</code> 。 在 7 种 JavaScript 原语类型中， <code class="language-plaintext highlighter-rouge">function</code> 和 <code class="language-plaintext highlighter-rouge">boolean</code> （写为 <code class="language-plaintext highlighter-rouge">bool</code> ）是唯一使用异常拼写的两种类型。 除了原始类型，还有其他类型可用。 例如，你可以检查 prop 是否为 React 元素。 请参阅<a href="https://reactjs.org/docs/typechecking-with-proptypes.html#proptypes">文档</a>以获取所有选项。</p>
+
+<p><strong>注意：</strong>在 React v15.5.0 中, <code class="language-plaintext highlighter-rouge">PropTypes</code> 可以从 React 中单独引入，例如：<code class="language-plaintext highlighter-rouge">import PropTypes from 'prop-types';</code>。</p>
+
+<hr />
+
+<p>为 <code class="language-plaintext highlighter-rouge">Items</code> 组件定义 <code class="language-plaintext highlighter-rouge">propTypes</code>，以要求 <code class="language-plaintext highlighter-rouge">quantity</code> 作为 prop，并验证它是否为 <code class="language-plaintext highlighter-rouge">number</code> 类型。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Items</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Current Quantity of Items in Cart: <span class="si">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">quantity</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">};</span>
+
+<span class="c1">// 修改这行下面的代码</span>
+<span class="nx">Items</span><span class="p">.</span><span class="nx">propTypes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">quantity</span><span class="p">:</span> <span class="nx">PropTypes</span><span class="p">.</span><span class="nx">number</span><span class="p">.</span><span class="nx">isRequired</span>
+<span class="p">}</span>
+<span class="c1">// 修改这行上面的代码</span>
+
+<span class="nx">Items</span><span class="p">.</span><span class="nx">defaultProps</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">quantity</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">};</span>
+
+<span class="kd">class</span> <span class="nx">ShoppingCart</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">&lt;</span><span class="nc">Items</span> <span class="p">/&gt;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="使用-thisprops-访问-props">使用 this.props 访问 Props</h2>
+
+<p>前几项挑战涵盖了将 props 传递给子组件的基本方法。 但是，倘若接收 prop 的子组件不是无状态函数组件，而是一个 ES6 类组件又当如何呢？ ES6 类组件访问 props 的方法略有不同。</p>
+
+<p>任何时候，如果要引用类组件本身，可以使用 <code class="language-plaintext highlighter-rouge">this</code> 关键字。 要访问类组件中的 props，需要在在访问它的代码前面添加 <code class="language-plaintext highlighter-rouge">this</code>。 例如，如果 ES6 类组件有一个名为 <code class="language-plaintext highlighter-rouge">data</code> 的 prop，可以在 JSX 中这样写：<code class="language-plaintext highlighter-rouge">{this.props.data}</code>。</p>
+
+<hr />
+
+<p>在父组件 <code class="language-plaintext highlighter-rouge">App</code> 中渲染 <code class="language-plaintext highlighter-rouge">Welcome</code> 组件的一个实例。 在这里，给 <code class="language-plaintext highlighter-rouge">Welcome</code> 一个 <code class="language-plaintext highlighter-rouge">name</code> 的 prop，并给它赋值一个字符串。 在 <code class="language-plaintext highlighter-rouge">Welcome</code> 的子节点里，访问 <code class="language-plaintext highlighter-rouge">strong</code> 标签内的 <code class="language-plaintext highlighter-rouge">name</code> prop。</p>
+
+<p>| <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220605000055TPXRco.png" alt="image-20220605000055249" /> | <img src="https://holon-image.oss-cn-beijing.aliyuncs.com/202206050002346wXBua.png" alt="image-20220605000234290" /> |
+| ———————————————————— | ———————————————————— |</p>
+
+<h2 id="复习使用无状态函数组件的-props">复习使用无状态函数组件的 Props</h2>
+
+<p>除了上一个挑战，一直在将 props 传递给无状态的函数组件。 这些组件就像纯函数， 它们接收 props 作为输入，并在每次传递相同 props 时返回相同的视图。 你可能好奇什么是状态，下一个挑战将会更详细地讲述它。 在此之前，我们先来回顾一下组件的术语。</p>
+
+<p><em>无状态函数组件</em>是一个函数，它接收 props 作为输入并返回 JSX。 另一方面，<em>无状态组件</em>是一个类，它扩展了<code class="language-plaintext highlighter-rouge">React.Component</code>，但是不使用内部状态（下一个挑战中讨论）。 最后，<em>状态组件</em>是指维护其自身内部状态的组件， 它简称组件或 React 组件。</p>
+
+<p>一种常见的应用模式是尽可能减少状态组件并创建无状态的函数组件。 这有助于将状态管理包含到应用程序的特定区域。 反过来，通过更容易地跟踪状态变化如何影响其行为，可以改善应用程序的开发和维护。</p>
+
+<hr />
+
+<p>在代码编辑器中有一个 <code class="language-plaintext highlighter-rouge">CampSite</code> 组件，它把 <code class="language-plaintext highlighter-rouge">Camper</code> 组件渲染为自己的子组件。 定义 <code class="language-plaintext highlighter-rouge">Camper</code> 组件，并为其分配默认 props <code class="language-plaintext highlighter-rouge">{ name: 'CamperBot' }</code>。 可以在 <code class="language-plaintext highlighter-rouge">Camper</code> 组件内部渲染任何你想要的代码，但是要确保有一个 <code class="language-plaintext highlighter-rouge">p</code> 元素，它只包含作为 <code class="language-plaintext highlighter-rouge">prop</code> 传递的 <code class="language-plaintext highlighter-rouge">name</code> 值。 最后，在 <code class="language-plaintext highlighter-rouge">Camper</code> 组件上定义 <code class="language-plaintext highlighter-rouge">propTypes</code>，要求提供 <code class="language-plaintext highlighter-rouge">name</code> 作为 prop，并验证它是 <code class="language-plaintext highlighter-rouge">string</code> 类型。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">CampSite</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">Camper</span><span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="c1">// 修改这行下面的代码</span>
+<span class="kd">const</span> <span class="nx">Camper</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="nx">Camper</span><span class="p">.</span><span class="nx">defaultProps</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">CamperBot</span><span class="dl">'</span>
+<span class="p">}</span>
+
+<span class="nx">Camper</span><span class="p">.</span><span class="nx">propTypes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="nx">PropTypes</span><span class="p">.</span><span class="nx">string</span><span class="p">.</span><span class="nx">isRequired</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="创建一个有状态的组件">创建一个有状态的组件</h2>
+
+<p>React 中最重要的主题之一是 <code class="language-plaintext highlighter-rouge">state</code>。 state 包含应用程序需要了解的任何数据，这些数据可能会随时间而变化。 应用程序能够响应 state 的变更，并在必要时显示更新后的 UI。 React 为现代 Web 应用程序的状态管理提供了一个很好的解决方案。</p>
+
+<p>可以在类组件的 <code class="language-plaintext highlighter-rouge">constructor</code> 上声明 <code class="language-plaintext highlighter-rouge">state</code> 属性来在 React 组件中创建 state， 它在创建时使用 <code class="language-plaintext highlighter-rouge">state</code> 初始化组件。 <code class="language-plaintext highlighter-rouge">state</code> 属性必须设置为 JavaScript <code class="language-plaintext highlighter-rouge">object</code>（对象）。 声明如下：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>可以在组件的整个生命周期内 访问 <code class="language-plaintext highlighter-rouge">state</code> 对象， 可以更新它、在 UI 中渲染它，也可以将其作为 props 传递给子组件。 <code class="language-plaintext highlighter-rouge">state</code> 对象的使用可以很简单，亦可以很复杂，就看你怎么用了。 请注意，必须通过扩展 <code class="language-plaintext highlighter-rouge">React.Component</code> 来创建类组件，以便像这样创建 <code class="language-plaintext highlighter-rouge">state</code>。</p>
+
+<hr />
+
+<p>代码编辑器中有一个组件试图从其 <code class="language-plaintext highlighter-rouge">state</code> 中渲染一个 <code class="language-plaintext highlighter-rouge">name</code> 属性， 但是 <code class="language-plaintext highlighter-rouge">state</code> 还没有定义。 在 <code class="language-plaintext highlighter-rouge">constructor</code> 中使用 <code class="language-plaintext highlighter-rouge">state</code> 初始化组件，并将你的名字赋给 <code class="language-plaintext highlighter-rouge">name</code> 属性。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/2022060500151554ZBiC.png" alt="image-20220605001515297" /></p>
+
+<h2 id="在用户界面中渲染状态">在用户界面中渲染状态</h2>
+
+<p>定义了组件的初始 state 之后，就可以在要渲染的 UI 中显示它。 如果组件是有状态的，它将始终可以访问 <code class="language-plaintext highlighter-rouge">render()</code> 方法中 <code class="language-plaintext highlighter-rouge">state</code> 的数据。 就可以使用 <code class="language-plaintext highlighter-rouge">this.state</code> 访问数据。</p>
+
+<p>如果想在 render 方法的 <code class="language-plaintext highlighter-rouge">return</code> 中访问 state 值，必须把这个值用花括号括起来。</p>
+
+<p><code class="language-plaintext highlighter-rouge">state</code> 是 React 组件中最强大的特性之一， 它可以跟踪应用程序中的重要数据，并根据数据的变化渲染 UI。 如果数据发生变化，UI 也会随之改变。 React 使用所谓的虚拟 DOM 来跟踪幕后的变化。 当 state 数据更新时，它会使用该数据触发组件的重新渲染 – 包括接收 prop 数据的子组件。 React 只在必要的时候更新实际的 DOM， 这意味着你不必担心 DOM 的变更， 只需声明 UI 的外观即可。</p>
+
+<p>注意，如果组件是有状态的，其它组件并不知道它的 <code class="language-plaintext highlighter-rouge">state</code>。 它的 <code class="language-plaintext highlighter-rouge">state</code> 是完全封装的，或者是局限于组件本身的，除非你将 state 数据作为 <code class="language-plaintext highlighter-rouge">props</code> 传递给子组件。 封装 <code class="language-plaintext highlighter-rouge">state</code> 的概念非常重要，因为它允许编写特定的逻辑，然后将该逻辑包含并隔离在代码中的某个位置。</p>
+
+<hr />
+
+<p>在代码编辑器中，<code class="language-plaintext highlighter-rouge">MyComponent</code> 是一个有状态组件， 在组件的 render 方法中定义一个<code class="language-plaintext highlighter-rouge">h1</code>标签，该方法从组件的 state 渲染 <code class="language-plaintext highlighter-rouge">name</code> 的值。</p>
+
+<p><strong>注意：</strong> <code class="language-plaintext highlighter-rouge">h1</code> 应该只渲染来自 <code class="language-plaintext highlighter-rouge">state</code> 的值。 在 JSX 中，使用花括号 <code class="language-plaintext highlighter-rouge">{ }</code> 编写的任何代码都将被视为 JavaScript。 因此，要访问 <code class="language-plaintext highlighter-rouge">state</code> 中的值，只需将引用括在花括号中即可。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyComponent</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">freeCodeCamp</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行下面的代码 */</span> <span class="si">}</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行上面的代码 */</span> <span class="si">}</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="以另一种方式在用户界面中渲染状态">以另一种方式在用户界面中渲染状态</h2>
+
+<p>还有另一种方法可以访问组件中的 <code class="language-plaintext highlighter-rouge">state</code>。 在 <code class="language-plaintext highlighter-rouge">render()</code> 方法中，在 <code class="language-plaintext highlighter-rouge">return</code> 语句之前，可以直接编写 JavaScript。 例如，可以声明函数、从 <code class="language-plaintext highlighter-rouge">state</code> 或 <code class="language-plaintext highlighter-rouge">props</code> 中访问数据、对此数据执行计算等。 然后，可以将任何数据赋值给 <code class="language-plaintext highlighter-rouge">return</code> 语句中可以访问的变量。</p>
+
+<hr />
+
+<p>在 <code class="language-plaintext highlighter-rouge">MyComponent</code> 的 render 方法中，定义一个名为 <code class="language-plaintext highlighter-rouge">name</code> 的 <code class="language-plaintext highlighter-rouge">const</code>（常量），并将其设置为组件 <code class="language-plaintext highlighter-rouge">state</code> 中的 name 值。 因为可以直接在代码部分编写 JavaScript，所以不需要用大括号括起来。</p>
+
+<p>接下来，在 return 语句中，在 <code class="language-plaintext highlighter-rouge">h1</code> 标签中渲染变量 <code class="language-plaintext highlighter-rouge">name</code> 的值。 记住，在 return 语句中需要使用 JSX 语法（用到 JavaScript 的花括号）。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyComponent</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">freeCodeCamp</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 修改这行下面的代码</span>
+    <span class="kd">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="c1">// 修改这行上面的代码</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行下面的代码 */</span> <span class="si">}</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">name</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行上面的代码 */</span> <span class="si">}</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="用-thissetstate-设置状态">用 this.setState 设置状态</h2>
+
+<p>前面的挑战涵盖了组件的 <code class="language-plaintext highlighter-rouge">state</code> 以及如何在 <code class="language-plaintext highlighter-rouge">constructor</code> 中初始化 state。 还有一种方法可以更改组件的 <code class="language-plaintext highlighter-rouge">state</code>。 React 提供了 <code class="language-plaintext highlighter-rouge">setState</code> 方法来更新组件的 <code class="language-plaintext highlighter-rouge">state</code>。 在组件类中调用 <code class="language-plaintext highlighter-rouge">setState</code> 方法如下所示：<code class="language-plaintext highlighter-rouge">this.setState()</code>，传入键值对的对象， 其中键是 state 属性，值是更新后的 state 数据。 例如，如果我们在 state 中存储 <code class="language-plaintext highlighter-rouge">username</code>，并想要更新它，代码如下所示：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+  <span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Lewis</span><span class="dl">'</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>React 要求永远不要直接修改 <code class="language-plaintext highlighter-rouge">state</code>，而是在 state 发生改变时始终使用 <code class="language-plaintext highlighter-rouge">this.setState()</code>。 此外，应该注意，React 可以批量处理多个 state 更新以提高性能。 这意味着通过 <code class="language-plaintext highlighter-rouge">setState</code> 方法进行的 state 更新可以是异步的。 <code class="language-plaintext highlighter-rouge">setState</code> 方法有一种替代语法可以解决异步问题， 虽然这很少用到，但是最好还是记住它！ 有关详细信息，请参阅<a href="https://reactjs.org/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous">React 文档</a>。</p>
+
+<hr />
+
+<p>代码编辑器中有一个 <code class="language-plaintext highlighter-rouge">button</code> 元素，它有一个 <code class="language-plaintext highlighter-rouge">onClick()</code> handler。 当 <code class="language-plaintext highlighter-rouge">button</code> 在浏览器中接收到单击事件时触发此 handler，并运行 <code class="language-plaintext highlighter-rouge">MyComponent</code> 中定义的 <code class="language-plaintext highlighter-rouge">handleClick</code> 方法。 在 <code class="language-plaintext highlighter-rouge">handleClick</code> 方法中，使用 <code class="language-plaintext highlighter-rouge">this.setState()</code> 更新组件的 <code class="language-plaintext highlighter-rouge">state</code>。 设置 <code class="language-plaintext highlighter-rouge">state</code> 中的 <code class="language-plaintext highlighter-rouge">name</code> 属性为字符串 <code class="language-plaintext highlighter-rouge">React Rocks!</code>。</p>
+
+<p>单击按钮查看渲染的 state 的更新。 如果不完全理解单击处理程序代码在此时的工作方式，请不要担心。 在接下来的挑战中会有讲述。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220605002513K9642K.png" alt="image-20220605002512738" /></p>
+
+<h2 id="将-this-绑定到-class-方法上">将 this 绑定到 Class 方法上</h2>
+
+<p>除了设置和更新 <code class="language-plaintext highlighter-rouge">state</code> 之外，还可以为组件类定义方法。 类方法通常需要使用 <code class="language-plaintext highlighter-rouge">this</code> 关键字，以便它可以访问方法中类的属性（例如 <code class="language-plaintext highlighter-rouge">state</code> 和 <code class="language-plaintext highlighter-rouge">props</code>）。 有几种方法可以让类方法访问 <code class="language-plaintext highlighter-rouge">this</code>。</p>
+
+<p>一种常见的方法是在构造函数中显式地绑定 <code class="language-plaintext highlighter-rouge">this</code>，这样当组件初始化时，<code class="language-plaintext highlighter-rouge">this</code> 就会绑定到类方法。 你可能已经注意到上一个挑战在构造函数中的 <code class="language-plaintext highlighter-rouge">handleClick</code> 方法使用了 <code class="language-plaintext highlighter-rouge">this.handleClick = this.handleClick.bind(this)</code>。 然后，当在类方法中调用像 <code class="language-plaintext highlighter-rouge">this.setState()</code> 这样的函数时，<code class="language-plaintext highlighter-rouge">this</code> 指的是这个类，而不是 <code class="language-plaintext highlighter-rouge">undefined</code>。</p>
+
+<p><strong>注意：</strong> <code class="language-plaintext highlighter-rouge">this</code>关键字是 JavaScript 中最令人困惑的方面之一，但它在 React 中扮演着重要的角色。 虽然它的行为在这里是完全正常的，但是这些课程并不深入研究<code class="language-plaintext highlighter-rouge">this</code>，所以如果以上内容令你感到困惑，请参考其他课程！</p>
+
+<hr />
+
+<p>代码编辑器有一个带有 <code class="language-plaintext highlighter-rouge">state</code> 的组件，用于跟踪项目计数。 它还有一个方法，允许设置文本为 <code class="language-plaintext highlighter-rouge">You clicked!</code>。 但是，该方法不起作用，因为它使用了未定义的 <code class="language-plaintext highlighter-rouge">this</code> 关键字。 可以通过将 <code class="language-plaintext highlighter-rouge">this</code> 显式绑定到组件构造函数中的 <code class="language-plaintext highlighter-rouge">handleClick()</code>方法来修复它。</p>
+
+<p>接下来，向 render 方法中的 <code class="language-plaintext highlighter-rouge">button</code> 元素添加一个单击处理程序。 当按钮接收到单击事件时，它应该触发 <code class="language-plaintext highlighter-rouge">handleClick()</code> 方法。 记住，传递给 <code class="language-plaintext highlighter-rouge">onClick</code> 处理程序的方法需要使用花括号，因为它应该直接被解释为 JavaScript。</p>
+
+<p>完成上述步骤后，可以单击按钮并看到 <code class="language-plaintext highlighter-rouge">You clicked!</code>。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220605002846SaBIlK.png" alt="image-20220605002845640" /></p>
+
+<h2 id="使用-state-切换元素">使用 State 切换元素</h2>
+
+<p>有时可能在更新状态的时候想知道上一个状态是什么。 但是状态更新是异步的，这意味着 React 可能会把多个 <code class="language-plaintext highlighter-rouge">setState()</code> 集中在一起批量更新。 所以计算下一个值时 <code class="language-plaintext highlighter-rouge">this.state</code> 或者 <code class="language-plaintext highlighter-rouge">this.props</code> 不能作为当前值。 所以最好不要写如下的代码：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+  <span class="na">counter</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">increment</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>正确的做法是，给 <code class="language-plaintext highlighter-rouge">setState</code> 传入一个函数，这个函数可以访问 state 和 props。 给 <code class="language-plaintext highlighter-rouge">setState</code> 传入函数可以保证 state 和 props 是正确的值。 代码可以重写为这样：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">((</span><span class="nx">state</span><span class="p">,</span> <span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">counter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="nx">props</span><span class="p">.</span><span class="nx">increment</span>
+<span class="p">}));</span>
+</code></pre></div></div>
+
+<p>如果只需要 <code class="language-plaintext highlighter-rouge">state</code>，那么用下面没有 <code class="language-plaintext highlighter-rouge">props</code> 的格式也是可以的：</p>
+
+<div class="language-jsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">state</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">counter</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">counter</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="p">}));</span>
+</code></pre></div></div>
+
+<p>注意一定要把 object 放在括号里，否则 JavaScript 会认为这只是代码片段。</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">MyComponent</code> 有一个初始值为 <code class="language-plaintext highlighter-rouge">false</code> 的<code class="language-plaintext highlighter-rouge">visibility</code> 属性。 如果 <code class="language-plaintext highlighter-rouge">visibility</code> 的值为 true，render 方法返回一个视图，如果为 false，返回另一个视图。</p>
+
+<p>目前，无法更新组件 <code class="language-plaintext highlighter-rouge">state</code> 中的 <code class="language-plaintext highlighter-rouge">visibility</code> 属性， 该值应在 true 和 false 之间来回切换。 按钮上有一个单击处理程序，它触发一个名为 <code class="language-plaintext highlighter-rouge">toggleVisibility()</code> 的类方法。 给函数传入 <code class="language-plaintext highlighter-rouge">setState</code> 来定义此方法，以便 <code class="language-plaintext highlighter-rouge">visibility</code> 的 <code class="language-plaintext highlighter-rouge">state</code> 在调用方法时切换到相反的值。 如果 <code class="language-plaintext highlighter-rouge">visibility</code> 是 <code class="language-plaintext highlighter-rouge">false</code>，则该方法将其设置为<code class="language-plaintext highlighter-rouge">true</code>，反之亦然。</p>
+
+<p>最后，单击按钮以查看基于其 <code class="language-plaintext highlighter-rouge">state</code> 的组件的条件渲染。</p>
+
+<p><strong>提示：</strong> 不要忘记将 <code class="language-plaintext highlighter-rouge">this</code> 关键字绑定到 <code class="language-plaintext highlighter-rouge">constructor</code> 中的方法上！</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyComponent</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">visibility</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">};</span>
+    <span class="c1">// 修改这行下面的代码</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">toggleVisibility</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">toggleVisibility</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="c1">// 修改这行上面的代码</span>
+  <span class="p">}</span>
+  <span class="c1">// 修改这行下面的代码</span>
+  <span class="nx">toggleVisibility</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">state</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">state</span><span class="p">.</span><span class="nx">visibility</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span><span class="na">visibility</span><span class="p">:</span> <span class="kc">false</span><span class="p">}</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span><span class="na">visibility</span><span class="p">:</span> <span class="kc">true</span><span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="c1">// 修改这行上面的代码</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">visibility</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">toggleVisibility</span><span class="si">}</span><span class="p">&gt;</span>Click Me<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Now you see me!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">toggleVisibility</span><span class="si">}</span><span class="p">&gt;</span>Click Me<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="写一个简单的计数器">写一个简单的计数器</h2>
+
+<p>可以结合目前为止所涵盖的概念来设计更复杂的有状态组件。 这包括初始化 <code class="language-plaintext highlighter-rouge">state</code>，编写设置 <code class="language-plaintext highlighter-rouge">state</code> 的方法，以及指定单击处理程序来触发这些方法。</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">Counter</code> 组件跟踪 <code class="language-plaintext highlighter-rouge">state</code> 中的 <code class="language-plaintext highlighter-rouge">count</code> 值。 有两个按钮分别调用 <code class="language-plaintext highlighter-rouge">increment()</code> 和 <code class="language-plaintext highlighter-rouge">decrement()</code> 方法。 编写这些方法，使计数器值在单击相应按钮时增加或减少 1。 另外，创建一个 <code class="language-plaintext highlighter-rouge">reset()</code> 方法，当单击 reset 按钮时，把计数设置为 0。</p>
+
+<p><strong>注意：</strong> 确保没有修改按钮的 <code class="language-plaintext highlighter-rouge">className</code>。 另外，请记住在构造函数中为新创建的方法添加必要的绑定。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Counter</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">count</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">};</span>
+    <span class="c1">// 修改这行下面的代码</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">increment</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">increment</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">decrement</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">decrement</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">reset</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">reset</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="c1">// 修改这行上面的代码</span>
+  <span class="p">}</span>
+  <span class="c1">// 修改这行下面的代码</span>
+  <span class="nx">increment</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">state</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="c1">// 注意这里的（</span>
+      <span class="na">count</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">}))</span>
+  <span class="p">}</span>
+
+  <span class="nx">decrement</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">state</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="c1">// 注意这里的（</span>
+      <span class="na">count</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="p">}))</span>
+  <span class="p">}</span>
+
+  <span class="nx">reset</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="na">count</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+  <span class="c1">// 修改这行上面的代码</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">className</span><span class="p">=</span><span class="s">'inc'</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">increment</span><span class="si">}</span><span class="p">&gt;</span>Increment!<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">className</span><span class="p">=</span><span class="s">'dec'</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">decrement</span><span class="si">}</span><span class="p">&gt;</span>Decrement!<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">className</span><span class="p">=</span><span class="s">'reset'</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">reset</span><span class="si">}</span><span class="p">&gt;</span>Reset<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Current Count: <span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">count</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="创建一个可以控制的输入框">创建一个可以控制的输入框</h2>
+
+<p>应用程序可能在 <code class="language-plaintext highlighter-rouge">state</code> 和渲染的 UI 之间有更复杂的交互。 例如，用于文本输入的表单控件元素（如 <code class="language-plaintext highlighter-rouge">input</code> 和 <code class="language-plaintext highlighter-rouge">textarea</code>）在用户键入时在 DOM 中维护自己的 state。 通过 React，可以将这种可变 state 转移到 React 组件的 <code class="language-plaintext highlighter-rouge">state</code> 中。 用户的输入变成了应用程序 <code class="language-plaintext highlighter-rouge">state</code> 的一部分，因此 React 控制该输入字段的值。 通常，如果 React 组件具有用户可以键入的输入字段，那么它将是一个受控的输入表单。</p>
+
+<hr />
+
+<p>代码编辑器具有一个名为 <code class="language-plaintext highlighter-rouge">ControlledInput</code> 的组件框架，用于创建受控的 <code class="language-plaintext highlighter-rouge">input</code> 元素。 组件的 <code class="language-plaintext highlighter-rouge">state</code> 已经被包含空字符串的 <code class="language-plaintext highlighter-rouge">input</code> 属性初始化。 此值表示用户在 <code class="language-plaintext highlighter-rouge">input</code> 字段中键入的文本。</p>
+
+<p>首先，创建一个名为 <code class="language-plaintext highlighter-rouge">handleChange()</code> 的方法，该方法具有一个名为 <code class="language-plaintext highlighter-rouge">event</code> 的参数。 方法被调用时，它接收一个 <code class="language-plaintext highlighter-rouge">event</code> 对象，该对象包含一个来自 <code class="language-plaintext highlighter-rouge">input</code> 元素的字符串文本。 可以使用方法内的 <code class="language-plaintext highlighter-rouge">event.target.value</code> 来访问这个字符串。 用这个新字符串更新组件的<code class="language-plaintext highlighter-rouge">state</code>的<code class="language-plaintext highlighter-rouge">input</code>属性。</p>
+
+<p>在 <code class="language-plaintext highlighter-rouge">render</code> 方法中的 <code class="language-plaintext highlighter-rouge">h4</code> 标签之上创建 <code class="language-plaintext highlighter-rouge">input</code> 元素。 添加一个 <code class="language-plaintext highlighter-rouge">value</code> 属性，使其等于组件 <code class="language-plaintext highlighter-rouge">state</code> 的 <code class="language-plaintext highlighter-rouge">input</code> 属性。 然后将 <code class="language-plaintext highlighter-rouge">onChange()</code> 事件处理程序设置到 <code class="language-plaintext highlighter-rouge">handleChange()</code> 方法中。</p>
+
+<p>在输入框中键入时，文本由 <code class="language-plaintext highlighter-rouge">handleChange()</code> 方法处理，文本被设置为本地 <code class="language-plaintext highlighter-rouge">state</code> 中的 <code class="language-plaintext highlighter-rouge">input</code> 属性，并渲染在页面上的 <code class="language-plaintext highlighter-rouge">input</code> 框中。 组件 <code class="language-plaintext highlighter-rouge">state</code> 是输入数据的唯一真实来源。</p>
+
+<p>最后，不要忘记在构造函数中添加必要的绑定。</p>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220605230816fcBVdN.png" alt="image-20220605230815818" /></p>
+
+<h2 id="创建一个可以控制的表单">创建一个可以控制的表单</h2>
+
+<p>上一个挑战展示了 React 能控制某些元素的内部 state，比如 <code class="language-plaintext highlighter-rouge">input</code> 和 <code class="language-plaintext highlighter-rouge">textarea</code>，这使得这些元素成为受控组件。 这也适用于其他表单元素，包括常规的 HTML 表单 <code class="language-plaintext highlighter-rouge">form</code> 元素。</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">MyForm</code> 组件中是一个带有提交处理程序的空 <code class="language-plaintext highlighter-rouge">form</code> 元素， 提交处理程序将在提交表单时被调用。</p>
+
+<p>我们增加了一个提交表单的按钮。 可以看到它的 <code class="language-plaintext highlighter-rouge">type</code> 被设置为 <code class="language-plaintext highlighter-rouge">submit</code>，表明它是控制表单提交的按钮。 在 <code class="language-plaintext highlighter-rouge">form</code> 中添加 <code class="language-plaintext highlighter-rouge">input</code> 元素，并像上个挑战一样设置其 <code class="language-plaintext highlighter-rouge">value</code> 和 <code class="language-plaintext highlighter-rouge">onChange()</code> 属性。 然后，应该完成 <code class="language-plaintext highlighter-rouge">handleSubmit</code> 方法，以便将组件 state 属性 <code class="language-plaintext highlighter-rouge">submit</code> 设置为本地 <code class="language-plaintext highlighter-rouge">state</code> 下的当前输入值。</p>
+
+<p><strong>注意：</strong> 还必须在提交处理程序中调用 <code class="language-plaintext highlighter-rouge">event.preventDefault()</code>，以防止将会刷新网页的默认的表单提交行为。 为了便于学员操作，默认行为在这里被禁用，以防止重置挑战的代码。</p>
+
+<p>最后，在 <code class="language-plaintext highlighter-rouge">form</code> 元素之后创建一个 <code class="language-plaintext highlighter-rouge">h1</code> 标签，该标签从组件的 <code class="language-plaintext highlighter-rouge">state</code> 渲染 <code class="language-plaintext highlighter-rouge">submit</code> 的值。 然后，可以在表单中键入任何内容，然后单击按钮（或按 enter 键），输入会渲染到页面上。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyForm</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">input</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+      <span class="na">submit</span><span class="p">:</span> <span class="dl">''</span>
+    <span class="p">};</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">handleSubmit</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleSubmit</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">handleChange</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="na">input</span><span class="p">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="nx">handleSubmit</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 修改这行下面的代码</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="na">submit</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">input</span>
+    <span class="p">});</span>
+    <span class="c1">// 修改这行上面的代码</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">form</span> <span class="na">onSubmit</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleSubmit</span><span class="si">}</span><span class="p">&gt;</span>
+          <span class="si">{</span><span class="cm">/* 修改这行下面的代码 */</span><span class="si">}</span>
+          <span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">input</span><span class="si">}</span> <span class="na">onChange</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span><span class="si">}</span> <span class="p">/&gt;</span>
+          <span class="si">{</span><span class="cm">/* 修改这行上面的代码 */</span><span class="si">}</span>
+          <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="p">=</span><span class="s">'submit'</span><span class="p">&gt;</span>Submit!<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+        <span class="si">{</span><span class="cm">/* 修改这行下面的代码 */</span><span class="si">}</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">submit</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+        <span class="si">{</span><span class="cm">/* 修改这行上面的代码 */</span><span class="si">}</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="将-state-作为-props-传递给子组件">将 State 作为 Props 传递给子组件</h2>
+
+<p>在之前的挑战中，看到了很多将 props 传递给子 JSX 元素和子 React 组件的例子。 你可能想知道那些 props 是从哪里来的。 一个常见的模式是：有状态组件中包含对应用程序很重要的 <code class="language-plaintext highlighter-rouge">state</code>，然后用它渲染子组件。 如果想让这些组件能够访问该 <code class="language-plaintext highlighter-rouge">state</code> 的某些部分，就把这些部分作为 props 传入。</p>
+
+<p>例如，有一个 <code class="language-plaintext highlighter-rouge">App</code> 组件可以渲染 <code class="language-plaintext highlighter-rouge">Navbar</code> 以及其他组件。 <code class="language-plaintext highlighter-rouge">App</code> 里的 <code class="language-plaintext highlighter-rouge">state</code> 包含大量用户信息，但 <code class="language-plaintext highlighter-rouge">Navbar</code> 只需要访问用户的用户名，以便显示它。 将该 <code class="language-plaintext highlighter-rouge">state</code> 作为 prop 传递给<code class="language-plaintext highlighter-rouge">Navbar</code>组件。</p>
+
+<p>这个模式说明了 React 中的一些重要范例。 第一个是<em>单向数据流</em>， state 沿着应用程序组件树的一个方向流动，从有状态父组件到子组件， 子组件只接收它们需要的 state 数据。 第二，复杂的有状态应用程序可以分解成几个，或者可能是一个单一的有状态组件。 其余组件只是从父组件简单的接收 state 作为 props，并从该 state 渲染 UI。 它开始创建一种分离，在这种分离中，state 管理在代码的一部分中处理，而 UI 渲染在另一部分中处理。 将 state 逻辑与 UI 逻辑分离是 React 的关键原则之一。 当它被正确使用时，它使得复杂的、有状态的应用程序的设计变得更容易管理。</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">MyApp</code> 组件是有状态的，并将 <code class="language-plaintext highlighter-rouge">Navbar</code> 组件渲染为子组件。 将 <code class="language-plaintext highlighter-rouge">state</code> 的 <code class="language-plaintext highlighter-rouge">name</code> 属性向下传递给子组件，然后在 <code class="language-plaintext highlighter-rouge">h1</code> 中显示该 <code class="language-plaintext highlighter-rouge">name</code> ，h1 是 <code class="language-plaintext highlighter-rouge">Navbar</code> render方法的一部分。 <code class="language-plaintext highlighter-rouge">name</code> 应该显示在文本 <code class="language-plaintext highlighter-rouge">Hello, my name is:</code> 后面。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyApp</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">CamperBot</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+       <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+         <span class="si">{</span><span class="cm">/* 修改这行下面的代码 */</span><span class="si">}</span>
+         <span class="p">&lt;</span><span class="nc">Navbar</span> <span class="na">name</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="p">/&gt;</span>
+         <span class="si">{</span><span class="cm">/* 修改这行上面的代码 */</span><span class="si">}</span>
+       <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">class</span> <span class="nx">Navbar</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="cm">/* 修改这行下面的代码 */</span><span class="si">}</span>
+      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Hello, my name is: <span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="cm">/* 修改这行上面的代码 */</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="传递回调作为-props">传递回调作为 Props</h2>
+
+<p>可以将 <code class="language-plaintext highlighter-rouge">state</code> 作为 props 传递给子组件，但不仅限于传递数据。 也可以将函数或在 React 组件中定义的任何方法传递给子组件。 这就是子组件与父组件交互的方式。 可以把方法像普通 prop 一样传递给子组件， 它会被分配一个名字，可以在子组件中的 <code class="language-plaintext highlighter-rouge">this.props</code> 下访问该方法的名字。</p>
+
+<hr />
+
+<p>代码编辑器中列出了三个组件。 <code class="language-plaintext highlighter-rouge">MyApp</code> 是父组件，<code class="language-plaintext highlighter-rouge">GetInput</code> 和<code class="language-plaintext highlighter-rouge">RenderInput</code> 是它将要渲染的子组件。 将 <code class="language-plaintext highlighter-rouge">GetInput</code> 组件添加到 <code class="language-plaintext highlighter-rouge">MyApp</code> 的 render 方法，然后将 <code class="language-plaintext highlighter-rouge">MyApp</code> 的 <code class="language-plaintext highlighter-rouge">state</code> 中的 <code class="language-plaintext highlighter-rouge">inputValue</code> 传入名为 <code class="language-plaintext highlighter-rouge">input</code> 的 prop。 还要创建一个名为 <code class="language-plaintext highlighter-rouge">handleChange</code> 的 prop，并将输入处理程序 <code class="language-plaintext highlighter-rouge">handleChange</code> 传递给它。</p>
+
+<p>接下来，将 <code class="language-plaintext highlighter-rouge">RenderInput</code> 添加到 <code class="language-plaintext highlighter-rouge">MyApp</code> 中的 render 方法中，然后创建一个名为 <code class="language-plaintext highlighter-rouge">input</code> 的 prop，并将 <code class="language-plaintext highlighter-rouge">state</code> 中的 <code class="language-plaintext highlighter-rouge">inputValue</code> 传递给它。 完成后，可以在 <code class="language-plaintext highlighter-rouge">GetInput</code> 组件中的 <code class="language-plaintext highlighter-rouge">input</code> 字段中键入内容，然后该组件通过 props 调用其父组件中的处理函数方法。 这将更新处于父组件 <code class="language-plaintext highlighter-rouge">state</code> 中的 input，该 input 将作为 props 传递给两个子组件。 观察数据如何在组件之间流动，以及单一数据源如何保持父组件<code class="language-plaintext highlighter-rouge">state</code>。 诚然，这个示例有点做作，但是应该能用来说明数据和回调是如何在 React 组件之间传递的。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyApp</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">inputValue</span><span class="p">:</span> <span class="dl">''</span>
+    <span class="p">}</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">handleChange</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="na">inputValue</span><span class="p">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+       <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行下面的代码 */</span> <span class="si">}</span>
+        <span class="p">&lt;</span><span class="nc">GetInput</span> <span class="na">input</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">inputValue</span><span class="si">}</span> <span class="na">handleChange</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span><span class="si">}</span><span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nc">RenderInput</span> <span class="na">input</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">inputValue</span><span class="si">}</span> <span class="p">/&gt;</span>
+        <span class="si">{</span> <span class="cm">/* 修改这行上面的代码 */</span> <span class="si">}</span>
+       <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">class</span> <span class="nx">GetInput</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Get Input:<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span>
+          <span class="na">value</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">input</span><span class="si">}</span>
+          <span class="na">onChange</span><span class="p">=</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">handleChange</span><span class="si">}</span><span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">class</span> <span class="nx">RenderInput</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Input Render:<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">input</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><img src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220613231256Wi2AaE.png" alt="image-20220613231256657" /></p>
+
+<h2 id="使用生命周期方法componentwillmount">使用生命周期方法：componentWillMount</h2>
+
+<p>React 组件有几种特殊方法，可以在组件生命周期的特定点执行操作。 这些称为生命周期方法或生命周期钩子，允许在特定时间点捕获组件。 这可以在渲染之前、更新之前、接收 props 之前、卸载之前等等。 以下是一些主要生命周期方法的列表： <code class="language-plaintext highlighter-rouge">componentWillMount()</code> <code class="language-plaintext highlighter-rouge">componentDidMount()</code> <code class="language-plaintext highlighter-rouge">shouldComponentUpdate()</code> <code class="language-plaintext highlighter-rouge">componentDidUpdate()</code> <code class="language-plaintext highlighter-rouge">componentWillUnmount()</code> 接下来的几节课将讲述这些生命周期方法的一些基本用例。</p>
+
+<p><strong>注意：</strong> <code class="language-plaintext highlighter-rouge">componentWillMount</code> 生命周期方法会在版本 16.X 废弃在版本 17 移除。 <a href="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html">(来源)</a></p>
+
+<hr />
+
+<p>当组件被挂载到 DOM 时，<code class="language-plaintext highlighter-rouge">componentWillMount()</code> 方法在 <code class="language-plaintext highlighter-rouge">render()</code> 方法之前被调用。 在<code class="language-plaintext highlighter-rouge">componentWillMount()</code>中将一些内容记录到控制台 – 可能需要打开浏览器控制台以查看输出。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyComponent</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">componentWillMount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 修改这行下面的代码</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">componentWillMount执行了</span><span class="dl">"</span><span class="p">);</span>
+    <span class="c1">// 修改这行上面的代码</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span> <span class="p">/&gt;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="使用生命周期方法componentdidmount">使用生命周期方法：componentDidMount</h2>
+
+<p>某些时候，大多数 web 开发人员需要调用 API 接口来获取数据。 如果正在使用 React，知道在哪里执行这个动作是很重要的。</p>
+
+<p>React 的最佳实践是在生命周期方法 <code class="language-plaintext highlighter-rouge">componentDidMount()</code> 中对服务器进行 API 调用或任何其它调用。 将组件装载到 DOM 后会调用此方法。 此处对 <code class="language-plaintext highlighter-rouge">setState()</code> 的任何调用都将触发组件的重新渲染。 在此方法中调用 API 并用 API 返回的数据设置 state 时，一旦收到数据，它将自动触发更新。</p>
+
+<hr />
+
+<p><code class="language-plaintext highlighter-rouge">componentDidMount()</code> 中有一个模拟 API 调用。 它在 2.5 秒后设置 state，以模拟调用服务器检索数据。 本示例请求站点的当前活动用户总数。 在 render 方法中，把 <code class="language-plaintext highlighter-rouge">activeUsers</code> 渲染到文字 <code class="language-plaintext highlighter-rouge">Active Users:</code> 后的 <code class="language-plaintext highlighter-rouge">h1</code> 标签中。 观看预览中发生的事情，随意更改超时时间以查看不同的效果。</p>
+
+<div class="language-react highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyComponent</span> <span class="kd">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">activeUsers</span><span class="p">:</span> <span class="kc">null</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+  <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+        <span class="na">activeUsers</span><span class="p">:</span> <span class="mi">1273</span>
+      <span class="p">});</span>
+    <span class="p">},</span> <span class="mi">2500</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="si">{</span><span class="cm">/* 修改这行下面的代码 */</span><span class="si">}</span>
+        <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Active Users: <span class="si">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">activeUsers</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span> /* 2.5秒后得到值 */
+        <span class="si">{</span><span class="cm">/* 修改这行上面的代码 */</span><span class="si">}</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="添加事件侦听器">添加事件侦听器</h2>
+
+<p><code class="language-plaintext highlighter-rouge">componentDidMount()</code> 方法也是添加特定功能所需的任何事件监听器的最佳位置。 React 提供了一个合成事件系统，它封装了浏览器中的事件系统。 这意味着，不管用户用的是什么浏览器，合成事件系统的行为都完全相同 – 即使不同浏览器之间的本地事件的行为可能不同。</p>
+
+<p>之前已经接触了一些合成事件处理程序，如<code class="language-plaintext highlighter-rouge">onClick()</code>。 React 的合成事件系统非常适合用于在 DOM 元素上管理的大多数交互。 但是，如果要将事件处理程序附加到 document 或 window 对象，则必须直接执行此操作。</p>
+
+<hr />
+
+<p>在 <code class="language-plaintext highlighter-rouge">componentDidMount()</code> 方法中为 <code class="language-plaintext highlighter-rouge">keydown</code> 事件添加事件监听器，并让这些事件触发回调 <code class="language-plaintext highlighter-rouge">handleKeyPress()</code>。 可以使用 <code class="language-plaintext highlighter-rouge">document.addEventListener()</code>，它将事件（用引号括起来）作为第一个参数，将回调作为第二个参数。</p>
+
+<p>然后，在 <code class="language-plaintext highlighter-rouge">componentWillUnmount()</code> 中移除相同的事件监听器。 可以把相同的参数传递给 <code class="language-plaintext highlighter-rouge">document.removeEventListener()</code>。 在卸载和销毁 React 组件之前，最好在这个生命周期方法中对它们进行清理。 移除事件监听器就是这样一个清理操作的例子。</p>
+</div><div class="d-print-none"><footer class="article__footer">
+  <!-- 原 更新时间 位置 --><!-- start custom article footer snippet -->
+
+<!-- end custom article footer snippet -->
+<!--  在页脚作者信息上方添加 联系我 标题 -->
+    <h2>联系我</h2><div itemscope itemtype="http://schema.org/Person" class="author-profile card card--flat item"><a href="https://holon.wang" class="item__image"><img class="author-profile__avatar" itemprop="image" src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220415234156pm7cyt.png" /></a><div class="item__content"><meta itemprop="name" content="Holon">
+        <p class="author-profile__name"><meta itemprop="url" content="https://holon.wang">
+            <a href="https://holon.wang">Holon</a></p><p itemprop="description">Keep it simple, Stupid</p><div class="author-profile__links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="https://holon.wang"><li title="给我发邮件。">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:holon.cn@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="在 Weibo 上关注我。">
+        <a class="button button--circle weibo-button" itemprop="sameAs" href="https://weibo.com/5718657072" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<path d="M769.226164 496.610234c-14.420098-4.330228-24.309277-7.266877-16.746482-26.214823 16.350218-41.133578 18.046881-76.626289 0.307181-101.939024-33.242099-47.500415-124.194284-44.928286-228.44638-1.280945 0-0.056317-32.73525 14.323848-24.371737-11.64523 16.042013-51.54906 13.626547-94.739726-11.332929-119.662341-56.566349-56.601163-206.976479 2.134908-335.954595 131.078209-96.594075 96.61353-152.681222 198.989775-152.681222 287.52035 0 169.337597 217.152361 272.292366 429.593589 272.292366 278.498445 0 463.752111-161.808592 463.752111-290.273715C893.345701 558.867622 827.968378 514.820945 769.226164 496.610234zM430.163922 866.063936c-169.51781 16.728051-315.851649-59.899262-326.864086-171.202185-11.010389-111.275277 117.530505-215.061482 287.031932-231.823323 169.537265-16.761841 315.876224 59.866496 326.86511 171.119247C728.190884 745.495411 599.705282 849.291856 430.163922 866.063936z" />
+	<path d="M954.16753 186.714824c-67.256246-74.565105-166.457264-102.990607-258.020739-83.522502l-0.037886 0c-21.188318 4.535015-34.695065 25.37929-30.159026 46.527675 4.516584 21.166816 25.352668 34.691993 46.54201 30.174385 65.139769-13.832358 135.634727 6.400627 183.442323 59.368863 47.765615 52.96414 60.740938 125.206957 40.282686 188.537431l0.011263 0.012287c-6.666851 20.629249 4.617954 42.698153 25.271777 49.366027 20.570885 6.662755 42.687913-4.607714 49.362955-25.188838 0-0.037886 0-0.116729 0.011263-0.150519C1039.577146 362.756133 1021.443231 261.206205 954.16753 186.714824" />
+	<path d="M850.886125 279.919669c-32.732179-36.315956-81.068126-50.108381-125.685136-40.621609-18.234261 3.885839-29.856965 21.833398-25.946551 40.085067 3.89915 18.173849 21.833398 29.851845 40.024654 25.893307l0 0.037886c21.809848-4.610786 45.459709 2.113405 61.461789 19.83365 16.018463 17.757107 20.323092 41.949655 13.45043 63.178931l0.035838 0c-5.715614 17.717174 3.983113 36.770584 21.717694 42.511796 17.7397 5.677728 36.76956-3.992328 42.493365-21.756603C892.458972 365.691759 883.686907 316.228458 850.886125 279.919669" />
+	<path d="M447.103928 548.691741c-80.666743-20.985579-171.84317 19.215193-206.880229 90.291746-35.685212 72.492657-1.180599 152.963828 80.321676 179.268757 84.41947 27.224424 183.926645-14.492797 218.521364-92.744074C573.187374 649.021137 530.586496 570.268131 447.103928 548.691741zM385.506979 733.819463c-16.398343 26.160554-51.51015 37.623523-77.954335 25.54824-26.066352-11.868448-33.760211-42.248645-17.360844-67.757975 16.197652-25.400793 50.129884-36.716316 76.378497-25.711046C393.129162 677.216253 401.60838 707.401901 385.506979 733.819463zM439.522702 664.493841c-5.929616 10.131852-19.03498 15.010909-29.304039 10.785123-10.096014-4.15411-13.261002-15.495231-7.522862-25.454038 5.906066-9.908634 18.500485-14.747758 28.572948-10.750309C441.502995 642.817105 445.180975 654.283146 439.522702 664.493841z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Telegram 上关注我。">
+        <a class="button button--circle telegram-button" itemprop="sameAs" href="https://t.me/Wholon" target="_blank">
+          <div class="icon"><?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+    <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 20.302734 2.984375 C 20.013769 2.996945 19.748583 3.080055 19.515625 3.171875 C 19.300407 3.256634 18.52754 3.5814726 17.296875 4.0976562 C 16.06621 4.61384 14.435476 5.2982348 12.697266 6.0292969 C 9.2208449 7.4914211 5.314238 9.1361259 3.3125 9.9785156 C 3.243759 10.007156 2.9645852 10.092621 2.65625 10.328125 C 2.3471996 10.564176 2.0039062 11.076462 2.0039062 11.636719 C 2.0039062 12.088671 2.2295201 12.548966 2.5019531 12.8125 C 2.7743861 13.076034 3.0504903 13.199244 3.28125 13.291016 C 3.9563403 13.559857 6.0424892 14.392968 6.9492188 14.755859 C 7.2668647 15.707799 8.0129251 17.950071 8.1875 18.501953 L 8.1855469 18.501953 C 8.3275588 18.951162 8.4659791 19.243913 8.6582031 19.488281 C 8.7543151 19.610465 8.8690398 19.721184 9.0097656 19.808594 C 9.0637596 19.842134 9.1235454 19.868148 9.1835938 19.892578 C 9.191962 19.896131 9.2005867 19.897012 9.2089844 19.900391 L 9.1855469 19.894531 C 9.2029579 19.901531 9.2185841 19.911859 9.2363281 19.917969 C 9.2652427 19.927926 9.2852873 19.927599 9.3242188 19.935547 C 9.4612233 19.977694 9.5979794 20.005859 9.7246094 20.005859 C 10.26822 20.005859 10.601562 19.710938 10.601562 19.710938 L 10.623047 19.695312 L 12.970703 17.708984 L 15.845703 20.367188 C 15.897113 20.439837 16.308174 20.998047 17.261719 20.998047 C 17.829844 20.998047 18.280978 20.718791 18.568359 20.423828 C 18.855741 20.128866 19.034757 19.82706 19.115234 19.417969 L 19.115234 19.414062 L 19.115234 19.412109 C 19.171124 19.121728 21.931641 5.265625 21.931641 5.265625 L 21.925781 5.2890625 C 22.01148 4.9067181 22.036735 4.5369631 21.935547 4.1601562 C 21.834358 3.7833495 21.561271 3.4156252 21.232422 3.2226562 C 20.903572 3.0296874 20.591699 2.9718046 20.302734 2.984375 z M 19.908203 5.1738281 C 19.799749 5.7182284 17.343164 18.059965 17.183594 18.878906 L 14.328125 16.240234 C 13.59209 15.559749 12.44438 15.535812 11.679688 16.181641 L 10.222656 17.414062 L 11 14.375 C 11 14.375 16.362547 8.9468594 16.685547 8.6308594 C 16.945547 8.3778594 17 8.2891719 17 8.2011719 C 17 8.0841719 16.939781 8 16.800781 8 C 16.675781 8 16.506016 8.1197812 16.416016 8.1757812 C 15.267511 8.8918132 10.350132 11.694224 7.96875 13.048828 C 7.8792978 12.995267 7.7913128 12.939666 7.6933594 12.900391 C 6.9119785 12.587666 5.4101276 11.985551 4.53125 11.634766 C 6.6055146 10.76177 10.161156 9.2658083 13.472656 7.8730469 C 15.210571 7.142109 16.840822 6.4570977 18.070312 5.9414062 C 19.108158 5.5060977 19.649538 5.2807035 19.908203 5.1738281 z M 17.152344 19.023438 C 17.152344 19.023438 17.154297 19.023438 17.154297 19.023438 C 17.154234 19.023761 17.152444 19.03095 17.152344 19.03125 C 17.154024 19.022709 17.151187 19.029588 17.152344 19.023438 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"/>
+</svg>
+</div>
+        </a>
+      </li><li title="在 Zhihu 上关注我。">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jeffrey-8-68" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Github 上关注我。">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/wholon" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+
+    </div>
+</div>
+<div class="article__license"><div class="license">
+    <p>本文遵守 <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> 许可协议。
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/cs/lang/css/2022/06/04/Sass/">Sass</a></div><div class="next"><span>下篇</span><a href="/posts/algorithms/2022/06/05/JavaScript-%E8%BF%87%E6%BB%A4%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0/">JavaScript-过滤数组元素</a></div></div></div>
+
+</div>
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    $(function() {
+      var $this ,$scroll;
+      var $articleContent = $('.js-article-content');
+      var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+      var scroll = hasSidebar ? '.js-page-main' : 'html, body';
+      $scroll = $(scroll);
+
+      $articleContent.find('.highlight').each(function() {
+        $this = $(this);
+        $this.attr('data-lang', $this.find('code').attr('data-lang'));
+      });
+      $articleContent.find('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').each(function() {
+        $this = $(this);
+        $this.append($('<a class="anchor d-print-none" aria-hidden="true"></a>').html('<i class="fas fa-anchor"></i>'));
+      });
+      $articleContent.on('click', '.anchor', function() {
+        $scroll.scrollToAnchor('#' + $(this).parent().attr('id'), 400);
+      });
+    });
+  });
+})();
+</script>
+</div><section
+                                        class="page__comments d-print-none"><div id="vcomments"></div>
+
+<!-- 在 valine 下方显示阅读量统计 --><script>
+  window.Lazyload.js(['https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js', 'https://cdn.bootcdn.net/ajax/libs/valine/1.4.18/Valine.min.js'], function() {
+    var _config = {
+      el: '#vcomments',
+      appId:  'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+      appKey: 'jVCnL11R3DvbBvS7T6Vg0lPc',
+      verify: false,
+      avatar: 'wavatar',
+    };_config.placeholder = '添加评论';_config.lang = 'zh-CN';new Valine(_config);
+  });
+</script></section></article><!-- start custom main bottom snippet -->
+
+<!-- end custom main bottom snippet -->
+</div>
+                          </div></div></div><div
+                          class="page__footer d-print-none">
+<footer class="footer py-4 js-page-footer">
+  <div class="main"><div itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Holon"><meta itemprop="url" content="https://holon.wang"><meta itemprop="description" content="Keep it simple, Stupid"><div class="footer__author-links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="https://holon.wang"><li title="给我发邮件。">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:holon.cn@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="在 Weibo 上关注我。">
+        <a class="button button--circle weibo-button" itemprop="sameAs" href="https://weibo.com/5718657072" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<path d="M769.226164 496.610234c-14.420098-4.330228-24.309277-7.266877-16.746482-26.214823 16.350218-41.133578 18.046881-76.626289 0.307181-101.939024-33.242099-47.500415-124.194284-44.928286-228.44638-1.280945 0-0.056317-32.73525 14.323848-24.371737-11.64523 16.042013-51.54906 13.626547-94.739726-11.332929-119.662341-56.566349-56.601163-206.976479 2.134908-335.954595 131.078209-96.594075 96.61353-152.681222 198.989775-152.681222 287.52035 0 169.337597 217.152361 272.292366 429.593589 272.292366 278.498445 0 463.752111-161.808592 463.752111-290.273715C893.345701 558.867622 827.968378 514.820945 769.226164 496.610234zM430.163922 866.063936c-169.51781 16.728051-315.851649-59.899262-326.864086-171.202185-11.010389-111.275277 117.530505-215.061482 287.031932-231.823323 169.537265-16.761841 315.876224 59.866496 326.86511 171.119247C728.190884 745.495411 599.705282 849.291856 430.163922 866.063936z" />
+	<path d="M954.16753 186.714824c-67.256246-74.565105-166.457264-102.990607-258.020739-83.522502l-0.037886 0c-21.188318 4.535015-34.695065 25.37929-30.159026 46.527675 4.516584 21.166816 25.352668 34.691993 46.54201 30.174385 65.139769-13.832358 135.634727 6.400627 183.442323 59.368863 47.765615 52.96414 60.740938 125.206957 40.282686 188.537431l0.011263 0.012287c-6.666851 20.629249 4.617954 42.698153 25.271777 49.366027 20.570885 6.662755 42.687913-4.607714 49.362955-25.188838 0-0.037886 0-0.116729 0.011263-0.150519C1039.577146 362.756133 1021.443231 261.206205 954.16753 186.714824" />
+	<path d="M850.886125 279.919669c-32.732179-36.315956-81.068126-50.108381-125.685136-40.621609-18.234261 3.885839-29.856965 21.833398-25.946551 40.085067 3.89915 18.173849 21.833398 29.851845 40.024654 25.893307l0 0.037886c21.809848-4.610786 45.459709 2.113405 61.461789 19.83365 16.018463 17.757107 20.323092 41.949655 13.45043 63.178931l0.035838 0c-5.715614 17.717174 3.983113 36.770584 21.717694 42.511796 17.7397 5.677728 36.76956-3.992328 42.493365-21.756603C892.458972 365.691759 883.686907 316.228458 850.886125 279.919669" />
+	<path d="M447.103928 548.691741c-80.666743-20.985579-171.84317 19.215193-206.880229 90.291746-35.685212 72.492657-1.180599 152.963828 80.321676 179.268757 84.41947 27.224424 183.926645-14.492797 218.521364-92.744074C573.187374 649.021137 530.586496 570.268131 447.103928 548.691741zM385.506979 733.819463c-16.398343 26.160554-51.51015 37.623523-77.954335 25.54824-26.066352-11.868448-33.760211-42.248645-17.360844-67.757975 16.197652-25.400793 50.129884-36.716316 76.378497-25.711046C393.129162 677.216253 401.60838 707.401901 385.506979 733.819463zM439.522702 664.493841c-5.929616 10.131852-19.03498 15.010909-29.304039 10.785123-10.096014-4.15411-13.261002-15.495231-7.522862-25.454038 5.906066-9.908634 18.500485-14.747758 28.572948-10.750309C441.502995 642.817105 445.180975 654.283146 439.522702 664.493841z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Telegram 上关注我。">
+        <a class="button button--circle telegram-button" itemprop="sameAs" href="https://t.me/Wholon" target="_blank">
+          <div class="icon"><?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+    <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 20.302734 2.984375 C 20.013769 2.996945 19.748583 3.080055 19.515625 3.171875 C 19.300407 3.256634 18.52754 3.5814726 17.296875 4.0976562 C 16.06621 4.61384 14.435476 5.2982348 12.697266 6.0292969 C 9.2208449 7.4914211 5.314238 9.1361259 3.3125 9.9785156 C 3.243759 10.007156 2.9645852 10.092621 2.65625 10.328125 C 2.3471996 10.564176 2.0039062 11.076462 2.0039062 11.636719 C 2.0039062 12.088671 2.2295201 12.548966 2.5019531 12.8125 C 2.7743861 13.076034 3.0504903 13.199244 3.28125 13.291016 C 3.9563403 13.559857 6.0424892 14.392968 6.9492188 14.755859 C 7.2668647 15.707799 8.0129251 17.950071 8.1875 18.501953 L 8.1855469 18.501953 C 8.3275588 18.951162 8.4659791 19.243913 8.6582031 19.488281 C 8.7543151 19.610465 8.8690398 19.721184 9.0097656 19.808594 C 9.0637596 19.842134 9.1235454 19.868148 9.1835938 19.892578 C 9.191962 19.896131 9.2005867 19.897012 9.2089844 19.900391 L 9.1855469 19.894531 C 9.2029579 19.901531 9.2185841 19.911859 9.2363281 19.917969 C 9.2652427 19.927926 9.2852873 19.927599 9.3242188 19.935547 C 9.4612233 19.977694 9.5979794 20.005859 9.7246094 20.005859 C 10.26822 20.005859 10.601562 19.710938 10.601562 19.710938 L 10.623047 19.695312 L 12.970703 17.708984 L 15.845703 20.367188 C 15.897113 20.439837 16.308174 20.998047 17.261719 20.998047 C 17.829844 20.998047 18.280978 20.718791 18.568359 20.423828 C 18.855741 20.128866 19.034757 19.82706 19.115234 19.417969 L 19.115234 19.414062 L 19.115234 19.412109 C 19.171124 19.121728 21.931641 5.265625 21.931641 5.265625 L 21.925781 5.2890625 C 22.01148 4.9067181 22.036735 4.5369631 21.935547 4.1601562 C 21.834358 3.7833495 21.561271 3.4156252 21.232422 3.2226562 C 20.903572 3.0296874 20.591699 2.9718046 20.302734 2.984375 z M 19.908203 5.1738281 C 19.799749 5.7182284 17.343164 18.059965 17.183594 18.878906 L 14.328125 16.240234 C 13.59209 15.559749 12.44438 15.535812 11.679688 16.181641 L 10.222656 17.414062 L 11 14.375 C 11 14.375 16.362547 8.9468594 16.685547 8.6308594 C 16.945547 8.3778594 17 8.2891719 17 8.2011719 C 17 8.0841719 16.939781 8 16.800781 8 C 16.675781 8 16.506016 8.1197812 16.416016 8.1757812 C 15.267511 8.8918132 10.350132 11.694224 7.96875 13.048828 C 7.8792978 12.995267 7.7913128 12.939666 7.6933594 12.900391 C 6.9119785 12.587666 5.4101276 11.985551 4.53125 11.634766 C 6.6055146 10.76177 10.161156 9.2658083 13.472656 7.8730469 C 15.210571 7.142109 16.840822 6.4570977 18.070312 5.9414062 C 19.108158 5.5060977 19.649538 5.2807035 19.908203 5.1738281 z M 17.152344 19.023438 C 17.152344 19.023438 17.154297 19.023438 17.154297 19.023438 C 17.154234 19.023761 17.152444 19.03095 17.152344 19.03125 C 17.154024 19.022709 17.151187 19.029588 17.152344 19.023438 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"/>
+</svg>
+</div>
+        </a>
+      </li><li title="在 Zhihu 上关注我。">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jeffrey-8-68" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Github 上关注我。">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/wholon" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+    </div>
+    <!--    在非文章的页脚显示总浏览量 使用VALINE统计    --><!--    在网站底部显示总访问量 使用 leanCLoud统计， key: 网站浏览量  -->
+    <div class="article__content code.info" style="text-align: center">
+      <code class="language-plaintext warning highlighter-rouge">总点击量</code>
+      <code id="site-view" class="js-pageview language-plaintext success highlighter-rouge" data-page-key="网站浏览量">0</code>
+    </div><div class="site-info mt-2">
+      <div>© Holon's Blog 2022,
+        Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/" target="_blank">Jekyll</a>/<a title="Jekyll中文文档." href="http://jekyllcn.com" target="_blank">Jekyllcn</a> & <a
+        title="TeXt is a super customizable Jekyll theme." href="https://tianqi.name/jekyll-TeXt-theme/docs/zh/quick-start" target="_blank">TeXt Theme</a>.
+      </div>
+    </div>
+  </div>
+</footer>
+</div></div>
+                  </div><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $body = $('body'), $window = $(window);
+    var $pageRoot = $('.js-page-root'), $pageMain = $('.js-page-main');
+    var activeCount = 0;
+    function modal(options) {
+      var $root = this, visible, onChange, hideWhenWindowScroll = false;
+      var scrollTop;
+      function setOptions(options) {
+        var _options = options || {};
+        visible = _options.initialVisible === undefined ? false : show;
+        onChange = _options.onChange;
+        hideWhenWindowScroll = _options.hideWhenWindowScroll;
+      }
+      function init() {
+        setState(visible);
+      }
+      function setState(isShow) {
+        if (isShow === visible) {
+          return;
+        }
+        visible = isShow;
+        if (visible) {
+          activeCount++;
+          scrollTop = $(window).scrollTop() || $pageMain.scrollTop();
+          $root.addClass('modal--show');
+          $pageMain.scrollTop(scrollTop);
+          activeCount === 1 && ($pageRoot.addClass('show-modal'), $body.addClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.on('scroll', hide);
+          $window.on('keyup', handleKeyup);
+        } else {
+          activeCount > 0 && activeCount--;
+          $root.removeClass('modal--show');
+          $window.scrollTop(scrollTop);
+          activeCount === 0 && ($pageRoot.removeClass('show-modal'), $body.removeClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.off('scroll', hide);
+          $window.off('keyup', handleKeyup);
+        }
+        onChange && onChange(visible);
+      }
+      function show() {
+        setState(true);
+      }
+      function hide() {
+        setState(false);
+      }
+      function handleKeyup(e) {
+        // Char Code: 27  ESC
+        if (e.which ===  27) {
+          hide();
+        }
+      }
+      setOptions(options);
+      init();
+      return {
+        show: show,
+        hide: hide,
+        $el: $root
+      };
+    }
+    $.fn.modal = modal;
+  });
+})();
+</script><div
+                  class="modal modal--overflow page__search-modal d-print-none js-page-search-modal"><script>
+(function () {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    // search panel
+    var search = (window.search || (window.search = {}));
+    var useDefaultSearchBox = window.useDefaultSearchBox === undefined ?
+      true : window.useDefaultSearchBox ;
+
+    var $searchModal = $('.js-page-search-modal');
+    var $searchToggle = $('.js-search-toggle');
+    var searchModal = $searchModal.modal({ onChange: handleModalChange, hideWhenWindowScroll: true });
+    var modalVisible = false;
+    search.searchModal = searchModal;
+
+    var $searchBox = null;
+    var $searchInput = null;
+    var $searchClear = null;
+
+    function getModalVisible() {
+      return modalVisible;
+    }
+    search.getModalVisible = getModalVisible;
+
+    function handleModalChange(visible) {
+      modalVisible = visible;
+      if (visible) {
+        search.onShow && search.onShow();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].focus();
+      } else {
+        search.onShow && search.onHide();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].blur();
+        setTimeout(function() {
+          useDefaultSearchBox && ($searchInput.val(''), $searchBox.removeClass('not-empty'));
+          search.clear && search.clear();
+          window.pageAsideAffix && window.pageAsideAffix.refresh();
+        }, 400);
+      }
+    }
+
+    $searchToggle.on('click', function() {
+      modalVisible ? searchModal.hide() : searchModal.show();
+    });
+    // Char Code: 83  S, 191 /
+    $(window).on('keyup', function(e) {
+      if (!modalVisible && !window.isFormElement(e.target || e.srcElement) && (e.which === 83 || e.which === 191)) {
+        modalVisible || searchModal.show();
+      }
+    });
+
+    if (useDefaultSearchBox) {
+      $searchBox = $('.js-search-box');
+      $searchInput = $searchBox.children('input');
+      $searchClear = $searchBox.children('.js-icon-clear');
+      search.getSearchInput = function() {
+        return $searchInput.get(0);
+      };
+      search.getVal = function() {
+        return $searchInput.val();
+      };
+      search.setVal = function(val) {
+        $searchInput.val(val);
+      };
+
+      $searchInput.on('focus', function() {
+        $(this).addClass('focus');
+      });
+      $searchInput.on('blur', function() {
+        $(this).removeClass('focus');
+      });
+      $searchInput.on('input', window.throttle(function() {
+        var val = $(this).val();
+        if (val === '' || typeof val !== 'string') {
+          search.clear && search.clear();
+        } else {
+          $searchBox.addClass('not-empty');
+          search.onInputNotEmpty && search.onInputNotEmpty(val);
+        }
+      }, 400));
+      $searchClear.on('click', function() {
+        $searchInput.val(''); $searchBox.removeClass('not-empty');
+        search.clear && search.clear();
+      });
+    }
+  });
+})();
+</script><div class="search search--dark">
+  <div class="main">
+    <div class="search__header">搜索</div>
+    <div class="search-bar">
+      <div class="search-box js-search-box">
+        <div class="search-box__icon-search"><i class="fas fa-search"></i></div>
+        <input type="text" />
+        <div class="search-box__icon-clear js-icon-clear">
+          <a><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      <button class="button button--theme-dark button--pill search__cancel js-search-toggle">
+        取消</button>
+    </div>
+    <div class="search-result js-search-result"></div>
+  </div>
+</div>
+<script>var SOURCES = window.TEXT_VARIABLES.sources;
+var PAHTS = window.TEXT_VARIABLES.paths;
+window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
+  var search = (window.search || (window.search = {}));
+  var searchData = window.TEXT_SEARCH_DATA || {};
+
+  function memorize(f) {
+    var cache = {};
+    return function () {
+      var key = Array.prototype.join.call(arguments, ',');
+      if (key in cache) return cache[key];
+      else return cache[key] = f.apply(this, arguments);
+    };
+  }
+
+  /// search
+  function searchByQuery(query) {
+    var i, j, key, keys, cur, _title, result = {};
+    keys = Object.keys(searchData);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      for (j = 0; j < searchData[key].length; j++) {
+        cur = searchData[key][j], _title = cur.title;
+        if ((result[key] === undefined || result[key] && result[key].length < 4 )
+          && _title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
+          if (result[key] === undefined) {
+            result[key] = [];
+          }
+          result[key].push(cur);
+        }
+      }
+    }
+    return result;
+  }
+
+  var renderHeader = memorize(function(header) {
+    return $('<p class="search-result__header">' + header + '</p>');
+  });
+
+  var renderItem = function(index, title, url) {
+    return $('<li class="search-result__item" data-index="' + index + '"><a class="button" href="' + url + '">' + title + '</a></li>');
+  };
+
+  function render(data) {
+    if (!data) { return null; }
+    var $root = $('<ul></ul>'), i, j, key, keys, cur, itemIndex = 0;
+    keys = Object.keys(data);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      $root.append(renderHeader(key));
+      for (j = 0; j < data[key].length; j++) {
+        cur = data[key][j];
+        $root.append(renderItem(itemIndex++, cur.title, cur.url));
+      }
+    }
+    return $root;
+  }
+
+  // search box
+  var $result = $('.js-search-result'), $resultItems;
+  var lastActiveIndex, activeIndex;
+
+  function clear() {
+    $result.html(null);
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+  }
+  function onInputNotEmpty(val) {
+    $result.html(render(searchByQuery(val)));
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+    $resultItems.eq(0).addClass('active');
+  }
+
+  search.clear = clear;
+  search.onInputNotEmpty = onInputNotEmpty;
+
+  function updateResultItems() {
+    lastActiveIndex >= 0 && $resultItems.eq(lastActiveIndex).removeClass('active');
+    activeIndex >= 0 && $resultItems.eq(activeIndex).addClass('active');
+  }
+
+  function moveActiveIndex(direction) {
+    var itemsCount = $resultItems ? $resultItems.length : 0;
+    if (itemsCount > 1) {
+      lastActiveIndex = activeIndex;
+      if (direction === 'up') {
+        activeIndex = (activeIndex - 1 + itemsCount) % itemsCount;
+      } else if (direction === 'down') {
+        activeIndex = (activeIndex + 1 + itemsCount) % itemsCount;
+      }
+      updateResultItems();
+    }
+  }
+
+  // Char Code: 13  Enter, 37  ⬅, 38  ⬆, 39  ➡, 40  ⬇
+  $(window).on('keyup', function(e) {
+    var modalVisible = search.getModalVisible && search.getModalVisible();
+    if (modalVisible) {
+      if (e.which === 38) {
+        modalVisible && moveActiveIndex('up');
+      } else if (e.which === 40) {
+        modalVisible && moveActiveIndex('down');
+      } else if (e.which === 13) {
+        modalVisible && $resultItems && activeIndex >= 0 && $resultItems.eq(activeIndex).children('a')[0].click();
+      }
+    }
+  });
+
+  $result.on('mouseover', '.search-result__item > a', function() {
+    var itemIndex = $(this).parent().data('index');
+    itemIndex >= 0 && (lastActiveIndex = activeIndex, activeIndex = itemIndex, updateResultItems());
+  });
+});
+</script>
+</div></div>
+
+
+            <script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function scrollToAnchor(anchor, duration, callback) {
+      var $root = this;
+      $root.animate({ scrollTop: $(anchor).position().top }, duration, function() {
+        window.history.replaceState(null, '', window.location.href.split('#')[0] + anchor);
+        callback && callback();
+      });
+    }
+    $.fn.scrollToAnchor = scrollToAnchor;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function affix(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroll,
+        offsetBottom = 0, scrollTarget = window, scroll = window.document, disabled = false, isOverallScroller = true,
+        rootTop, rootLeft, rootHeight, scrollBottom, rootBottomTop,
+        hasInit = false, curState;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.offsetBottom && (offsetBottom = _options.offsetBottom);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroll && (scroll = _options.scroll);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $scrollTarget = $(scrollTarget);
+        isOverallScroller = window.isOverallScroller($scrollTarget[0]);
+        $scroll = $(scroll);
+      }
+      function preCalc() {
+        top();
+        rootHeight = $root.outerHeight();
+        rootTop = $root.offset().top + (isOverallScroller ? 0 :  $scrollTarget.scrollTop());
+        rootLeft = $root.offset().left;
+      }
+      function calc(needPreCalc) {
+        needPreCalc && preCalc();
+        scrollBottom = $scroll.outerHeight() - offsetBottom - rootHeight;
+        rootBottomTop = scrollBottom - rootTop;
+      }
+      function top() {
+        if (curState !== 'top') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: 0
+          });
+          curState = 'top';
+        }
+      }
+      function fixed() {
+        if (curState !== 'fixed') {
+          $root.addClass('fixed').css({
+            left: rootLeft + 'px',
+            top: 0
+          });
+          curState = 'fixed';
+        }
+      }
+      function bottom() {
+        if (curState !== 'bottom') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: rootBottomTop + 'px'
+          });
+          curState = 'bottom';
+        }
+      }
+      function setState() {
+        var scrollTop = $scrollTarget.scrollTop();
+        if (scrollTop >= rootTop && scrollTop <= scrollBottom) {
+          fixed();
+        } else if (scrollTop < rootTop) {
+          top();
+        } else {
+          bottom();
+        }
+      }
+      function init() {
+        if(!hasInit) {
+          var interval, timeout;
+          calc(true); setState();
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState();
+          });
+          $window.on('resize', function() {
+            disabled || (calc(true), setState());
+          });
+          hasInit = true;
+        }
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions,
+        refresh: function() {
+          calc(true, { animation: false }); setState();
+        }
+      };
+    }
+    $.fn.affix = affix;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function toc(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroller, $tocUl = $('<ul class="toc toc--ellipsis"></ul>'), $tocLi, $headings, $activeLast, $activeCur,
+        selectors = 'h1,h2,h3', container = 'body', scrollTarget = window, scroller = 'html, body', disabled = false,
+        headingsPos, scrolling = false, hasRendered = false, hasInit = false;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.selectors && (selectors = _options.selectors);
+        _options.container && (container = _options.container);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroller && (scroller = _options.scroller);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $headings = $(container).find(selectors).filter('[id]');
+        $scrollTarget = $(scrollTarget);
+        $scroller = $(scroller);
+      }
+      function calc() {
+        headingsPos = [];
+        $headings.each(function() {
+          headingsPos.push(Math.floor($(this).position().top));
+        });
+      }
+      function setState(element, disabled) {
+        var scrollTop = $scrollTarget.scrollTop(), i;
+        if (disabled || !headingsPos || headingsPos.length < 1) { return; }
+        if (element) {
+          $activeCur = element;
+        } else {
+          for (i = 0; i < headingsPos.length; i++) {
+            if (scrollTop >= headingsPos[i]) {
+              $activeCur = $tocLi.eq(i);
+            } else {
+              $activeCur || ($activeCur = $tocLi.eq(i));
+              break;
+            }
+          }
+        }
+        $activeLast && $activeLast.removeClass('active');
+        ($activeLast = $activeCur).addClass('active');
+      }
+      function render() {
+        if(!hasRendered) {
+          $root.append($tocUl);
+          $headings.each(function() {
+            var $this = $(this);
+            $tocUl.append($('<li></li>').addClass('toc-' + $this.prop('tagName').toLowerCase())
+              .append($('<a></a>').text($this.text()).attr('href', '#' + $this.prop('id'))));
+          });
+          $tocLi = $tocUl.children('li');
+          $tocUl.on('click', 'a', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            scrolling = true;
+            setState($this.parent());
+            $scroller.scrollToAnchor($this.attr('href'), 400, function() {
+              scrolling = false;
+            });
+          });
+        }
+        hasRendered = true;
+      }
+      function init() {
+        var interval, timeout;
+        if(!hasInit) {
+          render(); calc(); setState(null, scrolling);
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState(null, scrolling);
+          });
+          $window.on('resize', window.throttle(function() {
+            if (!disabled) {
+              render(); calc(); setState(null, scrolling);
+            }
+          }, 100));
+        }
+        hasInit = true;
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions
+      };
+    }
+    $.fn.toc = toc;
+  });
+})();
+/*(function () {
+
+})();*/
+</script><script>
+                /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script>
+  window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.bootcdn.net/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js'], function() {
+    var $canvas = null, $this = null, _ctx = null, _text = '';
+    $('.language-chart').each(function(){
+      $this = $(this);
+      $canvas = $('<canvas></canvas>');
+      _text = $this.text();
+      $this.text('').append($canvas);
+      _ctx = $canvas.get(0).getContext('2d');
+      (_ctx && _text) && (new Chart(_ctx, JSON.parse(_text)) && $this.attr('data-processed', true));
+    });
+  });
+</script>
+<script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};_config.TeX = { equationNumbers: { autoNumber: "all" } };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  window.Lazyload.js('https://cdn.bootcdn.net/ajax/libs/mermaid/9.0.0/mermaid.js', function() {
+    mermaid.initialize({
+      startOnLoad: true
+    });
+    mermaid.init(undefined, '.language-mermaid');
+  });
+</script>
+<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      serverURLs: 'https://avoscloud.com',
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      
+      blog.set('title', title);
+      // 将插入的 key 设置为 title
+      // blog.set('key', key);
+      blog.set('key', title);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+        appKey:   'jVCnL11R3DvbBvS7T6Vg0lPc',
+        appClass: 'BlogPageView'
+      });
+      //  总浏览量增加
+      pageview.increase("网站浏览量", "网站浏览量", function(view) {
+        $("#site-view").text(view);
+      });
+      // 文章浏览量增加
+      var key =   'React';
+      var title = "React";
+      pageview.increase(key, key, function(view) {
+        $("[data-page-key='React']").text(view);
+      });
+    });
+  </script><!-- start custom pageview snippet (for the post) -->
+
+<!-- end custom pageview snippet (for the post) -->
+
+
+<!---->
+<!---->
+<!---->
+<!---->
+<!--<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      serverURLs: 'https://avoscloud.com',
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      
+      blog.set('title', title);
+      // 将插入的 key 设置为 title
+      // blog.set('key', key);
+      blog.set('key', title);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+        appKey:   'jVCnL11R3DvbBvS7T6Vg0lPc',
+        appClass: 'BlogPageView'
+      });
+      //  总浏览量增加
+      pageview.increase("网站浏览量", "网站浏览量", function(view) {
+        $("#site-view").text(view);
+      });
+      // 文章浏览量增加
+      var key =   'React';
+      var title = "React";
+      pageview.increase(key, key, function(view) {
+        $("[data-page-key='React']").text(view);
+      });
+    });
+  </script>-->
+<!---->
+<!---->
+<!---->
+<!---->
+
+    </div>
+    <script>(function () {
+  var $root = document.getElementsByClassName('root')[0];
+  if (window.hasEvent('touchstart')) {
+    $root.dataset.isTouch = true;
+    document.addEventListener('touchstart', function(){}, false);
+  }
+})();
+</script>
+  </body>
+</html>
+

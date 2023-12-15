@@ -1,0 +1,1643 @@
+<!DOCTYPE html><html lang="zh">
+  <head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>SpringBoot-第一个SpringBoot应用 - Holon's Blog</title>
+
+<meta name="description" content="要了解Spring Boot，我们先来编写第一个Spring Boot应用程序，看看与前面我们编写的Spring应用程序有何异同。我们新建一个springboot-hello的工程，创建标准的Maven目录结构如下：springboot-hello├── pom.xml├── src│   └── main│  ...">
+<link rel="canonical" href="https://wholon.github.io/posts/cs/lang/java/2022/07/13/SpringBoot-%E7%AC%AC%E4%B8%80%E4%B8%AASpringBoot%E5%BA%94%E7%94%A8/"><link rel="alternate" type="application/rss+xml" title="Holon's Blog" href="/feed.xml"><!-- start favicons snippet, use https://realfavicongenerator.net/ --><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png"><link rel="manifest" href="/assets/site.webmanifest"><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5"><link rel="shortcut icon" href="/assets/favicon.ico">
+
+<meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/browserconfig.xml">
+
+<meta name="theme-color" content="#ffffff">
+<!-- <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/browserconfig.xml">
+<meta name="theme-color" content="#ffffff"> -->
+<!-- end favicons snippet --><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.1/css/all.css" ><!-- start custom head snippets -->
+
+<!-- end custom head snippets -->
+<script>(function() {
+  window.isArray = function(val) {
+    return Object.prototype.toString.call(val) === '[object Array]';
+  };
+  window.isString = function(val) {
+    return typeof val === 'string';
+  };
+
+  window.hasEvent = function(event) {
+    return 'on'.concat(event) in window.document;
+  };
+
+  window.isOverallScroller = function(node) {
+    return node === document.documentElement || node === document.body || node === window;
+  };
+
+  window.isFormElement = function(node) {
+    var tagName = node.tagName;
+    return tagName === 'INPUT' || tagName === 'SELECT' || tagName === 'TEXTAREA';
+  };
+
+  window.pageLoad = (function () {
+    var loaded = false, cbs = [];
+    window.addEventListener('load', function () {
+      var i;
+      loaded = true;
+      if (cbs.length > 0) {
+        for (i = 0; i < cbs.length; i++) {
+          cbs[i]();
+        }
+      }
+    });
+    return {
+      then: function(cb) {
+        cb && (loaded ? cb() : (cbs.push(cb)));
+      }
+    };
+  })();
+})();
+(function() {
+  window.throttle = function(func, wait) {
+    var args, result, thisArg, timeoutId, lastCalled = 0;
+
+    function trailingCall() {
+      lastCalled = new Date;
+      timeoutId = null;
+      result = func.apply(thisArg, args);
+    }
+    return function() {
+      var now = new Date,
+        remaining = wait - (now - lastCalled);
+
+      args = arguments;
+      thisArg = this;
+
+      if (remaining <= 0) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+        lastCalled = now;
+        result = func.apply(thisArg, args);
+      } else if (!timeoutId) {
+        timeoutId = setTimeout(trailingCall, remaining);
+      }
+      return result;
+    };
+  };
+})();
+(function() {
+  var Set = (function() {
+    var add = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (data[i] === item) {
+          return;
+        }
+      }
+      this.size ++;
+      data.push(item);
+      return data;
+    };
+
+    var Set = function(data) {
+      this.size = 0;
+      this._data = [];
+      var i;
+      if (data.length > 0) {
+        for (i = 0; i < data.length; i++) {
+          add.call(this, data[i]);
+        }
+      }
+    };
+    Set.prototype.add = add;
+    Set.prototype.get = function(index) { return this._data[index]; };
+    Set.prototype.has = function(item) {
+      var i, data = this._data;
+      for (i = 0; i < data.length; i++) {
+        if (this.get(i) === item) {
+          return true;
+        }
+      }
+      return false;
+    };
+    Set.prototype.is = function(map) {
+      if (map._data.length !== this._data.length) { return false; }
+      var i, j, flag, tData = this._data, mData = map._data;
+      for (i = 0; i < tData.length; i++) {
+        for (flag = false, j = 0; j < mData.length; j++) {
+          if (tData[i] === mData[j]) {
+            flag = true;
+            break;
+          }
+        }
+        if (!flag) { return false; }
+      }
+      return true;
+    };
+    Set.prototype.values = function() {
+      return this._data;
+    };
+    return Set;
+  })();
+
+  window.Lazyload = (function(doc) {
+    var queue = {js: [], css: []}, sources = {js: {}, css: {}}, context = this;
+    var createNode = function(name, attrs) {
+      var node = doc.createElement(name), attr;
+      for (attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) {
+          node.setAttribute(attr, attrs[attr]);
+        }
+      }
+      return node;
+    };
+    var end = function(type, url) {
+      var s, q, qi, cbs, i, j, cur, val, flag;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        s[url] = true;
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (cur.urls.has(url)) {
+            qi = cur, val = qi.urls.values();
+            qi && (cbs = qi.callbacks);
+            for (flag = true, j = 0; j < val.length; j++) {
+              cur = val[j];
+              if (!s[cur]) {
+                flag = false;
+              }
+            }
+            if (flag && cbs && cbs.length > 0) {
+              for (j = 0; j < cbs.length; j++) {
+                cbs[j].call(context);
+              }
+              qi.load = true;
+            }
+          }
+        }
+      }
+    };
+    var load = function(type, urls, callback) {
+      var s, q, qi, node, i, cur,
+        _urls = typeof urls === 'string' ? new Set([urls]) : new Set(urls), val, url;
+      if (type === 'js' || type ==='css') {
+        s = sources[type], q = queue[type];
+        for (i = 0; i < q.length; i++) {
+          cur = q[i];
+          if (_urls.is(cur.urls)) {
+            qi = cur;
+            break;
+          }
+        }
+        val = _urls.values();
+        if (qi) {
+          callback && (qi.load || qi.callbacks.push(callback));
+          callback && (qi.load && callback());
+        } else {
+          q.push({
+            urls: _urls,
+            callbacks: callback ? [callback] : [],
+            load: false
+          });
+          for (i = 0; i < val.length; i++) {
+            node = null, url = val[i];
+            if (s[url] === undefined) {
+              (type === 'js' ) && (node = createNode('script', { src: url }));
+              (type === 'css') && (node = createNode('link', { rel: 'stylesheet', href: url }));
+              if (node) {
+                node.onload = (function(type, url) {
+                  return function() {
+                    end(type, url);
+                  };
+                })(type, url);
+                (doc.head || doc.body).appendChild(node);
+                s[url] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+    return {
+      js: function(url, callback) {
+        load('js', url, callback);
+      },
+      css: function(url, callback) {
+        load('css', url, callback);
+      }
+    };
+  })(this.document);
+})();
+</script><script>
+  (function() {
+    var TEXT_VARIABLES = {
+      version: '2.2.6',
+      sources: {
+        font_awesome: 'https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.1/css/all.css',
+        jquery: 'https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js',
+        leancloud_js_sdk: 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js',
+        chart: 'https://cdn.bootcdn.net/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js',
+        gitalk: {
+          js: 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.2.2/gitalk.min.js',
+          css: 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.2.2/gitalk.min.css'
+        },
+        valine: 'https://cdn.bootcdn.net/ajax/libs/valine/1.4.18/Valine.min.js',
+        mathjax: 'https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML',
+        mermaid: 'https://cdn.bootcdn.net/ajax/libs/mermaid/9.0.0/mermaid.js'
+      },
+      site: {
+        toc: {
+          selectors: 'h1,h2,h3,h4,h5,h6'
+        }
+      },
+      paths: {
+        search_js: '/assets/search.js'
+      }
+    };
+    window.TEXT_VARIABLES = TEXT_VARIABLES;
+  })();
+</script>
+</head>
+  <body>
+    <div class="root" data-is-touch="false">
+      <div class="layout--page js-page-root"><div class="page__main js-page-main page__viewport has-aside cell cell--auto">
+
+          <div class="page__main-inner"><div class="page__header d-print-none"><header class="header"><div class="main">
+      <div class="header__title">
+        <div class="header__brand"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="240px" height="240px" viewBox="0 0 240 240" enable-background="new 0 0 240 240" xml:space="preserve">  <image id="image0" width="240" height="240" x="0" y="0"
+    href="data:image/png;base64,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
+zbrW+o4N2YZlI7JZZXPW5r2tnW2a7TzbBtvndoZ2XLtiu1q7e/Y0+yD7ifbV9tcciA4shzyHdQ6X
+HVFHL0eRY5XjJSfUydtJ7LTOqW0YYZjvMMmw6mE3nanObOci51rnhy4GLjEuJS4NLq+GWw/PGL50
++NnhX129XPNdt7jeddN1i3IrcWtye+Pu6M53r3K/5kHzCPeY6dHo8drTyVPoud7zlhfDa6TXPK9m
+ry/ePt4y7zrvTh9rn0yftT43WXqseNZC1jlfgm+I70zfw74f/bz9Cv32+f3p7+yf57/D//kIuxHC
+EVtGPA6wDOAFbApoD2QGZgZuDGwPsgjiBVUHPQq2ChYEbw1+xnZg57J3sl+FuIbIQg6EvOf4caZz
+jodioRGhZaGtYbphKWFrwh6EW4bnhNeGd0d4RUyNOB5JiIyOXBp5k2vK5XNruN1RPlHTo05FU6OT
+otdEP4pxjJHFNI1ER0aNXD7yXqxNrCS2IQ7EceOWx92Pt4ufGH8ogZgQn1CV8DTRLXFa4tkkRtL4
+pB1J75JDkhcn302xT1GkNKfSU8ek1qS+TwtNW5bWPmr4qOmjLqYbp4vTGzNIGakZWzN6RoeNXjm6
+Y4zXmNIxN8bajZ089vw443H5446Mp4/njd+fSchMy9yR+ZkXx6vm9WRxs9ZmdfM5/FX8l4JgwQpB
+pzBAuEz4LDsge1n285yAnOU5naIgUYWoS8wRrxG/zo3M3ZD7Pi8ub1teX35a/u4CjYLMgoMSXUme
+5NQEswmTJ7RJnaSl0vaJfhNXTuyWRcu2yhH5WHljoR78qG9R2Ct+UjwsCiyqKvowKXXS/sk6kyWT
+W6Y4Tlkw5VlxePEvU/Gp/KnN0yymzZ72cDp7+qYZyIysGc0zrWbOndkxK2LW9tmU2XmzfytxLVlW
+8tectDlNc03nzpr7+KeIn2pLtUplpTfn+c/bMB+fL57fusBjweoFX8sEZRfKXcsryj8v5C+88LPb
+z5U/9y3KXtS62Hvx+iXEJZIlN5YGLd2+TGdZ8bLHy0cur1/BXFG24q+V41eer/Cs2LCKskqxqr0y
+prJxtfXqJas/rxGtuV4VUrV7rcnaBWvfrxOsu7I+eH3dBtMN5Rs+bRRvvLUpYlN9tW11xWbi5qLN
+T7ekbjn7C+uXmq3GW8u3ftkm2da+PXH7qRqfmpodJjsW16K1itrOnWN2Xt4Vuquxzrlu026D3eV7
+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
+b24ARGlzcGxheRcblbgAAAAASUVORK5CYII=" />
+</svg>
+<a title="Think Different" href="/">Holon's Blog</a></div>
+<!--        <p>Think Different</p>--><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></div><nav class="navigation">
+        <ul><li class="navigation__item"><a href="/">主页</a></li><li class="navigation__item navigation__item--active"><a href="/posts/cs/">计算机科学</a></li><li class="navigation__item"><a href="/posts/algorithms/">算法</a></li><li class="navigation__item"><a href="/posts/blog/">随笔</a></li><li class="navigation__item"><a href="/archive">归档</a></li><li class="navigation__item"><a href="/about">关于</a></li><li><button class="button button--secondary button--circle search-button js-search-toggle"><i class="fas fa-search"></i></button></li></ul>
+      </nav></div>
+  </header>
+</div><div class="page__content"><div class="main"><div class="grid grid--reverse">
+                            <div class="col-aside d-print-none js-col-aside"><aside class="page__aside js-page-aside"><div class="toc-aside js-toc-root">
+    <!-- 固定于 TOC 顶部的文章标题 -->
+    <a href="#" name="点击返回顶部">SpringBoot-第一个SpringBoot应用</a>
+</div>
+</aside></div>
+
+                            <div class="col-main cell cell--auto"><!-- start custom main top snippet -->
+
+<!-- end custom main top snippet -->
+<article itemscope
+                                       itemtype="http://schema.org/Article"><div class="article__header"><header><h1>SpringBoot-第一个SpringBoot应用</h1></header></div><meta itemprop="headline" content="SpringBoot-第一个SpringBoot应用"><div class="article__info clearfix">
+<!--      展示标签 --><!--展示文章分类-->
+      <!-- 获取设置项：是否开启显示文章位置 -->
+  <!-- 获取页面网址 -->
+  
+    
+      
+  
+    
+      
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  <!-- 获取当前侧边栏分类 -->
+  
+  
+  
+    
+    
+      
+
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+    
+    
+
+    
+    
+      
+        
+      
+        
+      
+    
+  
+    
+    
+
+    
+    
+  
+
+  <ul class="left-col menu">
+    
+      <li>位置：</li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/">计算机科学</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/">编程语言</a>
+      </li>
+    
+
+    
+      <li>></li>
+      <li>
+        <a class="button button--secondary button--pill button--sm"
+           href="/posts/cs/lang/java/">Java</a>
+      </li>
+    
+    
+  </ul>
+
+<!--  为防止路径过短问题，每生成一次，重置一下变量 -->
+  
+  
+  
+
+
+      <!--/展示文章分类--><ul class="right-col menu"><li><i class="fas fa-user"></i> <span>Holon</span></li><li><i class="far fa-calendar-alt"></i> <span>2022年 07月13日</span>
+            </li><li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="SpringBoot-第一个SpringBoot应用">0</span> 阅读</li></ul></div>
+    <!-- 展示更新时间 -->
+    
+<div class="article__info clearfix"><li class="right-col menu">
+    <time itemprop="dateModified" datetime="2023-12-15T08:24:22+08:00">更新于2023年12月15日 08:24:22</time>
+  </li></div>
+
+
+    
+<div class="article__info clearfix">
+  <li class="right-col menu">
+    <span>
+      
+      
+      预计阅读时间 5 分
+      
+    </span>
+  </li>
+</div>
+
+
+
+<!-- /展示更新时间 --><meta itemprop="author" content="Holon"/><meta itemprop="datePublished" content="2022-07-13T00:00:00+08:00"><div
+                                      class="js-article-content"><div class="layout--article"><!-- start custom article top snippet -->
+
+<!-- end custom article top snippet -->
+<div class="article__content" itemprop="articleBody"><p>要了解Spring Boot，我们先来编写第一个Spring Boot应用程序，看看与前面我们编写的Spring应用程序有何异同。</p>
+
+<p>我们新建一个<code class="language-plaintext highlighter-rouge">springboot-hello</code>的工程，创建标准的Maven目录结构如下：</p>
+
+<pre><code class="language-ascii">springboot-hello
+├── pom.xml
+├── src
+│   └── main
+│       ├── java
+│       └── resources
+│           ├── application.yml
+│           ├── logback-spring.xml
+│           ├── static
+│           └── templates
+└── target
+</code></pre>
+</div><div class="d-print-none"><footer class="article__footer">
+  <!-- 原 更新时间 位置 --><!-- start custom article footer snippet -->
+
+<!-- end custom article footer snippet -->
+<!--  在页脚作者信息上方添加 联系我 标题 -->
+    <h2>联系我</h2><div itemscope itemtype="http://schema.org/Person" class="author-profile card card--flat item"><a href="https://holon.wang" class="item__image"><img class="author-profile__avatar" itemprop="image" src="https://holon-image.oss-cn-beijing.aliyuncs.com/20220415234156pm7cyt.png" /></a><div class="item__content"><meta itemprop="name" content="Holon">
+        <p class="author-profile__name"><meta itemprop="url" content="https://holon.wang">
+            <a href="https://holon.wang">Holon</a></p><p itemprop="description">Keep it simple, Stupid</p><div class="author-profile__links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="https://holon.wang"><li title="给我发邮件。">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:holon.cn@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="在 Weibo 上关注我。">
+        <a class="button button--circle weibo-button" itemprop="sameAs" href="https://weibo.com/5718657072" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<path d="M769.226164 496.610234c-14.420098-4.330228-24.309277-7.266877-16.746482-26.214823 16.350218-41.133578 18.046881-76.626289 0.307181-101.939024-33.242099-47.500415-124.194284-44.928286-228.44638-1.280945 0-0.056317-32.73525 14.323848-24.371737-11.64523 16.042013-51.54906 13.626547-94.739726-11.332929-119.662341-56.566349-56.601163-206.976479 2.134908-335.954595 131.078209-96.594075 96.61353-152.681222 198.989775-152.681222 287.52035 0 169.337597 217.152361 272.292366 429.593589 272.292366 278.498445 0 463.752111-161.808592 463.752111-290.273715C893.345701 558.867622 827.968378 514.820945 769.226164 496.610234zM430.163922 866.063936c-169.51781 16.728051-315.851649-59.899262-326.864086-171.202185-11.010389-111.275277 117.530505-215.061482 287.031932-231.823323 169.537265-16.761841 315.876224 59.866496 326.86511 171.119247C728.190884 745.495411 599.705282 849.291856 430.163922 866.063936z" />
+	<path d="M954.16753 186.714824c-67.256246-74.565105-166.457264-102.990607-258.020739-83.522502l-0.037886 0c-21.188318 4.535015-34.695065 25.37929-30.159026 46.527675 4.516584 21.166816 25.352668 34.691993 46.54201 30.174385 65.139769-13.832358 135.634727 6.400627 183.442323 59.368863 47.765615 52.96414 60.740938 125.206957 40.282686 188.537431l0.011263 0.012287c-6.666851 20.629249 4.617954 42.698153 25.271777 49.366027 20.570885 6.662755 42.687913-4.607714 49.362955-25.188838 0-0.037886 0-0.116729 0.011263-0.150519C1039.577146 362.756133 1021.443231 261.206205 954.16753 186.714824" />
+	<path d="M850.886125 279.919669c-32.732179-36.315956-81.068126-50.108381-125.685136-40.621609-18.234261 3.885839-29.856965 21.833398-25.946551 40.085067 3.89915 18.173849 21.833398 29.851845 40.024654 25.893307l0 0.037886c21.809848-4.610786 45.459709 2.113405 61.461789 19.83365 16.018463 17.757107 20.323092 41.949655 13.45043 63.178931l0.035838 0c-5.715614 17.717174 3.983113 36.770584 21.717694 42.511796 17.7397 5.677728 36.76956-3.992328 42.493365-21.756603C892.458972 365.691759 883.686907 316.228458 850.886125 279.919669" />
+	<path d="M447.103928 548.691741c-80.666743-20.985579-171.84317 19.215193-206.880229 90.291746-35.685212 72.492657-1.180599 152.963828 80.321676 179.268757 84.41947 27.224424 183.926645-14.492797 218.521364-92.744074C573.187374 649.021137 530.586496 570.268131 447.103928 548.691741zM385.506979 733.819463c-16.398343 26.160554-51.51015 37.623523-77.954335 25.54824-26.066352-11.868448-33.760211-42.248645-17.360844-67.757975 16.197652-25.400793 50.129884-36.716316 76.378497-25.711046C393.129162 677.216253 401.60838 707.401901 385.506979 733.819463zM439.522702 664.493841c-5.929616 10.131852-19.03498 15.010909-29.304039 10.785123-10.096014-4.15411-13.261002-15.495231-7.522862-25.454038 5.906066-9.908634 18.500485-14.747758 28.572948-10.750309C441.502995 642.817105 445.180975 654.283146 439.522702 664.493841z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Telegram 上关注我。">
+        <a class="button button--circle telegram-button" itemprop="sameAs" href="https://t.me/Wholon" target="_blank">
+          <div class="icon"><?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+    <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 20.302734 2.984375 C 20.013769 2.996945 19.748583 3.080055 19.515625 3.171875 C 19.300407 3.256634 18.52754 3.5814726 17.296875 4.0976562 C 16.06621 4.61384 14.435476 5.2982348 12.697266 6.0292969 C 9.2208449 7.4914211 5.314238 9.1361259 3.3125 9.9785156 C 3.243759 10.007156 2.9645852 10.092621 2.65625 10.328125 C 2.3471996 10.564176 2.0039062 11.076462 2.0039062 11.636719 C 2.0039062 12.088671 2.2295201 12.548966 2.5019531 12.8125 C 2.7743861 13.076034 3.0504903 13.199244 3.28125 13.291016 C 3.9563403 13.559857 6.0424892 14.392968 6.9492188 14.755859 C 7.2668647 15.707799 8.0129251 17.950071 8.1875 18.501953 L 8.1855469 18.501953 C 8.3275588 18.951162 8.4659791 19.243913 8.6582031 19.488281 C 8.7543151 19.610465 8.8690398 19.721184 9.0097656 19.808594 C 9.0637596 19.842134 9.1235454 19.868148 9.1835938 19.892578 C 9.191962 19.896131 9.2005867 19.897012 9.2089844 19.900391 L 9.1855469 19.894531 C 9.2029579 19.901531 9.2185841 19.911859 9.2363281 19.917969 C 9.2652427 19.927926 9.2852873 19.927599 9.3242188 19.935547 C 9.4612233 19.977694 9.5979794 20.005859 9.7246094 20.005859 C 10.26822 20.005859 10.601562 19.710938 10.601562 19.710938 L 10.623047 19.695312 L 12.970703 17.708984 L 15.845703 20.367188 C 15.897113 20.439837 16.308174 20.998047 17.261719 20.998047 C 17.829844 20.998047 18.280978 20.718791 18.568359 20.423828 C 18.855741 20.128866 19.034757 19.82706 19.115234 19.417969 L 19.115234 19.414062 L 19.115234 19.412109 C 19.171124 19.121728 21.931641 5.265625 21.931641 5.265625 L 21.925781 5.2890625 C 22.01148 4.9067181 22.036735 4.5369631 21.935547 4.1601562 C 21.834358 3.7833495 21.561271 3.4156252 21.232422 3.2226562 C 20.903572 3.0296874 20.591699 2.9718046 20.302734 2.984375 z M 19.908203 5.1738281 C 19.799749 5.7182284 17.343164 18.059965 17.183594 18.878906 L 14.328125 16.240234 C 13.59209 15.559749 12.44438 15.535812 11.679688 16.181641 L 10.222656 17.414062 L 11 14.375 C 11 14.375 16.362547 8.9468594 16.685547 8.6308594 C 16.945547 8.3778594 17 8.2891719 17 8.2011719 C 17 8.0841719 16.939781 8 16.800781 8 C 16.675781 8 16.506016 8.1197812 16.416016 8.1757812 C 15.267511 8.8918132 10.350132 11.694224 7.96875 13.048828 C 7.8792978 12.995267 7.7913128 12.939666 7.6933594 12.900391 C 6.9119785 12.587666 5.4101276 11.985551 4.53125 11.634766 C 6.6055146 10.76177 10.161156 9.2658083 13.472656 7.8730469 C 15.210571 7.142109 16.840822 6.4570977 18.070312 5.9414062 C 19.108158 5.5060977 19.649538 5.2807035 19.908203 5.1738281 z M 17.152344 19.023438 C 17.152344 19.023438 17.154297 19.023438 17.154297 19.023438 C 17.154234 19.023761 17.152444 19.03095 17.152344 19.03125 C 17.154024 19.022709 17.151187 19.029588 17.152344 19.023438 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"/>
+</svg>
+</div>
+        </a>
+      </li><li title="在 Zhihu 上关注我。">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jeffrey-8-68" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Github 上关注我。">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/wholon" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+
+    </div>
+</div>
+<div class="article__license"><div class="license">
+    <p>本文遵守 <a itemprop="license" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">Attribution-NonCommercial 4.0 International</a> 许可协议。
+      <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">
+        <img alt="Attribution-NonCommercial 4.0 International" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+      </a>
+    </p>
+  </div></div></footer>
+<div class="article__section-navigator clearfix"><div class="previous"><span>上篇</span><a href="/posts/cs/lang/java/2022/07/12/SpringBoot%E5%BC%80%E5%8F%91/">SpringBoot开发</a></div><div class="next"><span>下篇</span><a href="/posts/cs/lang/java/2022/07/14/Spring-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AARESTful%E9%A3%8E%E6%A0%BC%E7%9A%84Web%E6%9C%8D%E5%8A%A1/">创建一个RESTful风格的Web服务</a></div></div></div>
+
+</div>
+
+<script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    $(function() {
+      var $this ,$scroll;
+      var $articleContent = $('.js-article-content');
+      var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+      var scroll = hasSidebar ? '.js-page-main' : 'html, body';
+      $scroll = $(scroll);
+
+      $articleContent.find('.highlight').each(function() {
+        $this = $(this);
+        $this.attr('data-lang', $this.find('code').attr('data-lang'));
+      });
+      $articleContent.find('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').each(function() {
+        $this = $(this);
+        $this.append($('<a class="anchor d-print-none" aria-hidden="true"></a>').html('<i class="fas fa-anchor"></i>'));
+      });
+      $articleContent.on('click', '.anchor', function() {
+        $scroll.scrollToAnchor('#' + $(this).parent().attr('id'), 400);
+      });
+    });
+  });
+})();
+</script>
+</div><section
+                                        class="page__comments d-print-none"><div id="vcomments"></div>
+
+<!-- 在 valine 下方显示阅读量统计 --><script>
+  window.Lazyload.js(['https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js', 'https://cdn.bootcdn.net/ajax/libs/valine/1.4.18/Valine.min.js'], function() {
+    var _config = {
+      el: '#vcomments',
+      appId:  'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+      appKey: 'jVCnL11R3DvbBvS7T6Vg0lPc',
+      verify: false,
+      avatar: 'wavatar',
+    };_config.placeholder = '添加评论';_config.lang = 'zh-CN';new Valine(_config);
+  });
+</script></section></article><!-- start custom main bottom snippet -->
+
+<!-- end custom main bottom snippet -->
+</div>
+                          </div></div></div><div
+                          class="page__footer d-print-none">
+<footer class="footer py-4 js-page-footer">
+  <div class="main"><div itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Holon"><meta itemprop="url" content="https://holon.wang"><meta itemprop="description" content="Keep it simple, Stupid"><div class="footer__author-links"><div class="author-links">
+  <ul class="menu menu--nowrap menu--inline"><link itemprop="url" href="https://holon.wang"><li title="给我发邮件。">
+      <a class="button button--circle mail-button" itemprop="email" href="mailto:holon.cn@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a><li title="在 Weibo 上关注我。">
+        <a class="button button--circle weibo-button" itemprop="sameAs" href="https://weibo.com/5718657072" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<path d="M769.226164 496.610234c-14.420098-4.330228-24.309277-7.266877-16.746482-26.214823 16.350218-41.133578 18.046881-76.626289 0.307181-101.939024-33.242099-47.500415-124.194284-44.928286-228.44638-1.280945 0-0.056317-32.73525 14.323848-24.371737-11.64523 16.042013-51.54906 13.626547-94.739726-11.332929-119.662341-56.566349-56.601163-206.976479 2.134908-335.954595 131.078209-96.594075 96.61353-152.681222 198.989775-152.681222 287.52035 0 169.337597 217.152361 272.292366 429.593589 272.292366 278.498445 0 463.752111-161.808592 463.752111-290.273715C893.345701 558.867622 827.968378 514.820945 769.226164 496.610234zM430.163922 866.063936c-169.51781 16.728051-315.851649-59.899262-326.864086-171.202185-11.010389-111.275277 117.530505-215.061482 287.031932-231.823323 169.537265-16.761841 315.876224 59.866496 326.86511 171.119247C728.190884 745.495411 599.705282 849.291856 430.163922 866.063936z" />
+	<path d="M954.16753 186.714824c-67.256246-74.565105-166.457264-102.990607-258.020739-83.522502l-0.037886 0c-21.188318 4.535015-34.695065 25.37929-30.159026 46.527675 4.516584 21.166816 25.352668 34.691993 46.54201 30.174385 65.139769-13.832358 135.634727 6.400627 183.442323 59.368863 47.765615 52.96414 60.740938 125.206957 40.282686 188.537431l0.011263 0.012287c-6.666851 20.629249 4.617954 42.698153 25.271777 49.366027 20.570885 6.662755 42.687913-4.607714 49.362955-25.188838 0-0.037886 0-0.116729 0.011263-0.150519C1039.577146 362.756133 1021.443231 261.206205 954.16753 186.714824" />
+	<path d="M850.886125 279.919669c-32.732179-36.315956-81.068126-50.108381-125.685136-40.621609-18.234261 3.885839-29.856965 21.833398-25.946551 40.085067 3.89915 18.173849 21.833398 29.851845 40.024654 25.893307l0 0.037886c21.809848-4.610786 45.459709 2.113405 61.461789 19.83365 16.018463 17.757107 20.323092 41.949655 13.45043 63.178931l0.035838 0c-5.715614 17.717174 3.983113 36.770584 21.717694 42.511796 17.7397 5.677728 36.76956-3.992328 42.493365-21.756603C892.458972 365.691759 883.686907 316.228458 850.886125 279.919669" />
+	<path d="M447.103928 548.691741c-80.666743-20.985579-171.84317 19.215193-206.880229 90.291746-35.685212 72.492657-1.180599 152.963828 80.321676 179.268757 84.41947 27.224424 183.926645-14.492797 218.521364-92.744074C573.187374 649.021137 530.586496 570.268131 447.103928 548.691741zM385.506979 733.819463c-16.398343 26.160554-51.51015 37.623523-77.954335 25.54824-26.066352-11.868448-33.760211-42.248645-17.360844-67.757975 16.197652-25.400793 50.129884-36.716316 76.378497-25.711046C393.129162 677.216253 401.60838 707.401901 385.506979 733.819463zM439.522702 664.493841c-5.929616 10.131852-19.03498 15.010909-29.304039 10.785123-10.096014-4.15411-13.261002-15.495231-7.522862-25.454038 5.906066-9.908634 18.500485-14.747758 28.572948-10.750309C441.502995 642.817105 445.180975 654.283146 439.522702 664.493841z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Telegram 上关注我。">
+        <a class="button button--circle telegram-button" itemprop="sameAs" href="https://t.me/Wholon" target="_blank">
+          <div class="icon"><?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+    <path style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" d="M 20.302734 2.984375 C 20.013769 2.996945 19.748583 3.080055 19.515625 3.171875 C 19.300407 3.256634 18.52754 3.5814726 17.296875 4.0976562 C 16.06621 4.61384 14.435476 5.2982348 12.697266 6.0292969 C 9.2208449 7.4914211 5.314238 9.1361259 3.3125 9.9785156 C 3.243759 10.007156 2.9645852 10.092621 2.65625 10.328125 C 2.3471996 10.564176 2.0039062 11.076462 2.0039062 11.636719 C 2.0039062 12.088671 2.2295201 12.548966 2.5019531 12.8125 C 2.7743861 13.076034 3.0504903 13.199244 3.28125 13.291016 C 3.9563403 13.559857 6.0424892 14.392968 6.9492188 14.755859 C 7.2668647 15.707799 8.0129251 17.950071 8.1875 18.501953 L 8.1855469 18.501953 C 8.3275588 18.951162 8.4659791 19.243913 8.6582031 19.488281 C 8.7543151 19.610465 8.8690398 19.721184 9.0097656 19.808594 C 9.0637596 19.842134 9.1235454 19.868148 9.1835938 19.892578 C 9.191962 19.896131 9.2005867 19.897012 9.2089844 19.900391 L 9.1855469 19.894531 C 9.2029579 19.901531 9.2185841 19.911859 9.2363281 19.917969 C 9.2652427 19.927926 9.2852873 19.927599 9.3242188 19.935547 C 9.4612233 19.977694 9.5979794 20.005859 9.7246094 20.005859 C 10.26822 20.005859 10.601562 19.710938 10.601562 19.710938 L 10.623047 19.695312 L 12.970703 17.708984 L 15.845703 20.367188 C 15.897113 20.439837 16.308174 20.998047 17.261719 20.998047 C 17.829844 20.998047 18.280978 20.718791 18.568359 20.423828 C 18.855741 20.128866 19.034757 19.82706 19.115234 19.417969 L 19.115234 19.414062 L 19.115234 19.412109 C 19.171124 19.121728 21.931641 5.265625 21.931641 5.265625 L 21.925781 5.2890625 C 22.01148 4.9067181 22.036735 4.5369631 21.935547 4.1601562 C 21.834358 3.7833495 21.561271 3.4156252 21.232422 3.2226562 C 20.903572 3.0296874 20.591699 2.9718046 20.302734 2.984375 z M 19.908203 5.1738281 C 19.799749 5.7182284 17.343164 18.059965 17.183594 18.878906 L 14.328125 16.240234 C 13.59209 15.559749 12.44438 15.535812 11.679688 16.181641 L 10.222656 17.414062 L 11 14.375 C 11 14.375 16.362547 8.9468594 16.685547 8.6308594 C 16.945547 8.3778594 17 8.2891719 17 8.2011719 C 17 8.0841719 16.939781 8 16.800781 8 C 16.675781 8 16.506016 8.1197812 16.416016 8.1757812 C 15.267511 8.8918132 10.350132 11.694224 7.96875 13.048828 C 7.8792978 12.995267 7.7913128 12.939666 7.6933594 12.900391 C 6.9119785 12.587666 5.4101276 11.985551 4.53125 11.634766 C 6.6055146 10.76177 10.161156 9.2658083 13.472656 7.8730469 C 15.210571 7.142109 16.840822 6.4570977 18.070312 5.9414062 C 19.108158 5.5060977 19.649538 5.2807035 19.908203 5.1738281 z M 17.152344 19.023438 C 17.152344 19.023438 17.154297 19.023438 17.154297 19.023438 C 17.154234 19.023761 17.152444 19.03095 17.152344 19.03125 C 17.154024 19.022709 17.151187 19.029588 17.152344 19.023438 z" font-weight="400" font-family="sans-serif" white-space="normal" overflow="visible"/>
+</svg>
+</div>
+        </a>
+      </li><li title="在 Zhihu 上关注我。">
+        <a class="button button--circle zhihu-button" itemprop="sameAs" href="https://www.zhihu.com/people/jeffrey-8-68" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M351.791182 562.469462l192.945407 0c0-45.367257-21.3871-71.939449-21.3871-71.939449L355.897709 490.530013c3.977591-82.182744 7.541767-187.659007 8.816806-226.835262l159.282726 0c0 0-0.86367-67.402109-18.578124-67.402109s-279.979646 0-279.979646 0 16.850783-88.141456 39.318494-127.053698c0 0-83.60514-4.510734-112.121614 106.962104S81.344656 355.077018 76.80834 367.390461c-4.536316 12.313443 24.62791 5.832845 36.941354 0 12.313443-5.832845 68.050885-25.924439 84.252893-103.69571l86.570681 0c1.165546 49.28652 4.596691 200.335724 3.515057 226.835262L109.86113 490.530013c-25.275663 18.147312-33.701566 71.939449-33.701566 71.939449L279.868105 562.469462c-8.497535 56.255235-23.417339 128.763642-44.275389 167.210279-33.05279 60.921511-50.55235 116.65793-169.802314 212.576513 0 0-19.442818 14.257725 40.829917 9.073656 60.273758-5.185093 117.305683-20.739347 156.840094-99.807147 20.553105-41.107233 41.805128-93.250824 58.386782-146.138358l-0.055259 0.185218 167.855986 193.263655c0 0 22.035876-51.847855 5.832845-108.880803L371.045711 650.610918l-42.1244 31.157627-0.045025 0.151449c11.69946-41.020252 20.11206-81.5749 22.726607-116.858498C351.665315 564.212152 351.72876 563.345412 351.791182 562.469462z" p-id="907"></path><path d="M584.918753 182.033893l0 668.840094 70.318532 0 28.807093 80.512708 121.875768-80.512708 153.600307 0L959.520453 182.033893 584.918753 182.033893zM887.150192 778.934538l-79.837326 0-99.578949 65.782216-23.537066-65.782216-24.855084 0L659.341766 256.673847l227.807403 0L887.149169 778.934538z" />
+</svg>
+</div>
+        </a>
+      </li><li title="在 Github 上关注我。">
+        <a class="button button--circle github-button" itemprop="sameAs" href="https://github.com/wholon" target="_blank">
+          <div class="icon"><svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path class="svgpath" data-index="path_0" fill="#272636" d="M0 525.2c0 223.6 143.3 413.7 343 483.5 26.9 6.8 22.8-12.4 22.8-25.4l0-88.7c-155.3 18.2-161.5-84.6-172-101.7-21.1-36-70.8-45.2-56-62.3 35.4-18.2 71.4 4.6 113.1 66.3 30.2 44.7 89.1 37.2 119 29.7 6.5-26.9 20.5-50.9 39.7-69.6C248.8 728.2 181.7 630 181.7 513.2c0-56.6 18.7-108.7 55.3-150.7-23.3-69.3 2.2-128.5 5.6-137.3 66.5-6 135.5 47.6 140.9 51.8 37.8-10.2 80.9-15.6 129.1-15.6 48.5 0 91.8 5.6 129.8 15.9 12.9-9.8 77-55.8 138.8-50.2 3.3 8.8 28.2 66.7 6.3 135 37.1 42.1 56 94.6 56 151.4 0 117-67.5 215.3-228.8 243.7 26.9 26.6 43.6 63.4 43.6 104.2l0 128.8c0.9 10.3 0 20.5 17.2 20.5C878.1 942.4 1024 750.9 1024 525.3c0-282.9-229.3-512-512-512C229.1 13.2 0 242.3 0 525.2L0 525.2z" />
+</svg>
+</div>
+        </a>
+      </li></ul>
+</div>
+</div>
+    </div>
+    <!--    在非文章的页脚显示总浏览量 使用VALINE统计    --><!--    在网站底部显示总访问量 使用 leanCLoud统计， key: 网站浏览量  -->
+    <div class="article__content code.info" style="text-align: center">
+      <code class="language-plaintext warning highlighter-rouge">总点击量</code>
+      <code id="site-view" class="js-pageview language-plaintext success highlighter-rouge" data-page-key="网站浏览量">0</code>
+    </div><div class="site-info mt-2">
+      <div>© Holon's Blog 2022,
+        Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/" target="_blank">Jekyll</a>/<a title="Jekyll中文文档." href="http://jekyllcn.com" target="_blank">Jekyllcn</a> & <a
+        title="TeXt is a super customizable Jekyll theme." href="https://tianqi.name/jekyll-TeXt-theme/docs/zh/quick-start" target="_blank">TeXt Theme</a>.
+      </div>
+    </div>
+  </div>
+</footer>
+</div></div>
+                  </div><script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $body = $('body'), $window = $(window);
+    var $pageRoot = $('.js-page-root'), $pageMain = $('.js-page-main');
+    var activeCount = 0;
+    function modal(options) {
+      var $root = this, visible, onChange, hideWhenWindowScroll = false;
+      var scrollTop;
+      function setOptions(options) {
+        var _options = options || {};
+        visible = _options.initialVisible === undefined ? false : show;
+        onChange = _options.onChange;
+        hideWhenWindowScroll = _options.hideWhenWindowScroll;
+      }
+      function init() {
+        setState(visible);
+      }
+      function setState(isShow) {
+        if (isShow === visible) {
+          return;
+        }
+        visible = isShow;
+        if (visible) {
+          activeCount++;
+          scrollTop = $(window).scrollTop() || $pageMain.scrollTop();
+          $root.addClass('modal--show');
+          $pageMain.scrollTop(scrollTop);
+          activeCount === 1 && ($pageRoot.addClass('show-modal'), $body.addClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.on('scroll', hide);
+          $window.on('keyup', handleKeyup);
+        } else {
+          activeCount > 0 && activeCount--;
+          $root.removeClass('modal--show');
+          $window.scrollTop(scrollTop);
+          activeCount === 0 && ($pageRoot.removeClass('show-modal'), $body.removeClass('of-hidden'));
+          hideWhenWindowScroll && window.hasEvent('touchstart') && $window.off('scroll', hide);
+          $window.off('keyup', handleKeyup);
+        }
+        onChange && onChange(visible);
+      }
+      function show() {
+        setState(true);
+      }
+      function hide() {
+        setState(false);
+      }
+      function handleKeyup(e) {
+        // Char Code: 27  ESC
+        if (e.which ===  27) {
+          hide();
+        }
+      }
+      setOptions(options);
+      init();
+      return {
+        show: show,
+        hide: hide,
+        $el: $root
+      };
+    }
+    $.fn.modal = modal;
+  });
+})();
+</script><div
+                  class="modal modal--overflow page__search-modal d-print-none js-page-search-modal"><script>
+(function () {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    // search panel
+    var search = (window.search || (window.search = {}));
+    var useDefaultSearchBox = window.useDefaultSearchBox === undefined ?
+      true : window.useDefaultSearchBox ;
+
+    var $searchModal = $('.js-page-search-modal');
+    var $searchToggle = $('.js-search-toggle');
+    var searchModal = $searchModal.modal({ onChange: handleModalChange, hideWhenWindowScroll: true });
+    var modalVisible = false;
+    search.searchModal = searchModal;
+
+    var $searchBox = null;
+    var $searchInput = null;
+    var $searchClear = null;
+
+    function getModalVisible() {
+      return modalVisible;
+    }
+    search.getModalVisible = getModalVisible;
+
+    function handleModalChange(visible) {
+      modalVisible = visible;
+      if (visible) {
+        search.onShow && search.onShow();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].focus();
+      } else {
+        search.onShow && search.onHide();
+        useDefaultSearchBox && $searchInput[0] && $searchInput[0].blur();
+        setTimeout(function() {
+          useDefaultSearchBox && ($searchInput.val(''), $searchBox.removeClass('not-empty'));
+          search.clear && search.clear();
+          window.pageAsideAffix && window.pageAsideAffix.refresh();
+        }, 400);
+      }
+    }
+
+    $searchToggle.on('click', function() {
+      modalVisible ? searchModal.hide() : searchModal.show();
+    });
+    // Char Code: 83  S, 191 /
+    $(window).on('keyup', function(e) {
+      if (!modalVisible && !window.isFormElement(e.target || e.srcElement) && (e.which === 83 || e.which === 191)) {
+        modalVisible || searchModal.show();
+      }
+    });
+
+    if (useDefaultSearchBox) {
+      $searchBox = $('.js-search-box');
+      $searchInput = $searchBox.children('input');
+      $searchClear = $searchBox.children('.js-icon-clear');
+      search.getSearchInput = function() {
+        return $searchInput.get(0);
+      };
+      search.getVal = function() {
+        return $searchInput.val();
+      };
+      search.setVal = function(val) {
+        $searchInput.val(val);
+      };
+
+      $searchInput.on('focus', function() {
+        $(this).addClass('focus');
+      });
+      $searchInput.on('blur', function() {
+        $(this).removeClass('focus');
+      });
+      $searchInput.on('input', window.throttle(function() {
+        var val = $(this).val();
+        if (val === '' || typeof val !== 'string') {
+          search.clear && search.clear();
+        } else {
+          $searchBox.addClass('not-empty');
+          search.onInputNotEmpty && search.onInputNotEmpty(val);
+        }
+      }, 400));
+      $searchClear.on('click', function() {
+        $searchInput.val(''); $searchBox.removeClass('not-empty');
+        search.clear && search.clear();
+      });
+    }
+  });
+})();
+</script><div class="search search--dark">
+  <div class="main">
+    <div class="search__header">搜索</div>
+    <div class="search-bar">
+      <div class="search-box js-search-box">
+        <div class="search-box__icon-search"><i class="fas fa-search"></i></div>
+        <input type="text" />
+        <div class="search-box__icon-clear js-icon-clear">
+          <a><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+      <button class="button button--theme-dark button--pill search__cancel js-search-toggle">
+        取消</button>
+    </div>
+    <div class="search-result js-search-result"></div>
+  </div>
+</div>
+<script>var SOURCES = window.TEXT_VARIABLES.sources;
+var PAHTS = window.TEXT_VARIABLES.paths;
+window.Lazyload.js([SOURCES.jquery, PAHTS.search_js], function() {
+  var search = (window.search || (window.search = {}));
+  var searchData = window.TEXT_SEARCH_DATA || {};
+
+  function memorize(f) {
+    var cache = {};
+    return function () {
+      var key = Array.prototype.join.call(arguments, ',');
+      if (key in cache) return cache[key];
+      else return cache[key] = f.apply(this, arguments);
+    };
+  }
+
+  /// search
+  function searchByQuery(query) {
+    var i, j, key, keys, cur, _title, result = {};
+    keys = Object.keys(searchData);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      for (j = 0; j < searchData[key].length; j++) {
+        cur = searchData[key][j], _title = cur.title;
+        if ((result[key] === undefined || result[key] && result[key].length < 4 )
+          && _title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
+          if (result[key] === undefined) {
+            result[key] = [];
+          }
+          result[key].push(cur);
+        }
+      }
+    }
+    return result;
+  }
+
+  var renderHeader = memorize(function(header) {
+    return $('<p class="search-result__header">' + header + '</p>');
+  });
+
+  var renderItem = function(index, title, url) {
+    return $('<li class="search-result__item" data-index="' + index + '"><a class="button" href="' + url + '">' + title + '</a></li>');
+  };
+
+  function render(data) {
+    if (!data) { return null; }
+    var $root = $('<ul></ul>'), i, j, key, keys, cur, itemIndex = 0;
+    keys = Object.keys(data);
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      $root.append(renderHeader(key));
+      for (j = 0; j < data[key].length; j++) {
+        cur = data[key][j];
+        $root.append(renderItem(itemIndex++, cur.title, cur.url));
+      }
+    }
+    return $root;
+  }
+
+  // search box
+  var $result = $('.js-search-result'), $resultItems;
+  var lastActiveIndex, activeIndex;
+
+  function clear() {
+    $result.html(null);
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+  }
+  function onInputNotEmpty(val) {
+    $result.html(render(searchByQuery(val)));
+    $resultItems = $('.search-result__item'); activeIndex = 0;
+    $resultItems.eq(0).addClass('active');
+  }
+
+  search.clear = clear;
+  search.onInputNotEmpty = onInputNotEmpty;
+
+  function updateResultItems() {
+    lastActiveIndex >= 0 && $resultItems.eq(lastActiveIndex).removeClass('active');
+    activeIndex >= 0 && $resultItems.eq(activeIndex).addClass('active');
+  }
+
+  function moveActiveIndex(direction) {
+    var itemsCount = $resultItems ? $resultItems.length : 0;
+    if (itemsCount > 1) {
+      lastActiveIndex = activeIndex;
+      if (direction === 'up') {
+        activeIndex = (activeIndex - 1 + itemsCount) % itemsCount;
+      } else if (direction === 'down') {
+        activeIndex = (activeIndex + 1 + itemsCount) % itemsCount;
+      }
+      updateResultItems();
+    }
+  }
+
+  // Char Code: 13  Enter, 37  ⬅, 38  ⬆, 39  ➡, 40  ⬇
+  $(window).on('keyup', function(e) {
+    var modalVisible = search.getModalVisible && search.getModalVisible();
+    if (modalVisible) {
+      if (e.which === 38) {
+        modalVisible && moveActiveIndex('up');
+      } else if (e.which === 40) {
+        modalVisible && moveActiveIndex('down');
+      } else if (e.which === 13) {
+        modalVisible && $resultItems && activeIndex >= 0 && $resultItems.eq(activeIndex).children('a')[0].click();
+      }
+    }
+  });
+
+  $result.on('mouseover', '.search-result__item > a', function() {
+    var itemIndex = $(this).parent().data('index');
+    itemIndex >= 0 && (lastActiveIndex = activeIndex, activeIndex = itemIndex, updateResultItems());
+  });
+});
+</script>
+</div></div>
+
+
+            <script>(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function scrollToAnchor(anchor, duration, callback) {
+      var $root = this;
+      $root.animate({ scrollTop: $(anchor).position().top }, duration, function() {
+        window.history.replaceState(null, '', window.location.href.split('#')[0] + anchor);
+        callback && callback();
+      });
+    }
+    $.fn.scrollToAnchor = scrollToAnchor;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function affix(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroll,
+        offsetBottom = 0, scrollTarget = window, scroll = window.document, disabled = false, isOverallScroller = true,
+        rootTop, rootLeft, rootHeight, scrollBottom, rootBottomTop,
+        hasInit = false, curState;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.offsetBottom && (offsetBottom = _options.offsetBottom);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroll && (scroll = _options.scroll);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $scrollTarget = $(scrollTarget);
+        isOverallScroller = window.isOverallScroller($scrollTarget[0]);
+        $scroll = $(scroll);
+      }
+      function preCalc() {
+        top();
+        rootHeight = $root.outerHeight();
+        rootTop = $root.offset().top + (isOverallScroller ? 0 :  $scrollTarget.scrollTop());
+        rootLeft = $root.offset().left;
+      }
+      function calc(needPreCalc) {
+        needPreCalc && preCalc();
+        scrollBottom = $scroll.outerHeight() - offsetBottom - rootHeight;
+        rootBottomTop = scrollBottom - rootTop;
+      }
+      function top() {
+        if (curState !== 'top') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: 0
+          });
+          curState = 'top';
+        }
+      }
+      function fixed() {
+        if (curState !== 'fixed') {
+          $root.addClass('fixed').css({
+            left: rootLeft + 'px',
+            top: 0
+          });
+          curState = 'fixed';
+        }
+      }
+      function bottom() {
+        if (curState !== 'bottom') {
+          $root.removeClass('fixed').css({
+            left: 0,
+            top: rootBottomTop + 'px'
+          });
+          curState = 'bottom';
+        }
+      }
+      function setState() {
+        var scrollTop = $scrollTarget.scrollTop();
+        if (scrollTop >= rootTop && scrollTop <= scrollBottom) {
+          fixed();
+        } else if (scrollTop < rootTop) {
+          top();
+        } else {
+          bottom();
+        }
+      }
+      function init() {
+        if(!hasInit) {
+          var interval, timeout;
+          calc(true); setState();
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState();
+          });
+          $window.on('resize', function() {
+            disabled || (calc(true), setState());
+          });
+          hasInit = true;
+        }
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions,
+        refresh: function() {
+          calc(true, { animation: false }); setState();
+        }
+      };
+    }
+    $.fn.affix = affix;
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    function toc(options) {
+      var $root = this, $window = $(window), $scrollTarget, $scroller, $tocUl = $('<ul class="toc toc--ellipsis"></ul>'), $tocLi, $headings, $activeLast, $activeCur,
+        selectors = 'h1,h2,h3', container = 'body', scrollTarget = window, scroller = 'html, body', disabled = false,
+        headingsPos, scrolling = false, hasRendered = false, hasInit = false;
+
+      function setOptions(options) {
+        var _options = options || {};
+        _options.selectors && (selectors = _options.selectors);
+        _options.container && (container = _options.container);
+        _options.scrollTarget && (scrollTarget = _options.scrollTarget);
+        _options.scroller && (scroller = _options.scroller);
+        _options.disabled !== undefined && (disabled = _options.disabled);
+        $headings = $(container).find(selectors).filter('[id]');
+        $scrollTarget = $(scrollTarget);
+        $scroller = $(scroller);
+      }
+      function calc() {
+        headingsPos = [];
+        $headings.each(function() {
+          headingsPos.push(Math.floor($(this).position().top));
+        });
+      }
+      function setState(element, disabled) {
+        var scrollTop = $scrollTarget.scrollTop(), i;
+        if (disabled || !headingsPos || headingsPos.length < 1) { return; }
+        if (element) {
+          $activeCur = element;
+        } else {
+          for (i = 0; i < headingsPos.length; i++) {
+            if (scrollTop >= headingsPos[i]) {
+              $activeCur = $tocLi.eq(i);
+            } else {
+              $activeCur || ($activeCur = $tocLi.eq(i));
+              break;
+            }
+          }
+        }
+        $activeLast && $activeLast.removeClass('active');
+        ($activeLast = $activeCur).addClass('active');
+      }
+      function render() {
+        if(!hasRendered) {
+          $root.append($tocUl);
+          $headings.each(function() {
+            var $this = $(this);
+            $tocUl.append($('<li></li>').addClass('toc-' + $this.prop('tagName').toLowerCase())
+              .append($('<a></a>').text($this.text()).attr('href', '#' + $this.prop('id'))));
+          });
+          $tocLi = $tocUl.children('li');
+          $tocUl.on('click', 'a', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            scrolling = true;
+            setState($this.parent());
+            $scroller.scrollToAnchor($this.attr('href'), 400, function() {
+              scrolling = false;
+            });
+          });
+        }
+        hasRendered = true;
+      }
+      function init() {
+        var interval, timeout;
+        if(!hasInit) {
+          render(); calc(); setState(null, scrolling);
+          // run calc every 100 millisecond
+          interval = setInterval(function() {
+            calc();
+          }, 100);
+          timeout = setTimeout(function() {
+            clearInterval(interval);
+          }, 45000);
+          window.pageLoad.then(function() {
+            setTimeout(function() {
+              clearInterval(interval);
+              clearTimeout(timeout);
+            }, 3000);
+          });
+          $scrollTarget.on('scroll', function() {
+            disabled || setState(null, scrolling);
+          });
+          $window.on('resize', window.throttle(function() {
+            if (!disabled) {
+              render(); calc(); setState(null, scrolling);
+            }
+          }, 100));
+        }
+        hasInit = true;
+      }
+
+      setOptions(options);
+      if (!disabled) {
+        init();
+      }
+      $window.on('resize', window.throttle(function() {
+        init();
+      }, 200));
+      return {
+        setOptions: setOptions
+      };
+    }
+    $.fn.toc = toc;
+  });
+})();
+/*(function () {
+
+})();*/
+</script><script>
+                /* toc must before affix, since affix need to konw toc' height. */(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  var TOC_SELECTOR = window.TEXT_VARIABLES.site.toc.selectors;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window);
+    var $articleContent = $('.js-article-content');
+    var $tocRoot = $('.js-toc-root'), $col2 = $('.js-col-aside');
+    var toc;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+    var hasToc = $articleContent.find(TOC_SELECTOR).length > 0;
+
+    function disabled() {
+      return $col2.css('display') === 'none' || !hasToc;
+    }
+
+    tocDisabled = disabled();
+
+    toc = $tocRoot.toc({
+      selectors: TOC_SELECTOR,
+      container: $articleContent,
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      tocDisabled = disabled();
+      toc && toc.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+  });
+})();
+(function() {
+  var SOURCES = window.TEXT_VARIABLES.sources;
+  window.Lazyload.js(SOURCES.jquery, function() {
+    var $window = $(window), $pageFooter = $('.js-page-footer');
+    var $pageAside = $('.js-page-aside');
+    var affix;
+    var tocDisabled = false;
+    var hasSidebar = $('.js-page-root').hasClass('layout--page--sidebar');
+
+    affix = $pageAside.affix({
+      offsetBottom: $pageFooter.outerHeight(),
+      scrollTarget: hasSidebar ? '.js-page-main' : null,
+      scroller: hasSidebar ? '.js-page-main' : null,
+      scroll: hasSidebar ? $('.js-page-main').children() : null,
+      disabled: tocDisabled
+    });
+
+    $window.on('resize', window.throttle(function() {
+      affix && affix.setOptions({
+        disabled: tocDisabled
+      });
+    }, 100));
+
+    window.pageAsideAffix = affix;
+  });
+})();
+</script><script>
+  window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.bootcdn.net/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js'], function() {
+    var $canvas = null, $this = null, _ctx = null, _text = '';
+    $('.language-chart').each(function(){
+      $this = $(this);
+      $canvas = $('<canvas></canvas>');
+      _text = $this.text();
+      $this.text('').append($canvas);
+      _ctx = $canvas.get(0).getContext('2d');
+      (_ctx && _text) && (new Chart(_ctx, JSON.parse(_text)) && $this.attr('data-processed', true));
+    });
+  });
+</script>
+<script type="text/x-mathjax-config">
+	var _config = { tex2jax: {
+		inlineMath: [['$','$'], ['\\(','\\)']]
+	}};_config.TeX = { equationNumbers: { autoNumber: "all" } };MathJax.Hub.Config(_config);
+</script>
+<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  window.Lazyload.js('https://cdn.bootcdn.net/ajax/libs/mermaid/9.0.0/mermaid.js', function() {
+    mermaid.initialize({
+      startOnLoad: true
+    });
+    mermaid.init(undefined, '.language-mermaid');
+  });
+</script>
+<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      serverURLs: 'https://avoscloud.com',
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      
+      blog.set('title', title);
+      // 将插入的 key 设置为 title
+      // blog.set('key', key);
+      blog.set('key', title);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+        appKey:   'jVCnL11R3DvbBvS7T6Vg0lPc',
+        appClass: 'BlogPageView'
+      });
+      //  总浏览量增加
+      pageview.increase("网站浏览量", "网站浏览量", function(view) {
+        $("#site-view").text(view);
+      });
+      // 文章浏览量增加
+      var key =   'SpringBoot-第一个SpringBoot应用';
+      var title = "SpringBoot-第一个SpringBoot应用";
+      pageview.increase(key, key, function(view) {
+        $("[data-page-key='SpringBoot-第一个SpringBoot应用']").text(view);
+      });
+    });
+  </script><!-- start custom pageview snippet (for the post) -->
+
+<!-- end custom pageview snippet (for the post) -->
+
+
+<!---->
+<!---->
+<!---->
+<!---->
+<!--<script>(function() {
+  function errorHandler(error, callback) {
+    if (error) {
+      callback && callback(error);
+      throw error;
+    }
+  }
+
+  function pageview(_AV, options) {
+    var AV = _AV;
+    var appId, appKey, appClass;
+    appId = options.appId;
+    appKey = options.appKey;
+    appClass = options.appClass;
+    AV.init({
+      serverURLs: 'https://avoscloud.com',
+      appId: appId,
+      appKey: appKey
+    });
+    return {
+      get: get,
+      increase: increase
+    };
+
+    function searchKey(key) {
+      var query = new AV.Query(appClass);
+      query.equalTo('key', key);
+      return query.first();
+    }
+
+    function insert(key, title) {
+      var Blog = AV.Object.extend(appClass);
+      var blog = new Blog();
+      
+      blog.set('title', title);
+      // 将插入的 key 设置为 title
+      // blog.set('key', key);
+      blog.set('key', title);
+      blog.set('views', 0);
+      return blog.save();
+    }
+
+    function increment(result) {
+      result.increment('views', 1);
+      return result.save(null, {
+        fetchWhenSave: true
+      });
+    }
+
+    function get(key, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          callback && callback(result.attributes.views);
+        }
+      }, errorHandler);
+    }
+
+    function increase(key, title, callback) {
+      searchKey(key).then(function(result) {
+        if (result) {
+          increment(result).then(function(result) {
+            callback && callback(result.attributes.views);
+          });
+        } else {
+          insert(key, title).then(function(result) {
+            increment(result).then(function(result) {
+              callback && callback(result.attributes.views);
+            });
+          }, errorHandler);
+        }
+      }, errorHandler);
+    }
+  }
+  window.pageview = pageview;
+})();
+</script>
+  <script>
+    window.Lazyload.js(['https://cdn.bootcdn.net/ajax/libs/jquery/3.1.1/jquery.min.js', 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.2/dist/av.min.js'], function() {
+      var pageview = window.pageview(AV, {
+        appId:    'cilQp1y35tu306dtvpUYQdai-gzGzoHsz',
+        appKey:   'jVCnL11R3DvbBvS7T6Vg0lPc',
+        appClass: 'BlogPageView'
+      });
+      //  总浏览量增加
+      pageview.increase("网站浏览量", "网站浏览量", function(view) {
+        $("#site-view").text(view);
+      });
+      // 文章浏览量增加
+      var key =   'SpringBoot-第一个SpringBoot应用';
+      var title = "SpringBoot-第一个SpringBoot应用";
+      pageview.increase(key, key, function(view) {
+        $("[data-page-key='SpringBoot-第一个SpringBoot应用']").text(view);
+      });
+    });
+  </script>-->
+<!---->
+<!---->
+<!---->
+<!---->
+
+    </div>
+    <script>(function () {
+  var $root = document.getElementsByClassName('root')[0];
+  if (window.hasEvent('touchstart')) {
+    $root.dataset.isTouch = true;
+    document.addEventListener('touchstart', function(){}, false);
+  }
+})();
+</script>
+  </body>
+</html>
+
